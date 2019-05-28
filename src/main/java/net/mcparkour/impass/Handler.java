@@ -42,7 +42,8 @@ class Handler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		String name = method.getName();
 		Class<?>[] parameterTypes = method.getParameterTypes();
-		Method targetMethod = this.targetClass.getMethod(name, parameterTypes);
+		Method targetMethod = this.targetClass.getDeclaredMethod(name, parameterTypes);
+		targetMethod.setAccessible(true);
 		return targetMethod.invoke(this.target, args);
 	}
 }
