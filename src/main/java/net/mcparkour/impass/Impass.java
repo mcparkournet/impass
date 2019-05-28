@@ -31,11 +31,11 @@ public class Impass {
 
 	@SuppressWarnings("unchecked")
 	public <T> T createImplementationAccessor(Class<T> accessorClass, Object implementationInstance) {
-		Class<?> implementationClass = implementationInstance.getClass();
-		ClassLoader implementationClassLoader = implementationClass.getClassLoader();
+		ClassLoader accessorClassLoader = accessorClass.getClassLoader();
 		Class<?>[] accessorClassArray = {accessorClass};
+		Class<?> implementationClass = implementationInstance.getClass();
 		InvocationHandler handler = new Handler(implementationInstance, implementationClass);
-		Object accessor = Proxy.newProxyInstance(implementationClassLoader, accessorClassArray, handler);
+		Object accessor = Proxy.newProxyInstance(accessorClassLoader, accessorClassArray, handler);
 		return (T) accessor;
 	}
 }
