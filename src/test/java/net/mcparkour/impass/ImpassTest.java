@@ -39,8 +39,8 @@ public class ImpassTest {
 
 	@Test
 	public void testAccessorFromInstance() {
-		Implementation implementation = new Implementation();
-		Accessor accessor = this.impass.createImplementationAccessor(Accessor.class, implementation);
+		TestImplementation implementation = new TestImplementation();
+		TestAccessor accessor = this.impass.createImplementationAccessor(TestAccessor.class, implementation);
 		Assertions.assertDoesNotThrow(accessor::nothing);
 		Assertions.assertEquals("foo", accessor.returnFoo());
 		Assertions.assertDoesNotThrow(() -> accessor.acceptFoo("foo"));

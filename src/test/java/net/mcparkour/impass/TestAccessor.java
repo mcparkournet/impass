@@ -24,23 +24,15 @@
 
 package net.mcparkour.impass;
 
-public class Implementation {
+public interface TestAccessor {
 
-	public void nothing() {
-	}
+	void nothing();
 
-	public String returnFoo() {
-		return "foo";
-	}
+	String returnFoo();
 
-	public void acceptFoo(String foo) {
-	}
+	void acceptFoo(String foo);
 
-	public String acceptAndReturn(String foo) {
-		return foo;
-	}
+	String acceptAndReturn(String foo);
 
-	public String acceptMultiParamAndReturn(String foo, int integer) {
-		return foo + " " + integer;
-	}
+	String acceptMultiParamAndReturn(String foo, int integer);
 }
