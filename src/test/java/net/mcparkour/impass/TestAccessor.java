@@ -24,6 +24,10 @@
 
 package net.mcparkour.impass;
 
+import net.mcparkour.impass.annotation.ImpassGetter;
+import net.mcparkour.impass.annotation.ImpassMethod;
+import net.mcparkour.impass.annotation.ImpassSetter;
+
 public interface TestAccessor {
 
 	void nothing();
@@ -35,4 +39,22 @@ public interface TestAccessor {
 	String acceptAndReturn(String foo);
 
 	String acceptMultiParamAndReturn(String foo, int integer);
+
+	@ImpassGetter("intField")
+	int getIntField();
+
+	@ImpassSetter("intField")
+	void setIntField(int intFieldValue);
+
+	@ImpassGetter("stringField")
+	String getStringField();
+
+	@ImpassSetter("stringField")
+	void setStringField(String stringFieldValue);
+
+	@ImpassMethod("annotatedMethodI")
+	String annotatedMethod(String s, int i);
+
+	@ImpassMethod("annotatedMethod2I")
+	int annotatedMethod2(int i, String s);
 }

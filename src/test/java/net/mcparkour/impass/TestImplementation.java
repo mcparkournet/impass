@@ -26,6 +26,18 @@ package net.mcparkour.impass;
 
 public class TestImplementation {
 
+	private int intField = 1;
+
+	public int intField() {
+		return this.intField;
+	}
+
+	private String stringField = "string";
+
+	public String stringField() {
+		return this.stringField;
+	}
+
 	public void nothing() {
 	}
 
@@ -42,5 +54,13 @@ public class TestImplementation {
 
 	public String acceptMultiParamAndReturn(String foo, int integer) {
 		return foo + " " + integer;
+	}
+
+	String annotatedMethodI(String s, int i) {
+		return s + " " + i;
+	}
+
+	int annotatedMethod2I(int i, String s) {
+		return i + Integer.parseInt(s);
 	}
 }
