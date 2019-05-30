@@ -25,17 +25,12 @@
 package net.mcparkour.impass;
 
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
+import net.mcparkour.impass.util.reflection.Reflections;
 
 public class Impass {
 
-	@SuppressWarnings("unchecked")
-	public <T> T createImplementationAccessor(Class<T> accessorClass, Object implementationInstance) {
-		ClassLoader accessorClassLoader = accessorClass.getClassLoader();
-		Class<?>[] accessorClassArray = {accessorClass};
-		Class<?> implementationClass = implementationInstance.getClass();
-		InvocationHandler handler = new AccessorHandler(implementationClass, implementationInstance);
-		Object accessor = Proxy.newProxyInstance(accessorClassLoader, accessorClassArray, handler);
-		return (T) accessor;
+	public <T> T createAccessor(Class<T> accessorClass, Object implementation) {
+		InvocationHandler handler = new AccessorHandler(implementation);
+		return Reflections.newProxyInstance(accessorClass, handler);
 	}
 }

@@ -35,12 +35,12 @@ import org.jetbrains.annotations.Nullable;
 
 class AccessorHandler implements InvocationHandler {
 
+	private Object implementation;
 	private Class<?> implementationClass;
-	private Object implementationInstance;
 
-	AccessorHandler(Class<?> implementationClass, Object implementationInstance) {
-		this.implementationClass = implementationClass;
-		this.implementationInstance = implementationInstance;
+	AccessorHandler(Object implementation) {
+		this.implementation = implementation;
+		this.implementationClass = implementation.getClass();
 	}
 
 	@Nullable
@@ -61,14 +61,14 @@ class AccessorHandler implements InvocationHandler {
 	private Object handleGetter(ImpassGetter getterAnnotation) {
 		String fieldName = getterAnnotation.value();
 		Field targetField = Reflections.getField(this.implementationClass, fieldName);
-		return Reflections.getFieldValue(targetField, this.implementationInstance);
+		return Reflections.getFieldValue(targetField, this.implementation);
 	}
 
 	@Nullable
 	private Object handleSetter(ImpassSetter setterAnnotation, @Nullable Object value) {
 		String fieldName = setterAnnotation.value();
 		Field targetField = Reflections.getField(this.implementationClass, fieldName);
-		Reflections.setFieldValue(targetField, this.implementationInstance, value);
+		Reflections.setFieldValue(targetField, this.implementation, value);
 		return null;
 	}
 
@@ -77,7 +77,7 @@ class AccessorHandler implements InvocationHandler {
 		String methodName = getMethodName(accessorMethod);
 		Class<?>[] parameterTypes = accessorMethod.getParameterTypes();
 		Method method = Reflections.getMethod(this.implementationClass, methodName, parameterTypes);
-		return Reflections.invokeMethod(method, this.implementationInstance, parameters);
+		return Reflections.invokeMethod(method, this.implementation, parameters);
 	}
 
 	private String getMethodName(Method method) {

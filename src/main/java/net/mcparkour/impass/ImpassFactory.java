@@ -32,7 +32,7 @@ public final class ImpassFactory {
 		throw new UnsupportedOperationException("Cannot create instance of this class");
 	}
 
-	public static <T> T createImplementationAccessor(Class<T> accessorClass, Object implementationInstance) {
-		return IMPASS.createImplementationAccessor(accessorClass, implementationInstance);
+	public static <T> T createAccessor(Class<T> accessorClass, Object implementation) {
+		return IMPASS.createAccessor(accessorClass, implementation);
 	}
 }

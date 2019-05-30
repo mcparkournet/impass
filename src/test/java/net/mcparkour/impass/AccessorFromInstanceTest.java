@@ -38,7 +38,7 @@ public class AccessorFromInstanceTest {
 		Assertions.assertDoesNotThrow(() -> {
 			Impass impass = new Impass();
 			this.implementation = new TestImplementation();
-			this.accessor = impass.createImplementationAccessor(TestAccessor.class, this.implementation);
+			this.accessor = impass.createAccessor(TestAccessor.class, this.implementation);
 		});
 	}
 

@@ -26,8 +26,10 @@ package net.mcparkour.impass.util.reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import org.jetbrains.annotations.Nullable;
 
 public final class Reflections {
@@ -106,5 +108,13 @@ public final class Reflections {
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
 			throw new UncheckedReflectiveOperationException(exception);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T newProxyInstance(Class<T> interfaceClass, InvocationHandler handler) {
+		ClassLoader interfaceClassLoader = interfaceClass.getClassLoader();
+		Class<?>[] interfaceClassArray = {interfaceClass};
+		Object proxy = Proxy.newProxyInstance(interfaceClassLoader, interfaceClassArray, handler);
+		return (T) proxy;
 	}
 }
