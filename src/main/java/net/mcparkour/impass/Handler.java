@@ -28,6 +28,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import net.mcparkour.impass.annotation.ImpassGetter;
+import net.mcparkour.impass.annotation.ImpassMethod;
 import net.mcparkour.impass.annotation.ImpassSetter;
 import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
@@ -73,9 +74,17 @@ class Handler implements InvocationHandler {
 
 	@Nullable
 	private Object handleMethod(Method accessorMethod, Object[] parameters) {
-		String methodName = accessorMethod.getName();
+		String methodName = getMethodName(accessorMethod);
 		Class<?>[] parameterTypes = accessorMethod.getParameterTypes();
 		Method method = Reflections.getMethod(this.targetClass, methodName, parameterTypes);
 		return Reflections.invokeMethod(method, this.target, parameters);
+	}
+
+	private String getMethodName(Method method) {
+		ImpassMethod methodAnnotation = method.getAnnotation(ImpassMethod.class);
+		if (methodAnnotation != null) {
+			return methodAnnotation.value();
+		}
+		return method.getName();
 	}
 }
