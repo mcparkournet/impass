@@ -24,9 +24,13 @@
 
 package net.mcparkour.impass;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import net.mcparkour.impass.annotation.ImpassGetter;
+import net.mcparkour.impass.annotation.ImpassSetter;
+import net.mcparkour.impass.util.reflection.Reflections;
+import org.jetbrains.annotations.Nullable;
 
 class Handler implements InvocationHandler {
 
@@ -38,12 +42,40 @@ class Handler implements InvocationHandler {
 		this.targetClass = targetClass;
 	}
 
+	@Nullable
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		String name = method.getName();
-		Class<?>[] parameterTypes = method.getParameterTypes();
-		Method targetMethod = this.targetClass.getDeclaredMethod(name, parameterTypes);
-		targetMethod.setAccessible(true);
-		return targetMethod.invoke(this.target, args);
+	public Object invoke(Object proxy, Method method, Object[] parameters) {
+		ImpassGetter getterAnnotation = method.getAnnotation(ImpassGetter.class);
+		if (getterAnnotation != null) {
+			return handleGetter(getterAnnotation);
+		}
+		ImpassSetter setterAnnotation = method.getAnnotation(ImpassSetter.class);
+		if (setterAnnotation != null) {
+			return handleSetter(setterAnnotation, parameters[0]);
+		}
+		return handleMethod(method, parameters);
+	}
+
+	@Nullable
+	private Object handleGetter(ImpassGetter getterAnnotation) {
+		String fieldName = getterAnnotation.value();
+		Field targetField = Reflections.getField(this.targetClass, fieldName);
+		return Reflections.getFieldValue(targetField, this.target);
+	}
+
+	@Nullable
+	private Object handleSetter(ImpassSetter setterAnnotation, @Nullable Object value) {
+		String fieldName = setterAnnotation.value();
+		Field targetField = Reflections.getField(this.targetClass, fieldName);
+		Reflections.setFieldValue(targetField, this.target, value);
+		return null;
+	}
+
+	@Nullable
+	private Object handleMethod(Method accessorMethod, Object[] parameters) {
+		String methodName = accessorMethod.getName();
+		Class<?>[] parameterTypes = accessorMethod.getParameterTypes();
+		Method method = Reflections.getMethod(this.targetClass, methodName, parameterTypes);
+		return Reflections.invokeMethod(method, this.target, parameters);
 	}
 }
