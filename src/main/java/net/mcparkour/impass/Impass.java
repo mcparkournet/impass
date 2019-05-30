@@ -34,7 +34,7 @@ public class Impass {
 		ClassLoader accessorClassLoader = accessorClass.getClassLoader();
 		Class<?>[] accessorClassArray = {accessorClass};
 		Class<?> implementationClass = implementationInstance.getClass();
-		InvocationHandler handler = new Handler(implementationInstance, implementationClass);
+		InvocationHandler handler = new AccessorHandler(implementationClass, implementationInstance);
 		Object accessor = Proxy.newProxyInstance(accessorClassLoader, accessorClassArray, handler);
 		return (T) accessor;
 	}

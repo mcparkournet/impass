@@ -33,42 +33,42 @@ import net.mcparkour.impass.annotation.ImpassSetter;
 import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
 
-class Handler implements InvocationHandler {
+class AccessorHandler implements InvocationHandler {
 
-	private Object target;
-	private Class<?> targetClass;
+	private Class<?> implementationClass;
+	private Object implementationInstance;
 
-	Handler(Object target, Class<?> targetClass) {
-		this.target = target;
-		this.targetClass = targetClass;
+	AccessorHandler(Class<?> implementationClass, Object implementationInstance) {
+		this.implementationClass = implementationClass;
+		this.implementationInstance = implementationInstance;
 	}
 
 	@Nullable
 	@Override
-	public Object invoke(Object proxy, Method method, Object[] parameters) {
-		ImpassGetter getterAnnotation = method.getAnnotation(ImpassGetter.class);
+	public Object invoke(Object proxy, Method accessorMethod, Object[] parameters) {
+		ImpassGetter getterAnnotation = accessorMethod.getAnnotation(ImpassGetter.class);
 		if (getterAnnotation != null) {
 			return handleGetter(getterAnnotation);
 		}
-		ImpassSetter setterAnnotation = method.getAnnotation(ImpassSetter.class);
+		ImpassSetter setterAnnotation = accessorMethod.getAnnotation(ImpassSetter.class);
 		if (setterAnnotation != null) {
 			return handleSetter(setterAnnotation, parameters[0]);
 		}
-		return handleMethod(method, parameters);
+		return handleMethod(accessorMethod, parameters);
 	}
 
 	@Nullable
 	private Object handleGetter(ImpassGetter getterAnnotation) {
 		String fieldName = getterAnnotation.value();
-		Field targetField = Reflections.getField(this.targetClass, fieldName);
-		return Reflections.getFieldValue(targetField, this.target);
+		Field targetField = Reflections.getField(this.implementationClass, fieldName);
+		return Reflections.getFieldValue(targetField, this.implementationInstance);
 	}
 
 	@Nullable
 	private Object handleSetter(ImpassSetter setterAnnotation, @Nullable Object value) {
 		String fieldName = setterAnnotation.value();
-		Field targetField = Reflections.getField(this.targetClass, fieldName);
-		Reflections.setFieldValue(targetField, this.target, value);
+		Field targetField = Reflections.getField(this.implementationClass, fieldName);
+		Reflections.setFieldValue(targetField, this.implementationInstance, value);
 		return null;
 	}
 
@@ -76,8 +76,8 @@ class Handler implements InvocationHandler {
 	private Object handleMethod(Method accessorMethod, Object[] parameters) {
 		String methodName = getMethodName(accessorMethod);
 		Class<?>[] parameterTypes = accessorMethod.getParameterTypes();
-		Method method = Reflections.getMethod(this.targetClass, methodName, parameterTypes);
-		return Reflections.invokeMethod(method, this.target, parameters);
+		Method method = Reflections.getMethod(this.implementationClass, methodName, parameterTypes);
+		return Reflections.invokeMethod(method, this.implementationInstance, parameters);
 	}
 
 	private String getMethodName(Method method) {
