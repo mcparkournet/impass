@@ -49,7 +49,7 @@ class AccessorHandler implements InvocationHandler {
 
 	@Nullable
 	@Override
-	public Object invoke(Object proxy, Method method, @Nullable Object[] args) {
+	public Object invoke(Object proxy, Method method, @Nullable Object[] args) throws Throwable {
 		Object[] parameters = args == null ? new Object[0] : args;
 		Handler handler = new Handler(method, parameters);
 		return handler.handle();
@@ -66,7 +66,7 @@ class AccessorHandler implements InvocationHandler {
 		}
 
 		@Nullable
-		private Object handle() {
+		private Object handle() throws Throwable {
 			if (this.accessorMethod.equals(GET_IMPLEMENTATION_METHOD)) {
 				return AccessorHandler.this.implementation;
 			}
@@ -104,7 +104,7 @@ class AccessorHandler implements InvocationHandler {
 		}
 
 		@Nullable
-		private Object handleMethod() {
+		private Object handleMethod() throws Throwable {
 			Object value = invokeMethod();
 			if (value == null) {
 				return null;
@@ -114,7 +114,7 @@ class AccessorHandler implements InvocationHandler {
 		}
 
 		@Nullable
-		private Object invokeMethod() {
+		private Object invokeMethod() throws Throwable {
 			String methodName = getMethodName(this.accessorMethod);
 			Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
 			remapParameters(this.parameters, parameterTypes);

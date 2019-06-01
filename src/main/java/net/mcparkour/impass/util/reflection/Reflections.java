@@ -84,11 +84,13 @@ public final class Reflections {
 	}
 
 	@Nullable
-	public static Object invokeMethod(Method method, Object instance, Object... parameters) {
+	public static Object invokeMethod(Method method, Object instance, Object... parameters) throws Throwable {
 		try {
 			return method.invoke(instance, parameters);
-		} catch (IllegalAccessException | InvocationTargetException exception) {
+		} catch (IllegalAccessException exception) {
 			throw new UncheckedReflectiveOperationException(exception);
+		} catch (InvocationTargetException exception) {
+			throw exception.getCause();
 		}
 	}
 
