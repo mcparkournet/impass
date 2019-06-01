@@ -24,6 +24,7 @@
 
 package net.mcparkour.impass;
 
+import java.util.Objects;
 import org.jetbrains.annotations.Nullable;
 
 public class TestImplementation {
@@ -130,5 +131,27 @@ public class TestImplementation {
 	@Nullable
 	private TestImplementationTwo nullNullMethod(@Nullable TestImplementationTwo accessor) {
 		return accessor;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		TestImplementation that = (TestImplementation) object;
+		return this.primitiveField == that.primitiveField && Objects.equals(this.objectField, that.objectField) && Objects.equals(this.accessorField, that.accessorField) && Objects.equals(this.nullField, that.nullField);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.primitiveField, this.objectField, this.accessorField, this.nullField);
+	}
+
+	@Override
+	public String toString() {
+		return "TestImplementation{" + "primitiveField=" + this.primitiveField + ", objectField='" + this.objectField + "'" + ", accessorField=" + this.accessorField + ", nullField=" + this.nullField + "}";
 	}
 }

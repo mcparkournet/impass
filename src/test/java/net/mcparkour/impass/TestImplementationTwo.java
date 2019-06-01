@@ -24,6 +24,8 @@
 
 package net.mcparkour.impass;
 
+import java.util.Objects;
+
 public class TestImplementationTwo {
 
 	private int constructorValue;
@@ -34,5 +36,27 @@ public class TestImplementationTwo {
 
 	public int getConstructorValue() {
 		return this.constructorValue;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		TestImplementationTwo that = (TestImplementationTwo) object;
+		return this.constructorValue == that.constructorValue;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.constructorValue);
+	}
+
+	@Override
+	public String toString() {
+		return "TestImplementationTwo{" + "constructorValue=" + this.constructorValue + "}";
 	}
 }

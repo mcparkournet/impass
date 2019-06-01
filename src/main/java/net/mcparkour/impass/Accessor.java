@@ -27,4 +27,13 @@ package net.mcparkour.impass;
 public interface Accessor {
 
 	Object getImplementation();
+
+	@Override
+	boolean equals(Object object);
+
+	@Override
+	int hashCode();
+
+	@Override
+	String toString();
 }

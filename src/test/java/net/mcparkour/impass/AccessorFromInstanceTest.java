@@ -48,6 +48,22 @@ public class AccessorFromInstanceTest {
 	}
 
 	@Test
+	public void testAccessorEquals() {
+		Assertions.assertEquals(this.accessor, this.accessor);
+		Assertions.assertEquals(this.accessor, this.implementation);
+	}
+
+	@Test
+	public void testAccessorHashCode() {
+		Assertions.assertEquals(this.implementation.hashCode(), this.accessor.hashCode());
+	}
+
+	@Test
+	public void testAccessorToString() {
+		Assertions.assertEquals(this.implementation.toString(), this.accessor.toString());
+	}
+
+	@Test
 	public void testUnannotatedMethodAccess() {
 		Assertions.assertThrows(AccessorHandlerException.class, () -> this.accessor.unannotatedMethod());
 	}

@@ -36,6 +36,9 @@ import org.jetbrains.annotations.Nullable;
 class AccessorHandler implements InvocationHandler {
 
 	private static final Method GET_IMPLEMENTATION_METHOD = Reflections.getMethod(Accessor.class, "getImplementation");
+	private static final Method EQUALS_METHOD = Reflections.getMethod(Object.class, "equals", Object.class);
+	private static final Method HASH_CODE_METHOD = Reflections.getMethod(Object.class, "hashCode");
+	private static final Method TO_STRING_METHOD = Reflections.getMethod(Object.class, "toString");
 
 	private Impass impass;
 	private Object implementation;
@@ -69,6 +72,17 @@ class AccessorHandler implements InvocationHandler {
 		private Object handle() throws Throwable {
 			if (this.accessorMethod.equals(GET_IMPLEMENTATION_METHOD)) {
 				return AccessorHandler.this.implementation;
+			}
+			if (this.accessorMethod.equals(EQUALS_METHOD)) {
+				Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
+				remapParameters(this.parameters, parameterTypes);
+				return this.parameters[0].equals(AccessorHandler.this.implementation);
+			}
+			if (this.accessorMethod.equals(HASH_CODE_METHOD)) {
+				return AccessorHandler.this.implementation.hashCode();
+			}
+			if (this.accessorMethod.equals(TO_STRING_METHOD)) {
+				return AccessorHandler.this.implementation.toString();
 			}
 			ImpassGetter getterAnnotation = this.accessorMethod.getAnnotation(ImpassGetter.class);
 			if (getterAnnotation != null) {
