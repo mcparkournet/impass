@@ -31,55 +31,83 @@ import org.jetbrains.annotations.Nullable;
 
 public interface TestAccessor extends Accessor {
 
-	@ImpassMethod("nothing")
-	void nothing();
+	void unannotatedMethod();
 
-	@ImpassMethod("returnFoo")
-	String returnFoo();
+	@ImpassGetter("primitiveField")
+	int getPrimitiveField();
 
-	@ImpassMethod("acceptFoo")
-	void acceptFoo(String foo);
+	@ImpassSetter("primitiveField")
+	void setPrimitiveField(int integer);
 
-	@ImpassMethod("acceptAndReturn")
-	String acceptAndReturn(String foo);
+	@ImpassGetter("objectField")
+	String getObjectField();
 
-	@ImpassGetter("intField")
-	int getIntField();
+	@ImpassSetter("objectField")
+	void setObjectField(String string);
 
-	@ImpassSetter("intField")
-	void setIntField(int intFieldValue);
+	@ImpassGetter("accessorField")
+	TestAccessorTwo getAccessorField();
 
-	@ImpassGetter("stringField")
-	String getStringField();
-
-	@ImpassSetter("stringField")
-	void setStringField(String stringFieldValue);
-
-	@ImpassMethod("annotatedMethodI")
-	String annotatedMethod(String s, int i);
-
-	@ImpassMethod("annotatedMethod2I")
-	int annotatedMethod2(int i, String s);
-
-	@ImpassMethod("testImplementation2")
-	TestAccessor2 testAccessor2();
-
-	@ImpassMethod("testImplementation22")
-	String testAccessor22(TestAccessor2 testAccessor21, TestAccessor2 testAccessor22, String string);
-
-	@ImpassGetter("implField")
-	TestAccessor2 getAccessorField();
-
-	@ImpassSetter("implField")
-	void setAccessorField(TestAccessor2 testAccessor2);
-
-	@Nullable
-	@ImpassMethod("nullMethod")
-	TestAccessor2 nullMethod();
+	@ImpassSetter("accessorField")
+	void setAccessorField(TestAccessorTwo accessor);
 
 	@Nullable
 	@ImpassGetter("nullField")
-	TestAccessor2 getNullField();
+	TestAccessorTwo getNullField();
 
-	void unannotatedMethod();
+	@ImpassSetter("nullField")
+	void setNullField(@Nullable TestAccessorTwo accessor);
+
+	@ImpassMethod("voidVoidMethod")
+	void voidVoidMethod();
+
+	@ImpassMethod("primitiveVoidMethod")
+	int primitiveVoidMethod();
+
+	@ImpassMethod("voidPrimitiveMethod")
+	void voidPrimitiveMethod(int integer);
+
+	@ImpassMethod("primitivePrimitiveMethod")
+	int primitivePrimitiveMethod(int integer);
+
+	@ImpassMethod("objectVoidMethod")
+	String objectVoidMethod();
+
+	@ImpassMethod("voidObjectMethod")
+	void voidObjectMethod(String string);
+
+	@ImpassMethod("objectObjectMethod")
+	String objectObjectMethod(String string);
+
+	@ImpassMethod("accessorVoidMethod")
+	TestAccessorTwo accessorVoidMethod();
+
+	@ImpassMethod("voidAccessorMethod")
+	void voidAccessorMethod(TestAccessorTwo accessor);
+
+	@ImpassMethod("accessorAccessorMethod")
+	TestAccessorTwo accessorAccessorMethod(TestAccessorTwo accessor);
+
+	@ImpassMethod("voidPrimitiveObjectMethod")
+	void voidPrimitiveObjectMethod(int integer, String string);
+
+	@ImpassMethod("primitivePrimitiveObjectMethod")
+	int primitivePrimitiveObjectMethod(int integer, String string);
+
+	@ImpassMethod("objectPrimitiveObjectMethod")
+	String objectPrimitiveObjectMethod(int integer, String string);
+
+	@ImpassMethod("accessorPrimitiveObjectAccessorMethod")
+	TestAccessorTwo accessorPrimitiveObjectAccessorMethod(int integer, String string, TestAccessorTwo accessor);
+
+	@Nullable
+	@ImpassMethod("nullVoidMethod")
+	TestAccessorTwo nullVoidMethod();
+
+	@ImpassMethod("voidNullMethod")
+	void voidNullMethod(@Nullable TestAccessorTwo accessor);
+
+	@Nullable
+	@ImpassMethod("nullNullMethod")
+	TestAccessorTwo nullNullMethod(@Nullable TestAccessorTwo accessor);
 }

@@ -24,17 +24,15 @@
 
 package net.mcparkour.impass;
 
-import net.mcparkour.impass.annotation.ImpassGetter;
-import net.mcparkour.impass.annotation.ImpassMethod;
+public class TestImplementationTwo {
 
-public interface TestAccessor2 extends Accessor {
+	private int constructorValue;
 
-	@ImpassMethod("returnNotString2")
-	String returnString1();
+	public TestImplementationTwo(int constructorValue) {
+		this.constructorValue = constructorValue;
+	}
 
-	@ImpassMethod("returnNotString2")
-	String returnString2();
-
-	@ImpassGetter("i")
-	int returnI();
+	public int getConstructorValue() {
+		return this.constructorValue;
+	}
 }

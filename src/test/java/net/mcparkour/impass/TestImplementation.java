@@ -28,64 +28,107 @@ import org.jetbrains.annotations.Nullable;
 
 public class TestImplementation {
 
-	private int intField = 1;
-
-	public int intField() {
-		return this.intField;
-	}
-
-	private String stringField = "string";
-
-	public String stringField() {
-		return this.stringField;
-	}
-
-	private TestImplementation2 implField = new TestImplementation2(1);
-
-	public TestImplementation2 implField() {
-		return this.implField;
-	}
-
-	private TestImplementation2 nullField;
-
-	public void nothing() {
+	private void unannotatedMethod() {
 		throw new MethodInvokedException();
 	}
 
-	public String returnFoo() {
-		return "foo";
+	private int primitiveField = 1;
+
+	public int getPrimitiveField() {
+		return this.primitiveField;
 	}
 
-	public void acceptFoo(String foo) {
-		throw new MethodInvokedException();
+	private String objectField = "string";
+
+	public String getObjectField() {
+		return this.objectField;
 	}
 
-	public String acceptAndReturn(String foo) {
-		return foo;
-	}
+	private TestImplementationTwo accessorField = new TestImplementationTwo(1);
 
-	String annotatedMethodI(String s, int i) {
-		return s + " " + i;
-	}
-
-	int annotatedMethod2I(int i, String s) {
-		return i + Integer.parseInt(s);
-	}
-
-	private TestImplementation2 testImplementation2() {
-		return new TestImplementation2(1);
-	}
-
-	private String testImplementation22(TestImplementation2 testAccessor21, TestImplementation2 testAccessor22, String s) {
-		return testAccessor21.returnNotString1() + " " + testAccessor22.returnNotString2() + " " + s + " " + testAccessor21.iField() + " " + testAccessor22.iField();
+	public TestImplementationTwo getAccessorField() {
+		return this.accessorField;
 	}
 
 	@Nullable
-	private TestImplementation2 nullMethod() {
+	private TestImplementationTwo nullField = null;
+
+	@Nullable
+	public TestImplementationTwo getNullField() {
+		return this.nullField;
+	}
+
+	public void setNullField(@Nullable TestImplementationTwo nullField) {
+		this.nullField = nullField;
+	}
+
+	private void voidVoidMethod() {
+		throw new MethodInvokedException();
+	}
+
+	private int primitiveVoidMethod() {
+		return 1;
+	}
+
+	private void voidPrimitiveMethod(int integer) {
+		throw new MethodInvokedException();
+	}
+
+	private int primitivePrimitiveMethod(int integer) {
+		return integer;
+	}
+
+	private String objectVoidMethod() {
+		return "string";
+	}
+
+	private void voidObjectMethod(String string) {
+		throw new MethodInvokedException();
+	}
+
+	private String objectObjectMethod(String string) {
+		return string;
+	}
+
+	private TestImplementationTwo accessorVoidMethod() {
+		return new TestImplementationTwo(1);
+	}
+
+	private void voidAccessorMethod(TestImplementationTwo accessor) {
+		throw new MethodInvokedException();
+	}
+
+	private TestImplementationTwo accessorAccessorMethod(TestImplementationTwo accessor) {
+		return accessor;
+	}
+
+	private void voidPrimitiveObjectMethod(int integer, String string) {
+		throw new MethodInvokedException();
+	}
+
+	private int primitivePrimitiveObjectMethod(int integer, String string) {
+		return integer + Integer.parseInt(string);
+	}
+
+	private String objectPrimitiveObjectMethod(int integer, String string) {
+		return integer + " " + string;
+	}
+
+	private TestImplementationTwo accessorPrimitiveObjectAccessorMethod(int integer, String string, TestImplementationTwo accessor) {
+		return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
+	}
+
+	@Nullable
+	private TestImplementationTwo nullVoidMethod() {
 		return null;
 	}
 
-	private void unannotatedMethod() {
+	private void voidNullMethod(@Nullable TestImplementationTwo accessor) {
 		throw new MethodInvokedException();
+	}
+
+	@Nullable
+	private TestImplementationTwo nullNullMethod(@Nullable TestImplementationTwo accessor) {
+		return accessor;
 	}
 }

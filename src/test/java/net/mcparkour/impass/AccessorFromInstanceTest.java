@@ -42,93 +42,159 @@ public class AccessorFromInstanceTest {
 	}
 
 	@Test
-	public void testVoidVoidMethodAccess() {
-		Assertions.assertThrows(MethodInvokedException.class, this.accessor::nothing);
-	}
-
-	@Test
-	public void testObjectVoidMethodAccess() {
-		Assertions.assertEquals("foo", this.accessor.returnFoo());
-	}
-
-	@Test
-	public void testVoidObjectMethodAccess() {
-		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.acceptFoo("foo"));
-	}
-
-	@Test
-	public void testObjectObjectMethodAccess() {
-		Assertions.assertEquals("foo", this.accessor.acceptAndReturn("foo"));
-	}
-
-	@Test
-	public void testPrimitiveFieldAccess() {
-		Assertions.assertEquals(1, this.accessor.getIntField());
-		this.accessor.setIntField(2);
-		Assertions.assertEquals(2, this.implementation.intField());
-	}
-
-	@Test
-	public void testObjectFieldAccess() {
-		Assertions.assertEquals("string", this.accessor.getStringField());
-		this.accessor.setStringField("string2");
-		Assertions.assertEquals("string2", this.implementation.stringField());
-	}
-
-	@Test
-	public void testAnnotatedMethodAccess() {
-		Assertions.assertEquals("string 1", this.accessor.annotatedMethod("string", 1));
-		Assertions.assertEquals(2, this.accessor.annotatedMethod2(1, "1"));
-	}
-
-	@Test
-	public void testGetInstance() {
+	public void testGetAccessorImplementation() {
 		Object implementation = this.accessor.getImplementation();
 		Assertions.assertSame(this.implementation, implementation);
 	}
 
 	@Test
-	public void testAccessorReturnTypeInMethod() {
-		TestAccessor2 testAccessor2 = this.accessor.testAccessor2();
-		String string2 = testAccessor2.returnString2();
-		Assertions.assertEquals("string2", string2);
+	public void testUnannotatedMethodAccess() {
+		Assertions.assertThrows(AccessorHandlerException.class, () -> this.accessor.unannotatedMethod());
 	}
 
 	@Test
-	public void testAccessorParameterTypesInMethod() {
-		TestAccessor2 accessor1 = createTestAccessor2(1);
-		TestAccessor2 accessor2 = createTestAccessor2(2);
-		String string = this.accessor.testAccessor22(accessor1, accessor2, "string");
-		Assertions.assertEquals("string1 string2 string 1 2", string);
+	public void testPrimitiveFieldGetterAccess() {
+		Assertions.assertEquals(1, this.accessor.getPrimitiveField());
 	}
 
 	@Test
-	public void testAccessorFieldAccess() {
-		TestAccessor2 accessorField = this.accessor.getAccessorField();
-		Assertions.assertEquals(1, accessorField.returnI());
-		TestAccessor2 accessor = createTestAccessor2(2);
+	public void testPrimitiveFieldSetterAccess() {
+		this.accessor.setPrimitiveField(2);
+		Assertions.assertEquals(2, this.implementation.getPrimitiveField());
+	}
+
+	@Test
+	public void testObjectFieldGetterAccess() {
+		Assertions.assertEquals("string", this.accessor.getObjectField());
+	}
+
+	@Test
+	public void testObjectFieldSetterAccess() {
+		this.accessor.setObjectField("");
+		Assertions.assertEquals("", this.implementation.getObjectField());
+	}
+
+	@Test
+	public void testAccessorFieldGetterAccess() {
+		TestAccessorTwo accessor = this.accessor.getAccessorField();
+		Assertions.assertEquals(1, accessor.getConstructorValue());
+	}
+
+	@Test
+	public void testAccessorFieldSetterAccess() {
+		TestAccessorTwo accessor = createTestAccessorTwo(2);
 		this.accessor.setAccessorField(accessor);
-		Assertions.assertEquals(2, this.implementation.implField()
-			.iField());
+		TestImplementationTwo accessorField = this.implementation.getAccessorField();
+		Assertions.assertEquals(2, accessorField.getConstructorValue());
 	}
 
 	@Test
-	public void testNullMethodAccess() {
-		Assertions.assertNull(this.accessor.nullMethod());
-	}
-
-	@Test
-	public void testNullFieldAccess() {
+	public void testNullFieldGetterAccess() {
 		Assertions.assertNull(this.accessor.getNullField());
 	}
 
 	@Test
-	public void testUnannotatedMethod() {
-		Assertions.assertThrows(AccessorHandlerException.class, () -> this.accessor.unannotatedMethod());
+	public void testNullFieldSetterAccess() {
+		this.implementation.setNullField(new TestImplementationTwo(1));
+		this.accessor.setNullField(null);
+		Assertions.assertNull(this.implementation.getNullField());
 	}
 
-	private TestAccessor2 createTestAccessor2(int i) {
-		TestImplementation2 implementation = new TestImplementation2(i);
-		return this.impass.createAccessor(TestAccessor2.class, implementation);
+	@Test
+	public void testVoidVoidMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, this.accessor::voidVoidMethod);
+	}
+
+	@Test
+	public void testPrimitiveVoidMethodAccess() {
+		Assertions.assertEquals(1, this.accessor.primitiveVoidMethod());
+	}
+
+	@Test
+	public void testVoidPrimitiveMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidPrimitiveMethod(1));
+	}
+
+	@Test
+	public void testPrimitivePrimitiveMethodAccess() {
+		Assertions.assertEquals(1, this.accessor.primitivePrimitiveMethod(1));
+	}
+
+	@Test
+	public void testObjectVoidMethodAccess() {
+		Assertions.assertEquals("string", this.accessor.objectVoidMethod());
+	}
+
+	@Test
+	public void testVoidObjectMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidObjectMethod("string"));
+	}
+
+	@Test
+	public void testObjectObjectMethodAccess() {
+		Assertions.assertEquals("string", this.accessor.objectObjectMethod("string"));
+	}
+
+	@Test
+	public void testAccessorVoidMethodAccess() {
+		TestAccessorTwo testAccessorTwo = this.accessor.accessorVoidMethod();
+		Assertions.assertEquals(1, testAccessorTwo.getConstructorValue());
+	}
+
+	@Test
+	public void testVoidAccessorMethodAccess() {
+		TestAccessorTwo testAccessorTwo = createTestAccessorTwo(1);
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidAccessorMethod(testAccessorTwo));
+	}
+
+	@Test
+	public void testAccessorAccessorMethodAccess() {
+		TestAccessorTwo testAccessorTwoExpected = createTestAccessorTwo(1);
+		TestAccessorTwo testAccessorTwo = this.accessor.accessorAccessorMethod(testAccessorTwoExpected);
+		Assertions.assertSame(1, testAccessorTwo.getConstructorValue());
+	}
+
+	@Test
+	public void testVoidPrimitiveObjectMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidPrimitiveObjectMethod(1, "string"));
+	}
+
+	@Test
+	public void testPrimitivePrimitiveObjectMethodAccess() {
+		Assertions.assertEquals(2, this.accessor.primitivePrimitiveObjectMethod(1, "1"));
+	}
+
+	@Test
+	public void testObjectPrimitiveObjectMethodAccess() {
+		Assertions.assertEquals("1 string", this.accessor.objectPrimitiveObjectMethod(1, "string"));
+	}
+
+	@Test
+	public void testAccessorPrimitiveObjectAccessorMethodAccess() {
+		TestAccessorTwo accessor = createTestAccessorTwo(1);
+		TestAccessorTwo testAccessorTwo = this.accessor.accessorPrimitiveObjectAccessorMethod(1, "1", accessor);
+		Assertions.assertEquals(3, testAccessorTwo.getConstructorValue());
+	}
+
+	@Test
+	public void testNullVoidMethodAccess() {
+		TestAccessorTwo testAccessorTwo = this.accessor.nullVoidMethod();
+		Assertions.assertNull(testAccessorTwo);
+	}
+
+	@Test
+	public void testVoidNullMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidNullMethod(null));
+	}
+
+	@Test
+	public void testNullNullMethodAccess() {
+		TestAccessorTwo testAccessorTwo = this.accessor.nullNullMethod(null);
+		Assertions.assertNull(testAccessorTwo);
+	}
+
+	private TestAccessorTwo createTestAccessorTwo(int constructorValue) {
+		TestImplementationTwo implementation = new TestImplementationTwo(constructorValue);
+		return this.impass.createAccessor(TestAccessorTwo.class, implementation);
 	}
 }
