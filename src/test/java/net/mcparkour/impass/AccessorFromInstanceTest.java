@@ -42,12 +42,23 @@ public class AccessorFromInstanceTest {
 	}
 
 	@Test
-	public void testMethodAccess() {
-		Assertions.assertDoesNotThrow(this.accessor::nothing);
+	public void testVoidVoidMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, this.accessor::nothing);
+	}
+
+	@Test
+	public void testObjectVoidMethodAccess() {
 		Assertions.assertEquals("foo", this.accessor.returnFoo());
-		Assertions.assertDoesNotThrow(() -> this.accessor.acceptFoo("foo"));
+	}
+
+	@Test
+	public void testVoidObjectMethodAccess() {
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.acceptFoo("foo"));
+	}
+
+	@Test
+	public void testObjectObjectMethodAccess() {
 		Assertions.assertEquals("foo", this.accessor.acceptAndReturn("foo"));
-		Assertions.assertEquals("foo 1", this.accessor.acceptMultiParamAndReturn("foo", 1));
 	}
 
 	@Test
@@ -97,7 +108,8 @@ public class AccessorFromInstanceTest {
 		Assertions.assertEquals(1, accessorField.returnI());
 		TestAccessor2 accessor = createTestAccessor2(2);
 		this.accessor.setAccessorField(accessor);
-		Assertions.assertEquals(2, this.implementation.implField().iField());
+		Assertions.assertEquals(2, this.implementation.implField()
+			.iField());
 	}
 
 	@Test
@@ -108,6 +120,11 @@ public class AccessorFromInstanceTest {
 	@Test
 	public void testNullFieldAccess() {
 		Assertions.assertNull(this.accessor.getNullField());
+	}
+
+	@Test
+	public void testUnannotatedMethod() {
+		Assertions.assertThrows(AccessorHandlerException.class, () -> this.accessor.unannotatedMethod());
 	}
 
 	private TestAccessor2 createTestAccessor2(int i) {

@@ -78,7 +78,11 @@ class AccessorHandler implements InvocationHandler {
 			if (setterAnnotation != null) {
 				return handleSetter(setterAnnotation);
 			}
-			return handleMethod();
+			ImpassMethod methodAnnotation = this.accessorMethod.getAnnotation(ImpassMethod.class);
+			if (methodAnnotation != null) {
+				return handleMethod(methodAnnotation);
+			}
+			throw new AccessorHandlerException("Method does not have any Impass annotation");
 		}
 
 		@Nullable
@@ -104,8 +108,8 @@ class AccessorHandler implements InvocationHandler {
 		}
 
 		@Nullable
-		private Object handleMethod() throws Throwable {
-			Object value = invokeMethod();
+		private Object handleMethod(ImpassMethod methodAnnotation) throws Throwable {
+			Object value = invokeMethod(methodAnnotation);
 			if (value == null) {
 				return null;
 			}
@@ -114,20 +118,12 @@ class AccessorHandler implements InvocationHandler {
 		}
 
 		@Nullable
-		private Object invokeMethod() throws Throwable {
-			String methodName = getMethodName(this.accessorMethod);
+		private Object invokeMethod(ImpassMethod methodAnnotation) throws Throwable {
+			String methodName = methodAnnotation.value();
 			Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
 			remapParameters(this.parameters, parameterTypes);
 			Method method = Reflections.getMethod(AccessorHandler.this.implementationClass, methodName, parameterTypes);
 			return Reflections.invokeMethod(method, AccessorHandler.this.implementation, this.parameters);
-		}
-
-		private String getMethodName(Method method) {
-			ImpassMethod methodAnnotation = method.getAnnotation(ImpassMethod.class);
-			if (methodAnnotation != null) {
-				return methodAnnotation.value();
-			}
-			return method.getName();
 		}
 
 		private Object remapReturnType(Class<?> returnType, Object value) {

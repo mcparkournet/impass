@@ -49,6 +49,7 @@ public class TestImplementation {
 	private TestImplementation2 nullField;
 
 	public void nothing() {
+		throw new MethodInvokedException();
 	}
 
 	public String returnFoo() {
@@ -56,14 +57,11 @@ public class TestImplementation {
 	}
 
 	public void acceptFoo(String foo) {
+		throw new MethodInvokedException();
 	}
 
 	public String acceptAndReturn(String foo) {
 		return foo;
-	}
-
-	public String acceptMultiParamAndReturn(String foo, int integer) {
-		return foo + " " + integer;
 	}
 
 	String annotatedMethodI(String s, int i) {
@@ -85,5 +83,9 @@ public class TestImplementation {
 	@Nullable
 	private TestImplementation2 nullMethod() {
 		return null;
+	}
+
+	private void unannotatedMethod() {
+		throw new MethodInvokedException();
 	}
 }

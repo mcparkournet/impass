@@ -31,15 +31,17 @@ import org.jetbrains.annotations.Nullable;
 
 public interface TestAccessor extends Accessor {
 
+	@ImpassMethod("nothing")
 	void nothing();
 
+	@ImpassMethod("returnFoo")
 	String returnFoo();
 
+	@ImpassMethod("acceptFoo")
 	void acceptFoo(String foo);
 
+	@ImpassMethod("acceptAndReturn")
 	String acceptAndReturn(String foo);
-
-	String acceptMultiParamAndReturn(String foo, int integer);
 
 	@ImpassGetter("intField")
 	int getIntField();
@@ -78,4 +80,6 @@ public interface TestAccessor extends Accessor {
 	@Nullable
 	@ImpassGetter("nullField")
 	TestAccessor2 getNullField();
+
+	void unannotatedMethod();
 }
