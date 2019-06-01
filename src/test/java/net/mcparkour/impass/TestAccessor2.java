@@ -26,56 +26,15 @@ package net.mcparkour.impass;
 
 import net.mcparkour.impass.annotation.ImpassGetter;
 import net.mcparkour.impass.annotation.ImpassMethod;
-import net.mcparkour.impass.annotation.ImpassSetter;
-import org.jetbrains.annotations.Nullable;
 
-public interface TestAccessor extends Accessor {
+public interface TestAccessor2 extends Accessor {
 
-	void nothing();
+	@ImpassMethod("returnNotString2")
+	String returnString1();
 
-	String returnFoo();
+	@ImpassMethod("returnNotString2")
+	String returnString2();
 
-	void acceptFoo(String foo);
-
-	String acceptAndReturn(String foo);
-
-	String acceptMultiParamAndReturn(String foo, int integer);
-
-	@ImpassGetter("intField")
-	int getIntField();
-
-	@ImpassSetter("intField")
-	void setIntField(int intFieldValue);
-
-	@ImpassGetter("stringField")
-	String getStringField();
-
-	@ImpassSetter("stringField")
-	void setStringField(String stringFieldValue);
-
-	@ImpassMethod("annotatedMethodI")
-	String annotatedMethod(String s, int i);
-
-	@ImpassMethod("annotatedMethod2I")
-	int annotatedMethod2(int i, String s);
-
-	@ImpassMethod("testImplementation2")
-	TestAccessor2 testAccessor2();
-
-	@ImpassMethod("testImplementation22")
-	String testAccessor22(TestAccessor2 testAccessor21, TestAccessor2 testAccessor22, String string);
-
-	@ImpassGetter("implField")
-	TestAccessor2 getAccessorField();
-
-	@ImpassSetter("implField")
-	void setAccessorField(TestAccessor2 testAccessor2);
-
-	@Nullable
-	@ImpassMethod("nullMethod")
-	TestAccessor2 nullMethod();
-
-	@Nullable
-	@ImpassGetter("nullField")
-	TestAccessor2 getNullField();
+	@ImpassGetter("i")
+	int returnI();
 }

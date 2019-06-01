@@ -29,8 +29,8 @@ import net.mcparkour.impass.util.reflection.Reflections;
 
 public class Impass {
 
-	public <T> T createAccessor(Class<T> accessorClass, Object implementation) {
-		InvocationHandler handler = new AccessorHandler(implementation);
+	public <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
+		InvocationHandler handler = new AccessorHandler(this, implementation);
 		return Reflections.newProxyInstance(accessorClass, handler);
 	}
 }

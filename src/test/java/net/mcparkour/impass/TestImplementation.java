@@ -24,6 +24,8 @@
 
 package net.mcparkour.impass;
 
+import org.jetbrains.annotations.Nullable;
+
 public class TestImplementation {
 
 	private int intField = 1;
@@ -37,6 +39,14 @@ public class TestImplementation {
 	public String stringField() {
 		return this.stringField;
 	}
+
+	private TestImplementation2 implField = new TestImplementation2(1);
+
+	public TestImplementation2 implField() {
+		return this.implField;
+	}
+
+	private TestImplementation2 nullField;
 
 	public void nothing() {
 	}
@@ -62,5 +72,18 @@ public class TestImplementation {
 
 	int annotatedMethod2I(int i, String s) {
 		return i + Integer.parseInt(s);
+	}
+
+	private TestImplementation2 testImplementation2() {
+		return new TestImplementation2(1);
+	}
+
+	private String testImplementation22(TestImplementation2 testAccessor21, TestImplementation2 testAccessor22, String s) {
+		return testAccessor21.returnNotString1() + " " + testAccessor22.returnNotString2() + " " + s + " " + testAccessor21.iField() + " " + testAccessor22.iField();
+	}
+
+	@Nullable
+	private TestImplementation2 nullMethod() {
+		return null;
 	}
 }

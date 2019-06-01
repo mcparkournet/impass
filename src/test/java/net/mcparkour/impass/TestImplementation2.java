@@ -24,15 +24,23 @@
 
 package net.mcparkour.impass;
 
-public final class ImpassFactory {
+public class TestImplementation2 {
 
-	private static final Impass IMPASS = new Impass();
+	private int i;
 
-	private ImpassFactory() {
-		throw new UnsupportedOperationException("Cannot create instance of this class");
+	public int iField() {
+		return this.i;
 	}
 
-	public static <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
-		return IMPASS.createAccessor(accessorClass, implementation);
+	public TestImplementation2(int i) {
+		this.i = i;
+	}
+
+	public String returnNotString1() {
+		return "string1";
+	}
+
+	public String returnNotString2() {
+		return "string2";
 	}
 }

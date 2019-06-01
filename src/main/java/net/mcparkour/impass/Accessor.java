@@ -24,15 +24,7 @@
 
 package net.mcparkour.impass;
 
-public final class ImpassFactory {
+public interface Accessor {
 
-	private static final Impass IMPASS = new Impass();
-
-	private ImpassFactory() {
-		throw new UnsupportedOperationException("Cannot create instance of this class");
-	}
-
-	public static <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
-		return IMPASS.createAccessor(accessorClass, implementation);
-	}
+	Object getImplementation();
 }

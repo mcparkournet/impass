@@ -35,56 +35,120 @@ import org.jetbrains.annotations.Nullable;
 
 class AccessorHandler implements InvocationHandler {
 
+	private static final Method GET_IMPLEMENTATION_METHOD = Reflections.getMethod(Accessor.class, "getImplementation");
+
+	private Impass impass;
 	private Object implementation;
 	private Class<?> implementationClass;
 
-	AccessorHandler(Object implementation) {
+	AccessorHandler(Impass impass, Object implementation) {
+		this.impass = impass;
 		this.implementation = implementation;
 		this.implementationClass = implementation.getClass();
 	}
 
 	@Nullable
 	@Override
-	public Object invoke(Object proxy, Method accessorMethod, Object[] parameters) {
-		ImpassGetter getterAnnotation = accessorMethod.getAnnotation(ImpassGetter.class);
-		if (getterAnnotation != null) {
-			return handleGetter(getterAnnotation);
+	public Object invoke(Object proxy, Method method, @Nullable Object[] args) {
+		Object[] parameters = args == null ? new Object[0] : args;
+		Handler handler = new Handler(method, parameters);
+		return handler.handle();
+	}
+
+	private final class Handler {
+
+		private Method accessorMethod;
+		private Object[] parameters;
+
+		private Handler(Method accessorMethod, Object[] parameters) {
+			this.accessorMethod = accessorMethod;
+			this.parameters = parameters;
 		}
-		ImpassSetter setterAnnotation = accessorMethod.getAnnotation(ImpassSetter.class);
-		if (setterAnnotation != null) {
-			return handleSetter(setterAnnotation, parameters[0]);
+
+		@Nullable
+		private Object handle() {
+			if (this.accessorMethod.equals(GET_IMPLEMENTATION_METHOD)) {
+				return AccessorHandler.this.implementation;
+			}
+			ImpassGetter getterAnnotation = this.accessorMethod.getAnnotation(ImpassGetter.class);
+			if (getterAnnotation != null) {
+				return handleGetter(getterAnnotation);
+			}
+			ImpassSetter setterAnnotation = this.accessorMethod.getAnnotation(ImpassSetter.class);
+			if (setterAnnotation != null) {
+				return handleSetter(setterAnnotation);
+			}
+			return handleMethod();
 		}
-		return handleMethod(accessorMethod, parameters);
-	}
 
-	@Nullable
-	private Object handleGetter(ImpassGetter getterAnnotation) {
-		String fieldName = getterAnnotation.value();
-		Field targetField = Reflections.getField(this.implementationClass, fieldName);
-		return Reflections.getFieldValue(targetField, this.implementation);
-	}
-
-	@Nullable
-	private Object handleSetter(ImpassSetter setterAnnotation, @Nullable Object value) {
-		String fieldName = setterAnnotation.value();
-		Field targetField = Reflections.getField(this.implementationClass, fieldName);
-		Reflections.setFieldValue(targetField, this.implementation, value);
-		return null;
-	}
-
-	@Nullable
-	private Object handleMethod(Method accessorMethod, Object[] parameters) {
-		String methodName = getMethodName(accessorMethod);
-		Class<?>[] parameterTypes = accessorMethod.getParameterTypes();
-		Method method = Reflections.getMethod(this.implementationClass, methodName, parameterTypes);
-		return Reflections.invokeMethod(method, this.implementation, parameters);
-	}
-
-	private String getMethodName(Method method) {
-		ImpassMethod methodAnnotation = method.getAnnotation(ImpassMethod.class);
-		if (methodAnnotation != null) {
-			return methodAnnotation.value();
+		@Nullable
+		private Object handleGetter(ImpassGetter getterAnnotation) {
+			String fieldName = getterAnnotation.value();
+			Field field = Reflections.getField(AccessorHandler.this.implementationClass, fieldName);
+			Object value = Reflections.getFieldValue(field, AccessorHandler.this.implementation);
+			if (value == null) {
+				return null;
+			}
+			Class<?> returnType = this.accessorMethod.getReturnType();
+			return remapReturnType(returnType, value);
 		}
-		return method.getName();
+
+		@Nullable
+		private Object handleSetter(ImpassSetter setterAnnotation) {
+			String fieldName = setterAnnotation.value();
+			Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
+			remapParameters(this.parameters, parameterTypes);
+			Field field = Reflections.getField(AccessorHandler.this.implementationClass, fieldName);
+			Reflections.setFieldValue(field, AccessorHandler.this.implementation, this.parameters[0]);
+			return null;
+		}
+
+		@Nullable
+		private Object handleMethod() {
+			Object value = invokeMethod();
+			if (value == null) {
+				return null;
+			}
+			Class<?> returnType = this.accessorMethod.getReturnType();
+			return remapReturnType(returnType, value);
+		}
+
+		@Nullable
+		private Object invokeMethod() {
+			String methodName = getMethodName(this.accessorMethod);
+			Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
+			remapParameters(this.parameters, parameterTypes);
+			Method method = Reflections.getMethod(AccessorHandler.this.implementationClass, methodName, parameterTypes);
+			return Reflections.invokeMethod(method, AccessorHandler.this.implementation, this.parameters);
+		}
+
+		private String getMethodName(Method method) {
+			ImpassMethod methodAnnotation = method.getAnnotation(ImpassMethod.class);
+			if (methodAnnotation != null) {
+				return methodAnnotation.value();
+			}
+			return method.getName();
+		}
+
+		private Object remapReturnType(Class<?> returnType, Object value) {
+			if (Accessor.class.isAssignableFrom(returnType)) {
+				Class<? extends Accessor> returnAccessorType = returnType.asSubclass(Accessor.class);
+				return AccessorHandler.this.impass.createAccessor(returnAccessorType, value);
+			}
+			return value;
+		}
+
+		private void remapParameters(Object[] parameters, Class<?>[] parameterTypes) {
+			for (int index = 0; index < parameters.length; index++) {
+				Class<?> parameterType = parameterTypes[index];
+				if (Accessor.class.isAssignableFrom(parameterType)) {
+					Object parameter = parameters[index];
+					Accessor accessor = (Accessor) parameter;
+					Object implementation = accessor.getImplementation();
+					parameters[index] = implementation;
+					parameterTypes[index] = implementation.getClass();
+				}
+			}
+		}
 	}
 }

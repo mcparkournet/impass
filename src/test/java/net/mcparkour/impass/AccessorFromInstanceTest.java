@@ -30,16 +30,15 @@ import org.junit.jupiter.api.Test;
 
 public class AccessorFromInstanceTest {
 
+	private Impass impass;
 	private TestImplementation implementation;
 	private TestAccessor accessor;
 
 	@BeforeEach
 	public void setUp() {
-		Assertions.assertDoesNotThrow(() -> {
-			Impass impass = new Impass();
-			this.implementation = new TestImplementation();
-			this.accessor = impass.createAccessor(TestAccessor.class, this.implementation);
-		});
+		this.impass = new Impass();
+		this.implementation = new TestImplementation();
+		this.accessor = this.impass.createAccessor(TestAccessor.class, this.implementation);
 	}
 
 	@Test
@@ -54,14 +53,14 @@ public class AccessorFromInstanceTest {
 	@Test
 	public void testPrimitiveFieldAccess() {
 		Assertions.assertEquals(1, this.accessor.getIntField());
-		Assertions.assertDoesNotThrow(() -> this.accessor.setIntField(2));
+		this.accessor.setIntField(2);
 		Assertions.assertEquals(2, this.implementation.intField());
 	}
 
 	@Test
 	public void testObjectFieldAccess() {
 		Assertions.assertEquals("string", this.accessor.getStringField());
-		Assertions.assertDoesNotThrow(() -> this.accessor.setStringField("string2"));
+		this.accessor.setStringField("string2");
 		Assertions.assertEquals("string2", this.implementation.stringField());
 	}
 
@@ -69,5 +68,50 @@ public class AccessorFromInstanceTest {
 	public void testAnnotatedMethodAccess() {
 		Assertions.assertEquals("string 1", this.accessor.annotatedMethod("string", 1));
 		Assertions.assertEquals(2, this.accessor.annotatedMethod2(1, "1"));
+	}
+
+	@Test
+	public void testGetInstance() {
+		Object implementation = this.accessor.getImplementation();
+		Assertions.assertSame(this.implementation, implementation);
+	}
+
+	@Test
+	public void testAccessorReturnTypeInMethod() {
+		TestAccessor2 testAccessor2 = this.accessor.testAccessor2();
+		String string2 = testAccessor2.returnString2();
+		Assertions.assertEquals("string2", string2);
+	}
+
+	@Test
+	public void testAccessorParameterTypesInMethod() {
+		TestAccessor2 accessor1 = createTestAccessor2(1);
+		TestAccessor2 accessor2 = createTestAccessor2(2);
+		String string = this.accessor.testAccessor22(accessor1, accessor2, "string");
+		Assertions.assertEquals("string1 string2 string 1 2", string);
+	}
+
+	@Test
+	public void testAccessorFieldAccess() {
+		TestAccessor2 accessorField = this.accessor.getAccessorField();
+		Assertions.assertEquals(1, accessorField.returnI());
+		TestAccessor2 accessor = createTestAccessor2(2);
+		this.accessor.setAccessorField(accessor);
+		Assertions.assertEquals(2, this.implementation.implField().iField());
+	}
+
+	@Test
+	public void testNullMethodAccess() {
+		Assertions.assertNull(this.accessor.nullMethod());
+	}
+
+	@Test
+	public void testNullFieldAccess() {
+		Assertions.assertNull(this.accessor.getNullField());
+	}
+
+	private TestAccessor2 createTestAccessor2(int i) {
+		TestImplementation2 implementation = new TestImplementation2(i);
+		return this.impass.createAccessor(TestAccessor2.class, implementation);
 	}
 }
