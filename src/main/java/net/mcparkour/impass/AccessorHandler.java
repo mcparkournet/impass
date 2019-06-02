@@ -75,9 +75,7 @@ class AccessorHandler implements InvocationHandler {
 				return AccessorHandler.this.implementation;
 			}
 			if (this.accessorMethod.equals(EQUALS_METHOD)) {
-				Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
-				remapParameters(this.parameters, parameterTypes);
-				return this.parameters[0].equals(AccessorHandler.this.implementation);
+				return handleEquals();
 			}
 			if (this.accessorMethod.equals(HASH_CODE_METHOD)) {
 				return AccessorHandler.this.implementation.hashCode();
@@ -98,6 +96,12 @@ class AccessorHandler implements InvocationHandler {
 				return handleMethod(methodAnnotation);
 			}
 			throw new AccessorHandlerException("Method does not have any Impass annotation");
+		}
+
+		private boolean handleEquals() {
+			Class<?>[] parameterTypes = this.accessorMethod.getParameterTypes();
+			remapParameters(this.parameters, parameterTypes);
+			return this.parameters[0].equals(AccessorHandler.this.implementation);
 		}
 
 		@Nullable
