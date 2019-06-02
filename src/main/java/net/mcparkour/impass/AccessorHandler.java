@@ -27,6 +27,7 @@ package net.mcparkour.impass;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import net.mcparkour.impass.annotation.ImpassClass;
 import net.mcparkour.impass.annotation.ImpassGetter;
 import net.mcparkour.impass.annotation.ImpassMethod;
 import net.mcparkour.impass.annotation.ImpassSetter;
@@ -153,12 +154,25 @@ class AccessorHandler implements InvocationHandler {
 				Class<?> parameterType = parameterTypes[index];
 				if (Accessor.class.isAssignableFrom(parameterType)) {
 					Object parameter = parameters[index];
-					Accessor accessor = (Accessor) parameter;
-					Object implementation = accessor.getImplementation();
-					parameters[index] = implementation;
-					parameterTypes[index] = implementation.getClass();
+					if (parameter != null) {
+						Accessor accessor = (Accessor) parameter;
+						Object implementation = accessor.getImplementation();
+						parameters[index] = implementation;
+						parameterTypes[index] = implementation.getClass();
+					} else {
+						parameterTypes[index] = getImplementationClass(parameterType);
+					}
 				}
 			}
+		}
+
+		private Class<?> getImplementationClass(Class<?> accessorClass) {
+			ImpassClass classAnnotation = accessorClass.getAnnotation(ImpassClass.class);
+			if (classAnnotation == null) {
+				throw new AccessorHandlerException("Implementation class annotation not found");
+			}
+			String implementationClassName = classAnnotation.value();
+			return Reflections.getClass(implementationClassName);
 		}
 	}
 }

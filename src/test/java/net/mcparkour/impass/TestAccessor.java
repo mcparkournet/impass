@@ -24,11 +24,13 @@
 
 package net.mcparkour.impass;
 
+import net.mcparkour.impass.annotation.ImpassClass;
 import net.mcparkour.impass.annotation.ImpassGetter;
 import net.mcparkour.impass.annotation.ImpassMethod;
 import net.mcparkour.impass.annotation.ImpassSetter;
 import org.jetbrains.annotations.Nullable;
 
+@ImpassClass("net.mcparkour.impass.TestImplementation")
 public interface TestAccessor extends Accessor {
 
 	void unannotatedMethod();
