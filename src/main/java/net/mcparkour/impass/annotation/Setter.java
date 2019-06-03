@@ -31,10 +31,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface ImpassMethod {
+public @interface Setter {
 
 	/**
-	 * @return implementation method name
+	 * @return implementation field name
 	 */
 	String value();
 }

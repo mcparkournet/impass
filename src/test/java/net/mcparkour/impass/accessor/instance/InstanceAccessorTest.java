@@ -22,29 +22,34 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.accessor.instance;
 
+import net.mcparkour.impass.AccessorFactory;
+import net.mcparkour.impass.MethodInvokedException;
+import net.mcparkour.impass.TestImplementation;
+import net.mcparkour.impass.TestImplementationTwo;
+import net.mcparkour.impass.accessor.AccessorHandlerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccessorFromInstanceTest {
+public class InstanceAccessorTest {
 
-	private Impass impass;
+	private AccessorFactory accessorFactory;
 	private TestImplementation implementation;
-	private TestAccessor accessor;
+	private TestInstanceAccessor accessor;
 
 	@BeforeEach
 	public void setUp() {
-		this.impass = new Impass();
+		this.accessorFactory = new AccessorFactory();
 		this.implementation = new TestImplementation();
-		this.accessor = this.impass.createAccessor(TestAccessor.class, this.implementation);
+		this.accessor = this.accessorFactory.createInstanceAccessor(TestInstanceAccessor.class, this.implementation);
 	}
 
 	@Test
 	public void testGetAccessorImplementation() {
-		Object implementation = this.accessor.getImplementation();
-		Assertions.assertSame(this.implementation, implementation);
+		var instance = this.accessor.getInstance();
+		Assertions.assertSame(this.implementation, instance);
 	}
 
 	@Test
@@ -92,16 +97,16 @@ public class AccessorFromInstanceTest {
 
 	@Test
 	public void testAccessorFieldGetterAccess() {
-		TestAccessorTwo accessor = this.accessor.getAccessorField();
+		var accessor = this.accessor.getAccessorField();
 		Assertions.assertEquals(1, accessor.getConstructorValue());
 	}
 
 	@Test
 	public void testAccessorFieldSetterAccess() {
-		TestAccessorTwo accessor = createTestAccessorTwo(2);
+		var accessor = createAccessorTwo(2);
 		this.accessor.setAccessorField(accessor);
-		TestImplementationTwo accessorField = this.implementation.getAccessorField();
-		Assertions.assertEquals(2, accessorField.getConstructorValue());
+		var implementation = this.implementation.getAccessorField();
+		Assertions.assertEquals(2, implementation.getConstructorValue());
 	}
 
 	@Test
@@ -153,21 +158,21 @@ public class AccessorFromInstanceTest {
 
 	@Test
 	public void testAccessorVoidMethodAccess() {
-		TestAccessorTwo testAccessorTwo = this.accessor.accessorVoidMethod();
-		Assertions.assertEquals(1, testAccessorTwo.getConstructorValue());
+		var accessor = this.accessor.accessorVoidMethod();
+		Assertions.assertEquals(1, accessor.getConstructorValue());
 	}
 
 	@Test
 	public void testVoidAccessorMethodAccess() {
-		TestAccessorTwo testAccessorTwo = createTestAccessorTwo(1);
-		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidAccessorMethod(testAccessorTwo));
+		var accessor = createAccessorTwo(1);
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.voidAccessorMethod(accessor));
 	}
 
 	@Test
 	public void testAccessorAccessorMethodAccess() {
-		TestAccessorTwo testAccessorTwoExpected = createTestAccessorTwo(1);
-		TestAccessorTwo testAccessorTwo = this.accessor.accessorAccessorMethod(testAccessorTwoExpected);
-		Assertions.assertSame(1, testAccessorTwo.getConstructorValue());
+		var accessorExpected = createAccessorTwo(1);
+		var accessor = this.accessor.accessorAccessorMethod(accessorExpected);
+		Assertions.assertSame(1, accessor.getConstructorValue());
 	}
 
 	@Test
@@ -187,15 +192,15 @@ public class AccessorFromInstanceTest {
 
 	@Test
 	public void testAccessorPrimitiveObjectAccessorMethodAccess() {
-		TestAccessorTwo accessor = createTestAccessorTwo(1);
-		TestAccessorTwo testAccessorTwo = this.accessor.accessorPrimitiveObjectAccessorMethod(1, "1", accessor);
-		Assertions.assertEquals(3, testAccessorTwo.getConstructorValue());
+		var accessor = createAccessorTwo(1);
+		var outputAccessor = this.accessor.accessorPrimitiveObjectAccessorMethod(1, "1", accessor);
+		Assertions.assertEquals(3, outputAccessor.getConstructorValue());
 	}
 
 	@Test
 	public void testNullVoidMethodAccess() {
-		TestAccessorTwo testAccessorTwo = this.accessor.nullVoidMethod();
-		Assertions.assertNull(testAccessorTwo);
+		var accessor = this.accessor.nullVoidMethod();
+		Assertions.assertNull(accessor);
 	}
 
 	@Test
@@ -205,12 +210,12 @@ public class AccessorFromInstanceTest {
 
 	@Test
 	public void testNullNullMethodAccess() {
-		TestAccessorTwo testAccessorTwo = this.accessor.nullNullMethod(null);
-		Assertions.assertNull(testAccessorTwo);
+		var accessor = this.accessor.nullNullMethod(null);
+		Assertions.assertNull(accessor);
 	}
 
-	private TestAccessorTwo createTestAccessorTwo(int constructorValue) {
-		TestImplementationTwo implementation = new TestImplementationTwo(constructorValue);
-		return this.impass.createAccessor(TestAccessorTwo.class, implementation);
+	private TestInstanceAccessorTwo createAccessorTwo(int constructorValue) {
+		var implementation = new TestImplementationTwo(constructorValue);
+		return this.accessorFactory.createInstanceAccessor(TestInstanceAccessorTwo.class, implementation);
 	}
 }

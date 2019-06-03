@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.util.reflection;
+package net.mcparkour.impass.reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -48,7 +48,7 @@ public final class Reflections {
 
 	public static Field getField(Class<?> fieldClass, String fieldName) {
 		try {
-			Field field = fieldClass.getDeclaredField(fieldName);
+			var field = fieldClass.getDeclaredField(fieldName);
 			field.trySetAccessible();
 			return field;
 		} catch (NoSuchFieldException exception) {
@@ -58,6 +58,16 @@ public final class Reflections {
 
 	@Nullable
 	public static Object getFieldValue(Field field, Object instance) {
+		return getFieldValue0(field, instance);
+	}
+
+	@Nullable
+	public static Object getStaticFieldValue(Field field) {
+		return getFieldValue0(field, null);
+	}
+
+	@Nullable
+	private static Object getFieldValue0(Field field, @Nullable Object instance) {
 		try {
 			return field.get(instance);
 		} catch (IllegalAccessException exception) {
@@ -66,6 +76,14 @@ public final class Reflections {
 	}
 
 	public static void setFieldValue(Field field, Object instance, @Nullable Object value) {
+		setFieldValue0(field, instance, value);
+	}
+
+	public static void setStaticFieldValue(Field field, @Nullable Object value) {
+		setFieldValue0(field, null, value);
+	}
+
+	private static void setFieldValue0(Field field, @Nullable Object instance, @Nullable Object value) {
 		try {
 			field.set(instance, value);
 		} catch (IllegalAccessException exception) {
@@ -73,26 +91,9 @@ public final class Reflections {
 		}
 	}
 
-	@Nullable
-	public static Object getStaticFieldValue(Field field) {
-		try {
-			return field.get(null);
-		} catch (IllegalAccessException exception) {
-			throw new UncheckedReflectiveOperationException(exception);
-		}
-	}
-
-	public static void setStaticFieldValue(Field field, @Nullable Object value) {
-		try {
-			field.set(null, value);
-		} catch (IllegalAccessException exception) {
-			throw new UncheckedReflectiveOperationException(exception);
-		}
-	}
-
 	public static Method getMethod(Class<?> methodClass, String methodName, Class<?>... parameterTypes) {
 		try {
-			Method method = methodClass.getDeclaredMethod(methodName, parameterTypes);
+			var method = methodClass.getDeclaredMethod(methodName, parameterTypes);
 			method.trySetAccessible();
 			return method;
 		} catch (NoSuchMethodException exception) {
@@ -102,6 +103,15 @@ public final class Reflections {
 
 	@Nullable
 	public static Object invokeMethod(Method method, Object instance, Object... parameters) throws Throwable {
+		return invokeMethod0(method, instance, parameters);
+	}
+
+	@Nullable
+	public static Object invokeStaticMethod(Method method, Object... parameters) throws Throwable {
+		return invokeMethod0(method, null, parameters);
+	}
+
+	private static Object invokeMethod0(Method method, @Nullable Object instance, Object... parameters) throws Throwable {
 		try {
 			return method.invoke(instance, parameters);
 		} catch (IllegalAccessException exception) {
@@ -111,20 +121,9 @@ public final class Reflections {
 		}
 	}
 
-	@Nullable
-	public static Object invokeStaticMethod(Method method, Object... parameters) throws Throwable {
-		try {
-			return method.invoke(null, parameters);
-		} catch (IllegalAccessException exception) {
-			throw new UncheckedReflectiveOperationException(exception);
-		} catch (InvocationTargetException exception) {
-			throw exception.getCause();
-		}
-	}
-
 	public static <T> Constructor<T> getConstructor(Class<T> constructorClass, Class<?>... parameterTypes) {
 		try {
-			Constructor<T> constructor = constructorClass.getDeclaredConstructor(parameterTypes);
+			var constructor = constructorClass.getDeclaredConstructor(parameterTypes);
 			constructor.trySetAccessible();
 			return constructor;
 		} catch (NoSuchMethodException exception) {
@@ -142,9 +141,9 @@ public final class Reflections {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T newProxyInstance(Class<T> interfaceClass, InvocationHandler handler) {
-		ClassLoader interfaceClassLoader = interfaceClass.getClassLoader();
-		Class<?>[] interfaceClassArray = {interfaceClass};
-		Object proxy = Proxy.newProxyInstance(interfaceClassLoader, interfaceClassArray, handler);
-		return (T) proxy;
+		var interfaceClassLoader = interfaceClass.getClassLoader();
+		var interfaceClassArray = new Class[] {interfaceClass};
+		var proxyObject = Proxy.newProxyInstance(interfaceClassLoader, interfaceClassArray, handler);
+		return (T) proxyObject;
 	}
 }

@@ -22,19 +22,14 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.annotation;
+package net.mcparkour.impass.accessor.instance;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import net.mcparkour.impass.annotation.Getter;
+import net.mcparkour.impass.annotation.Type;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface ImpassGetter {
+@Type("net.mcparkour.impass.TestImplementationTwo")
+public interface TestInstanceAccessorTwo extends InstanceAccessor {
 
-	/**
-	 * @return implementation field name
-	 */
-	String value();
+	@Getter("constructorValue")
+	int getConstructorValue();
 }

@@ -22,6 +22,18 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.accessor.instance;
 
-public interface StaticAccessor {}
+public interface InstanceAccessor {
+
+	Object getInstance();
+
+	@Override
+	boolean equals(Object object);
+
+	@Override
+	int hashCode();
+
+	@Override
+	String toString();
+}

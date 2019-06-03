@@ -22,13 +22,23 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.util.reflection;
+package net.mcparkour.impass;
 
-public class UncheckedReflectiveOperationException extends RuntimeException {
+import net.mcparkour.impass.accessor.instance.InstanceAccessor;
+import net.mcparkour.impass.accessor.instance.InstanceAccessorHandler;
+import net.mcparkour.impass.accessor.type.TypeAccessor;
+import net.mcparkour.impass.accessor.type.TypeAccessorHandler;
+import net.mcparkour.impass.reflection.Reflections;
 
-	private static final long serialVersionUID = -3973436225687316633L;
+public class AccessorFactory {
 
-	public UncheckedReflectiveOperationException(ReflectiveOperationException cause) {
-		super(cause);
+	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
+		var handler = new TypeAccessorHandler(this, accessorClass);
+		return Reflections.newProxyInstance(accessorClass, handler);
+	}
+
+	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
+		var handler = new InstanceAccessorHandler(this, accessorClass, instance);
+		return Reflections.newProxyInstance(accessorClass, handler);
 	}
 }

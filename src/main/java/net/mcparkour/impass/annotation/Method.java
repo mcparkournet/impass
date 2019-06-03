@@ -22,14 +22,19 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.annotation;
 
-import net.mcparkour.impass.annotation.ImpassClass;
-import net.mcparkour.impass.annotation.ImpassGetter;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-@ImpassClass("net.mcparkour.impass.TestImplementationTwo")
-public interface TestAccessorTwo extends Accessor {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Method {
 
-	@ImpassGetter("constructorValue")
-	int getConstructorValue();
+	/**
+	 * @return implementation method name
+	 */
+	String value();
 }

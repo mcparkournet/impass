@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.reflection;
 
-public class AccessorHandlerException extends RuntimeException {
+public class UncheckedReflectiveOperationException extends RuntimeException {
 
-	private static final long serialVersionUID = 3270439577167139360L;
+	private static final long serialVersionUID = -3973436225687316633L;
 
-	public AccessorHandlerException(String message) {
-		super(message);
+	public UncheckedReflectiveOperationException(ReflectiveOperationException cause) {
+		super(cause);
 	}
 }

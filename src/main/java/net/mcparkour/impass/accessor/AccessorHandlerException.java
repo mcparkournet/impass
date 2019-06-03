@@ -22,20 +22,13 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.accessor;
 
-import java.lang.reflect.InvocationHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
+public class AccessorHandlerException extends RuntimeException {
 
-public class Impass {
+	private static final long serialVersionUID = 3270439577167139360L;
 
-	public <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
-		InvocationHandler handler = new AccessorHandler(this, implementation);
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
-
-	public <T extends StaticAccessor> T createStaticAccessor(Class<T> accessorClass) {
-		InvocationHandler handler = new StaticAccessorHandler(this, accessorClass);
-		return Reflections.newProxyInstance(accessorClass, handler);
+	public AccessorHandlerException(String message) {
+		super(message);
 	}
 }

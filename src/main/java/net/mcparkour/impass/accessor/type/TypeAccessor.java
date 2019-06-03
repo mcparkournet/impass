@@ -22,18 +22,6 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.accessor.type;
 
-public interface Accessor {
-
-	Object getImplementation();
-
-	@Override
-	boolean equals(Object object);
-
-	@Override
-	int hashCode();
-
-	@Override
-	String toString();
-}
+public interface TypeAccessor {}
