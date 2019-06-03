@@ -22,20 +22,13 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.annotation;
 
-import java.lang.reflect.InvocationHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class Impass {
-
-	public <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
-		InvocationHandler handler = new AccessorHandler(this, implementation);
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
-
-	public <T extends StaticAccessor> T createStaticAccessor(Class<T> accessorClass) {
-		InvocationHandler handler = new StaticAccessorHandler(this, accessorClass);
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
-}
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface ImpassConstructor {}

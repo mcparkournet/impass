@@ -24,18 +24,4 @@
 
 package net.mcparkour.impass;
 
-import java.lang.reflect.InvocationHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
-
-public class Impass {
-
-	public <T extends Accessor> T createAccessor(Class<T> accessorClass, Object implementation) {
-		InvocationHandler handler = new AccessorHandler(this, implementation);
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
-
-	public <T extends StaticAccessor> T createStaticAccessor(Class<T> accessorClass) {
-		InvocationHandler handler = new StaticAccessorHandler(this, accessorClass);
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
-}
+public interface StaticAccessor {}

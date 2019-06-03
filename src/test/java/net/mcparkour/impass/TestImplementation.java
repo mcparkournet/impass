@@ -154,4 +154,140 @@ public class TestImplementation {
 	public String toString() {
 		return "TestImplementation{" + "primitiveField=" + this.primitiveField + ", objectField='" + this.objectField + "'" + ", accessorField=" + this.accessorField + ", nullField=" + this.nullField + "}";
 	}
+
+	private static void staticUnannotatedMethod() {
+		throw new MethodInvokedException();
+	}
+
+	private static int staticPrimitiveField = 1;
+
+	public static int getStaticPrimitiveField() {
+		return staticPrimitiveField;
+	}
+
+	public static void setStaticPrimitiveField(int staticPrimitiveField) {
+		TestImplementation.staticPrimitiveField = staticPrimitiveField;
+	}
+
+	private static String staticObjectField = "string";
+
+	public static String getStaticObjectField() {
+		return staticObjectField;
+	}
+
+	public static void setStaticObjectField(String staticObjectField) {
+		TestImplementation.staticObjectField = staticObjectField;
+	}
+
+	private static TestImplementationTwo staticAccessorField = new TestImplementationTwo(1);
+
+	public static TestImplementationTwo getStaticAccessorField() {
+		return staticAccessorField;
+	}
+
+	public static void setStaticAccessorField(TestImplementationTwo staticAccessorField) {
+		TestImplementation.staticAccessorField = staticAccessorField;
+	}
+
+	@Nullable
+	private static TestImplementationTwo staticNullField = null;
+
+	@Nullable
+	public static TestImplementationTwo getStaticNullField() {
+		return staticNullField;
+	}
+
+	public static void setStaticNullField(@Nullable TestImplementationTwo nullField) {
+		staticNullField = nullField;
+	}
+
+	private static void staticVoidVoidMethod() {
+		throw new MethodInvokedException();
+	}
+
+	private static int staticPrimitiveVoidMethod() {
+		return 1;
+	}
+
+	private static void staticVoidPrimitiveMethod(int integer) {
+		throw new MethodInvokedException();
+	}
+
+	private static int staticPrimitivePrimitiveMethod(int integer) {
+		return integer;
+	}
+
+	private static String staticObjectVoidMethod() {
+		return "string";
+	}
+
+	private static void staticVoidObjectMethod(String string) {
+		throw new MethodInvokedException();
+	}
+
+	private static String staticObjectObjectMethod(String string) {
+		return string;
+	}
+
+	private static TestImplementationTwo staticAccessorVoidMethod() {
+		return new TestImplementationTwo(1);
+	}
+
+	private static void staticVoidAccessorMethod(TestImplementationTwo accessor) {
+		throw new MethodInvokedException();
+	}
+
+	private static TestImplementationTwo staticAccessorAccessorMethod(TestImplementationTwo accessor) {
+		return accessor;
+	}
+
+	private static void staticVoidPrimitiveObjectMethod(int integer, String string) {
+		throw new MethodInvokedException();
+	}
+
+	private static int staticPrimitivePrimitiveObjectMethod(int integer, String string) {
+		return integer + Integer.parseInt(string);
+	}
+
+	private static String staticObjectPrimitiveObjectMethod(int integer, String string) {
+		return integer + " " + string;
+	}
+
+	private static TestImplementationTwo staticAccessorPrimitiveObjectAccessorMethod(int integer, String string, TestImplementationTwo accessor) {
+		return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
+	}
+
+	@Nullable
+	private static TestImplementationTwo staticNullVoidMethod() {
+		return null;
+	}
+
+	private static void staticVoidNullMethod(@Nullable TestImplementationTwo accessor) {
+		throw new MethodInvokedException();
+	}
+
+	@Nullable
+	private static TestImplementationTwo staticNullNullMethod(@Nullable TestImplementationTwo accessor) {
+		return accessor;
+	}
+
+	public TestImplementation() {}
+
+	public TestImplementation(int primitiveField) {
+		this.primitiveField = primitiveField;
+	}
+
+	public TestImplementation(String objectField) {
+		this.objectField = objectField;
+	}
+
+	public TestImplementation(TestImplementationTwo accessorField) {
+		this.accessorField = accessorField;
+	}
+
+	public TestImplementation(int primitiveField, String objectField, TestImplementationTwo accessorField) {
+		this.primitiveField = primitiveField;
+		this.objectField = objectField;
+		this.accessorField = accessorField;
+	}
 }

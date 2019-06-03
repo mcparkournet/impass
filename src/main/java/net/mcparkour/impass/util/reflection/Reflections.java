@@ -73,6 +73,23 @@ public final class Reflections {
 		}
 	}
 
+	@Nullable
+	public static Object getStaticFieldValue(Field field) {
+		try {
+			return field.get(null);
+		} catch (IllegalAccessException exception) {
+			throw new UncheckedReflectiveOperationException(exception);
+		}
+	}
+
+	public static void setStaticFieldValue(Field field, @Nullable Object value) {
+		try {
+			field.set(null, value);
+		} catch (IllegalAccessException exception) {
+			throw new UncheckedReflectiveOperationException(exception);
+		}
+	}
+
 	public static Method getMethod(Class<?> methodClass, String methodName, Class<?>... parameterTypes) {
 		try {
 			Method method = methodClass.getDeclaredMethod(methodName, parameterTypes);
@@ -87,6 +104,17 @@ public final class Reflections {
 	public static Object invokeMethod(Method method, Object instance, Object... parameters) throws Throwable {
 		try {
 			return method.invoke(instance, parameters);
+		} catch (IllegalAccessException exception) {
+			throw new UncheckedReflectiveOperationException(exception);
+		} catch (InvocationTargetException exception) {
+			throw exception.getCause();
+		}
+	}
+
+	@Nullable
+	public static Object invokeStaticMethod(Method method, Object... parameters) throws Throwable {
+		try {
+			return method.invoke(null, parameters);
 		} catch (IllegalAccessException exception) {
 			throw new UncheckedReflectiveOperationException(exception);
 		} catch (InvocationTargetException exception) {
