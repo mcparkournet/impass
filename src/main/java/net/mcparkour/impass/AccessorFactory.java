@@ -24,21 +24,55 @@
 
 package net.mcparkour.impass;
 
-import net.mcparkour.impass.accessor.instance.InstanceAccessor;
-import net.mcparkour.impass.accessor.instance.InstanceAccessorHandler;
-import net.mcparkour.impass.accessor.type.TypeAccessor;
-import net.mcparkour.impass.accessor.type.TypeAccessorHandler;
-import net.mcparkour.impass.reflection.Reflections;
+import java.lang.annotation.Annotation;
+import net.mcparkour.impass.annotation.handler.method.ConstructorAnnotationHandler;
+import net.mcparkour.impass.annotation.handler.method.GetterAnnotationHandler;
+import net.mcparkour.impass.annotation.handler.method.MethodAnnotationHandler;
+import net.mcparkour.impass.annotation.handler.method.SetterAnnotationHandler;
+import net.mcparkour.impass.annotation.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
+import net.mcparkour.impass.instance.InstanceAccessor;
+import net.mcparkour.impass.instance.InstanceAccessorHandler;
+import net.mcparkour.impass.type.TypeAccessor;
+import net.mcparkour.impass.type.TypeAccessorHandler;
+import net.mcparkour.impass.util.reflection.Reflections;
 
 public class AccessorFactory {
 
+	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> TYPE_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>>builder().
+		add(new TypeAnnotationHandler())
+		.build();
+	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> TYPE_METHOD_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
+		add(new GetterAnnotationHandler())
+		.add(new SetterAnnotationHandler())
+		.add(new MethodAnnotationHandler())
+		.add(new ConstructorAnnotationHandler())
+		.build();
+	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> INSTANCE_METHOD_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
+		add(new GetterAnnotationHandler())
+		.add(new SetterAnnotationHandler())
+		.add(new MethodAnnotationHandler())
+		.build();
+
 	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
-		var handler = new TypeAccessorHandler(this, accessorClass);
-		return Reflections.newProxyInstance(accessorClass, handler);
+		return createTypeAccessor(TYPE_HANDLER_REGISTRY, TYPE_METHOD_HANDLER_REGISTRY, accessorClass);
+	}
+
+	public <T extends TypeAccessor> T createTypeAccessor(AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass) {
+		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass);
+		return createAccessor(accessorClass, handler);
 	}
 
 	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
-		var handler = new InstanceAccessorHandler(this, accessorClass, instance);
+		return createInstanceAccessor(TYPE_HANDLER_REGISTRY, INSTANCE_METHOD_HANDLER_REGISTRY, accessorClass, instance);
+	}
+
+	public <T extends InstanceAccessor> T createInstanceAccessor(AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass, Object instance) {
+		var handler = new InstanceAccessorHandler(this, TYPE_HANDLER_REGISTRY, INSTANCE_METHOD_HANDLER_REGISTRY, accessorClass, instance);
+		return createAccessor(accessorClass, handler);
+	}
+
+	public <T extends Accessor> T createAccessor(Class<T> accessorClass, AccessorHandler handler) {
 		return Reflections.newProxyInstance(accessorClass, handler);
 	}
 }
