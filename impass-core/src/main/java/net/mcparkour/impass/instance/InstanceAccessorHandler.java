@@ -25,6 +25,7 @@
 package net.mcparkour.impass.instance;
 
 import java.lang.reflect.Method;
+import net.mcparkour.impass.Accessor;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
 import net.mcparkour.impass.handler.method.MethodHandler;
@@ -40,35 +41,34 @@ public class InstanceAccessorHandler extends AccessorHandler {
 	private static final Method HASH_CODE_METHOD = Reflections.getMethod(Object.class, "hashCode");
 	private static final Method TO_STRING_METHOD = Reflections.getMethod(Object.class, "toString");
 
-	private Class<?> instanceType;
 	private Object instance;
 
-	public InstanceAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<? extends InstanceAccessor> accessorClass, Object instance) {
-		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry);
-		this.instanceType = typeHandlerRegistry.handleType(accessorClass);
+	public InstanceAccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Object instance) {
+		super(accessorFactory, accessorType, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(instance));
 		this.instance = instance;
 	}
 
 	@Override
 	@Nullable
-	public Object handle(Method method, Object[] parameters) throws Throwable {
-		var accessorFactory = getAccessorFactory();
-		var typeHandlerRegistry = getTypeHandlerRegistry();
-		var methodHandlerRegistry = getMethodHandlerRegistry();
-		var handler = new MethodHandler(this.instanceType, method, parameters, accessorFactory, typeHandlerRegistry, new InstanceReflectionOperations(this.instance));
-		if (method.equals(GET_INSTANCE_METHOD)) {
+	public Object handle(MethodHandler handler) throws Throwable {
+		if (handler.isInvoked(GET_INSTANCE_METHOD)) {
 			return this.instance;
 		}
-		if (method.equals(EQUALS_METHOD)) {
+		if (handler.isInvoked(EQUALS_METHOD)) {
 			handler.remapParameters();
-			return handler.getParameters()[0].equals(this.instance);
+			var firstParameter = handler.getFirstParameter();
+			return firstParameter.equals(this.instance);
 		}
-		if (method.equals(HASH_CODE_METHOD)) {
+		if (handler.isInvoked(HASH_CODE_METHOD)) {
 			return this.instance.hashCode();
 		}
-		if (method.equals(TO_STRING_METHOD)) {
+		if (handler.isInvoked(TO_STRING_METHOD)) {
 			return this.instance.toString();
 		}
-		return methodHandlerRegistry.handleMethod(handler);
+		return super.handle(handler);
+	}
+
+	public Object getInstance() {
+		return this.instance;
 	}
 }

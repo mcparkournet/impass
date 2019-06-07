@@ -43,20 +43,20 @@ public class AccessorFactory {
 	}
 
 	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
-		return createTypeAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass);
+		return createTypeAccessor(accessorClass,this.typeHandlerRegistry, this.methodHandlerRegistry);
 	}
 
-	public <T extends TypeAccessor> T createTypeAccessor(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<T> accessorClass) {
-		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass);
+	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		var handler = new TypeAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry);
 		return createAccessor(accessorClass, handler);
 	}
 
 	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
-		return createInstanceAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass, instance);
+		return createInstanceAccessor(accessorClass, instance, this.typeHandlerRegistry, this.methodHandlerRegistry);
 	}
 
-	public <T extends InstanceAccessor> T createInstanceAccessor(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<T> accessorClass, Object instance) {
-		var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass, instance);
+	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		var handler = new InstanceAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry, instance);
 		return createAccessor(accessorClass, handler);
 	}
 

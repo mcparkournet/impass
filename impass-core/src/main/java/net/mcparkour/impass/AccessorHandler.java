@@ -26,31 +26,40 @@ package net.mcparkour.impass;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import net.mcparkour.impass.handler.method.MethodHandler;
+import net.mcparkour.impass.handler.method.ReflectionOperations;
 import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class AccessorHandler implements InvocationHandler {
+public class AccessorHandler implements InvocationHandler {
 
 	private AccessorFactory accessorFactory;
+	private Class<?> type;
 	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
 	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
+	private ReflectionOperations reflectionOperations;
 
-	public AccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+	public AccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, ReflectionOperations reflectionOperations) {
 		this.accessorFactory = accessorFactory;
+		this.type = typeHandlerRegistry.handleType(accessorType);
 		this.typeHandlerRegistry = typeHandlerRegistry;
 		this.methodHandlerRegistry = methodHandlerRegistry;
+		this.reflectionOperations = reflectionOperations;
 	}
 
 	@Override
 	@Nullable
 	public Object invoke(Object proxy, Method method, @Nullable Object[] args) throws Throwable {
 		var parameters = args == null ? new Object[0] : args;
-		return handle(method, parameters);
+		var handler = new MethodHandler(this.type, method, parameters, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
+		return handle(handler);
 	}
 
 	@Nullable
-	public abstract Object handle(Method method, Object[] parameters) throws Throwable;
+	public Object handle(MethodHandler handler) throws Throwable {
+		return this.methodHandlerRegistry.handleMethod(handler);
+	}
 
 	public AccessorFactory getAccessorFactory() {
 		return this.accessorFactory;

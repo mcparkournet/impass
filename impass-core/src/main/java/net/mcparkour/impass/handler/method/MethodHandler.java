@@ -67,7 +67,8 @@ public class MethodHandler {
 	public void setFieldValue(String fieldName) {
 		remapParameters();
 		var field = Reflections.getField(this.type, fieldName);
-		this.reflectionOperations.setFieldValue(field, this.parameters[0]);
+		var firstParameter = getFirstParameter();
+		this.reflectionOperations.setFieldValue(field, firstParameter);
 	}
 
 	@Nullable
@@ -113,6 +114,14 @@ public class MethodHandler {
 				}
 			}
 		}
+	}
+
+	public boolean isInvoked(Method method) {
+		return this.method.equals(method);
+	}
+
+	public Object getFirstParameter() {
+		return this.parameters[0];
 	}
 
 	public Class<?> getType() {

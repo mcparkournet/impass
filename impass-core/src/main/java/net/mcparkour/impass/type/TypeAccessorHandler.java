@@ -24,30 +24,15 @@
 
 package net.mcparkour.impass.type;
 
-import java.lang.reflect.Method;
+import net.mcparkour.impass.Accessor;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
-import net.mcparkour.impass.handler.method.MethodHandler;
 import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
-import org.jetbrains.annotations.Nullable;
 
 public class TypeAccessorHandler extends AccessorHandler {
 
-	private Class<?> type;
-
-	public TypeAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<?> accessorClass) {
-		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry);
-		this.type = typeHandlerRegistry.handleType(accessorClass);
-	}
-
-	@Override
-	@Nullable
-	public Object handle(Method method, Object[] parameters) throws Throwable {
-		var accessorFactory = getAccessorFactory();
-		var typeHandlerRegistry = getTypeHandlerRegistry();
-		var methodHandlerRegistry = getMethodHandlerRegistry();
-		var handler = new MethodHandler(this.type, method, parameters, accessorFactory, typeHandlerRegistry, new TypeReflectionOperations());
-		return methodHandlerRegistry.handleMethod(handler);
+	public TypeAccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		super(accessorFactory, accessorType, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
 	}
 }
