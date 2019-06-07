@@ -34,12 +34,20 @@ public interface CraftPlayerAccessor extends InstanceAccessor {
 }
 ```
 
-Create instance accessor:
+Create accessor factory:
 
 ```java
-Player apiPlayer = ...
-var version = "v1_14_R1"
-var accessorFactory = new BukkitAccessorFactory(version);
-CraftPlayerAccessor accessor = accessorFactory.createInstanceAccessor(CraftPlayerAccessor.class, apiPlayer);
-accessor.refreshPlayer();
+org.bukkit.Server server = ...
+AccessorFactory accessorFactory = new BukkitAccessorFactory(server);
+```
+
+Create instance of accessor and invoke defined there method:
+
+```java
+AccessorFactory accessorFactory = ...
+
+org.bukkit.entity.Player player = ...
+CraftPlayerAccessor accessor = accessorFactory.createInstanceAccessor(CraftPlayerAccessor.class, player);
+
+accessor.refreshPlayer(); //Invokes CraftPlayer#refreshPlayer()
 ```
