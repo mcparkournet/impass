@@ -58,7 +58,7 @@ public class TypeAccessorHandler extends AccessorHandler {
 		var accessorFactory = getAccessorFactory();
 		var typeHandlerRegistry = getTypeHandlerRegistry();
 		var methodHandlerRegistry = getMethodHandlerRegistry();
-		var context = new MethodHandler(this.type, method, parameters, accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
+		var context = new MethodHandler(this.type, method, parameters, accessorFactory, typeHandlerRegistry, new TypeReflectionOperations());
 		var annotations = method.getDeclaredAnnotations();
 		for (var annotation : annotations) {
 			var annotationType = annotation.annotationType();

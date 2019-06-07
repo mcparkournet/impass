@@ -31,31 +31,25 @@ import net.mcparkour.impass.annotation.handler.method.MethodAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.SetterAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.type.TypeAnnotationHandler;
 import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.instance.InstanceAccessor;
-import net.mcparkour.impass.type.TypeAccessor;
 
 public class BasicAccessorFactory extends AccessorFactory {
 
-	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> TYPE_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>>builder().
-		add(new TypeAnnotationHandler())
-		.build();
-	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> TYPE_METHOD_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
-		add(new GetterAnnotationHandler())
-		.add(new SetterAnnotationHandler())
-		.add(new MethodAnnotationHandler())
-		.add(new ConstructorAnnotationHandler())
-		.build();
-	public static final AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> INSTANCE_METHOD_HANDLER_REGISTRY = AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
-		add(new GetterAnnotationHandler())
-		.add(new SetterAnnotationHandler())
-		.add(new MethodAnnotationHandler())
-		.build();
-
-	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
-		return createTypeAccessor(TYPE_HANDLER_REGISTRY, TYPE_METHOD_HANDLER_REGISTRY, accessorClass);
+	public BasicAccessorFactory() {
+		super(createTypeHandlerRegistry(), createMethodHandlerRegistry());
 	}
 
-	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
-		return createInstanceAccessor(TYPE_HANDLER_REGISTRY, INSTANCE_METHOD_HANDLER_REGISTRY, accessorClass, instance);
+	public static AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> createTypeHandlerRegistry() {
+		return AnnotationHandlerRegistry.<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>>builder().
+			add(new TypeAnnotationHandler())
+			.build();
+	}
+
+	public static AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> createMethodHandlerRegistry() {
+		return AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
+			add(new GetterAnnotationHandler())
+			.add(new SetterAnnotationHandler())
+			.add(new MethodAnnotationHandler())
+			.add(new ConstructorAnnotationHandler())
+			.build();
 	}
 }

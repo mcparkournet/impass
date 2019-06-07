@@ -66,7 +66,7 @@ public class InstanceAccessorHandler extends AccessorHandler {
 		var accessorFactory = getAccessorFactory();
 		var typeHandlerRegistry = getTypeHandlerRegistry();
 		var methodHandlerRegistry = getMethodHandlerRegistry();
-		var handler = new MethodHandler(this.instanceType, method, parameters, accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(this.instance));
+		var handler = new MethodHandler(this.instanceType, method, parameters, accessorFactory, typeHandlerRegistry, new InstanceReflectionOperations(this.instance));
 		if (method.equals(GET_INSTANCE_METHOD)) {
 			return this.instance;
 		}

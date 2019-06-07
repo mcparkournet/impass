@@ -41,17 +41,15 @@ public class MethodHandler {
 	private Class<?>[] parameterTypes;
 	private AccessorFactory accessorFactory;
 	private AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
-	private AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry;
 	private ReflectionOperations reflectionOperations;
 
-	public MethodHandler(Class<?> type, Method method, Object[] parameters, AccessorFactory accessorFactory, AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, ReflectionOperations reflectionOperations) {
+	public MethodHandler(Class<?> type, Method method, Object[] parameters, AccessorFactory accessorFactory, AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, ReflectionOperations reflectionOperations) {
 		this.type = type;
 		this.method = method;
 		this.parameters = parameters;
 		this.parameterTypes = method.getParameterTypes();
 		this.accessorFactory = accessorFactory;
 		this.typeHandlerRegistry = typeHandlerRegistry;
-		this.methodHandlerRegistry = methodHandlerRegistry;
 		this.reflectionOperations = reflectionOperations;
 	}
 
@@ -93,7 +91,7 @@ public class MethodHandler {
 		var returnType = this.method.getReturnType();
 		if (InstanceAccessor.class.isAssignableFrom(returnType)) {
 			var returnAccessorType = returnType.asSubclass(InstanceAccessor.class);
-			return this.accessorFactory.createInstanceAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, returnAccessorType, value);
+			return this.accessorFactory.createInstanceAccessor(returnAccessorType, value);
 		}
 		return value;
 	}
