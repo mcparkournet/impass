@@ -24,6 +24,7 @@
 
 package net.mcparkour.impass.type;
 
+import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.BasicAccessorFactory;
 import net.mcparkour.impass.MethodInvokedException;
 import net.mcparkour.impass.TestImplementation;
@@ -38,7 +39,7 @@ import org.junit.jupiter.api.Test;
 
 public class TypeAccessorTest {
 
-	private BasicAccessorFactory accessorFactory;
+	private AccessorFactory accessorFactory;
 	private TestTypeAccessor accessor;
 
 	@BeforeEach

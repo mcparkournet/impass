@@ -28,7 +28,7 @@ import net.mcparkour.impass.annotation.handler.type.CraftBukkitAnnotationHandler
 import net.mcparkour.impass.annotation.handler.type.MinecraftServerAnnotationHandler;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
-public class BukkitAccessorFactory extends AccessorFactory {
+public class BukkitAccessorFactory extends BasicAccessorFactory {
 
 	public BukkitAccessorFactory(Object bukkitObject) {
 		this(getServerVersion(bukkitObject));

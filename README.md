@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-	implementation("net.mcparkour:impass-bukkit:1.0.1")
+	implementation("net.mcparkour:impass-bukkit:1.0.2")
 }
 ```
 

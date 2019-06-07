@@ -31,11 +31,24 @@ import net.mcparkour.impass.annotation.handler.method.SetterAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.type.TypeAnnotationHandler;
 import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
+import net.mcparkour.impass.instance.InstanceAccessor;
+import net.mcparkour.impass.instance.InstanceAccessorHandler;
+import net.mcparkour.impass.type.TypeAccessor;
+import net.mcparkour.impass.type.TypeAccessorHandler;
+import net.mcparkour.impass.util.reflection.Reflections;
 
-public class BasicAccessorFactory extends AccessorFactory {
+public class BasicAccessorFactory implements AccessorFactory {
+
+	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
+	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
 
 	public BasicAccessorFactory() {
-		super(createTypeHandlerRegistry(), createMethodHandlerRegistry());
+		this(createTypeHandlerRegistry(), createMethodHandlerRegistry());
+	}
+
+	public BasicAccessorFactory(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		this.typeHandlerRegistry = typeHandlerRegistry;
+		this.methodHandlerRegistry = methodHandlerRegistry;
 	}
 
 	public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry() {
@@ -51,5 +64,37 @@ public class BasicAccessorFactory extends AccessorFactory {
 			.add(new MethodAnnotationHandler())
 			.add(new ConstructorAnnotationHandler())
 			.build();
+	}
+
+	@Override
+	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
+		return createTypeAccessor(accessorClass, this.typeHandlerRegistry, this.methodHandlerRegistry);
+	}
+
+	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		var handler = new TypeAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry);
+		return createAccessor(accessorClass, handler);
+	}
+
+	@Override
+	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
+		return createInstanceAccessor(accessorClass, instance, this.typeHandlerRegistry, this.methodHandlerRegistry);
+	}
+
+	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		var handler = new InstanceAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry, instance);
+		return createAccessor(accessorClass, handler);
+	}
+
+	public <T extends Accessor> T createAccessor(Class<T> accessorClass, AccessorHandler handler) {
+		return Reflections.newProxyInstance(accessorClass, handler);
+	}
+
+	public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
+		return this.typeHandlerRegistry;
+	}
+
+	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
+		return this.methodHandlerRegistry;
 	}
 }

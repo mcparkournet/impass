@@ -24,6 +24,7 @@
 
 package net.mcparkour.impass.minecraftserver;
 
+import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.BukkitAccessorFactory;
 import net.minecraft.server.v1_14_R1.MinecraftServerEntity;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 public class MinecraftServerAccessorTest {
 
-	private BukkitAccessorFactory accessorFactory;
+	private AccessorFactory accessorFactory;
 	private MinecraftServerEntityAccessor accessor;
 
 	@BeforeEach

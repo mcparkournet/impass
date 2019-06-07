@@ -24,6 +24,7 @@
 
 package net.mcparkour.impass.craftbukkit;
 
+import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.BukkitAccessorFactory;
 import org.bukkit.craftbukkit.v1_14_R1.CraftBukkitEntity;
 import org.junit.jupiter.api.Assertions;
@@ -32,7 +33,7 @@ import org.junit.jupiter.api.Test;
 
 public class CraftBukkitAccessorTest {
 
-	private BukkitAccessorFactory accessorFactory;
+	private AccessorFactory accessorFactory;
 	private CraftBukkitEntityAccessor accessor;
 
 	@BeforeEach
