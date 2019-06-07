@@ -36,8 +36,8 @@ import net.mcparkour.impass.util.reflection.Reflections;
 
 public class AccessorFactory {
 
-	private AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
-	private AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry;
+	private AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
+	private AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry;
 
 	public AccessorFactory(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry) {
 		this.typeHandlerRegistry = typeHandlerRegistry;
@@ -48,7 +48,7 @@ public class AccessorFactory {
 		return createTypeAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass);
 	}
 
-	public <T extends TypeAccessor> T createTypeAccessor(AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass) {
+	public <T extends TypeAccessor> T createTypeAccessor(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass) {
 		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass);
 		return createAccessor(accessorClass, handler);
 	}
@@ -57,7 +57,7 @@ public class AccessorFactory {
 		return createInstanceAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass, instance);
 	}
 
-	public <T extends InstanceAccessor> T createInstanceAccessor(AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass, Object instance) {
+	public <T extends InstanceAccessor> T createInstanceAccessor(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass, Object instance) {
 		var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass, instance);
 		return createAccessor(accessorClass, handler);
 	}
