@@ -30,8 +30,23 @@ import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
 public class BukkitAccessorFactory extends AccessorFactory {
 
+	public BukkitAccessorFactory(Object bukkitObject) {
+		this(getServerVersion(bukkitObject));
+	}
+
 	public BukkitAccessorFactory(String serverVersion) {
 		super(createTypeHandlerRegistry(serverVersion), BasicAccessorFactory.createMethodHandlerRegistry());
+	}
+
+	public static String getServerVersion(Object bukkitObject) {
+		var implementationClass = bukkitObject.getClass();
+		var packageName = implementationClass.getPackageName();
+		var split = packageName.split("\\.");
+		var version = split[3];
+		if (!version.matches("v\\d+_\\d+_R\\d+")) {
+			throw new IllegalArgumentException("Object implementation is not in net.minecraft.server or org.bukkit.craftbukkit package");
+		}
+		return version;
 	}
 
 	public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry(String serverVersion) {

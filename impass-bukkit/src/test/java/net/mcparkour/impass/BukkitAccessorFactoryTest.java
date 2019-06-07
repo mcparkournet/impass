@@ -22,27 +22,18 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.minecraftserver;
+package net.mcparkour.impass;
 
-import net.mcparkour.impass.BukkitAccessorFactory;
 import net.minecraft.server.v1_14_R1.MinecraftServerEntity;
+import org.bukkit.craftbukkit.v1_14_R1.CraftBukkitEntity;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MinecraftServerAccessorTest {
-
-	private BukkitAccessorFactory accessorFactory;
-	private MinecraftServerEntityAccessor accessor;
-
-	@BeforeEach
-	public void setUp() {
-		this.accessorFactory = new BukkitAccessorFactory("v1_14_R1");
-		this.accessor = this.accessorFactory.createInstanceAccessor(MinecraftServerEntityAccessor.class, new MinecraftServerEntity());
-	}
+public class BukkitAccessorFactoryTest {
 
 	@Test
-	public void testMinecraftServerMethodAccess() {
-		Assertions.assertEquals(1, this.accessor.getNumberOne());
+	public void testGetServerVersion() {
+		Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new MinecraftServerEntity()));
+		Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new CraftBukkitEntity()));
 	}
 }
