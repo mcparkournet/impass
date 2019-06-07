@@ -24,10 +24,8 @@
 
 package net.mcparkour.impass;
 
-import java.lang.annotation.Annotation;
-import net.mcparkour.impass.handler.method.MethodAnnotationHandler;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import net.mcparkour.impass.instance.InstanceAccessor;
 import net.mcparkour.impass.instance.InstanceAccessorHandler;
 import net.mcparkour.impass.type.TypeAccessor;
@@ -36,10 +34,10 @@ import net.mcparkour.impass.util.reflection.Reflections;
 
 public class AccessorFactory {
 
-	private AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
-	private AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry;
+	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
+	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
 
-	public AccessorFactory(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry) {
+	public AccessorFactory(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
 		this.typeHandlerRegistry = typeHandlerRegistry;
 		this.methodHandlerRegistry = methodHandlerRegistry;
 	}
@@ -48,7 +46,7 @@ public class AccessorFactory {
 		return createTypeAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass);
 	}
 
-	public <T extends TypeAccessor> T createTypeAccessor(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass) {
+	public <T extends TypeAccessor> T createTypeAccessor(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<T> accessorClass) {
 		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass);
 		return createAccessor(accessorClass, handler);
 	}
@@ -57,7 +55,7 @@ public class AccessorFactory {
 		return createInstanceAccessor(this.typeHandlerRegistry, this.methodHandlerRegistry, accessorClass, instance);
 	}
 
-	public <T extends InstanceAccessor> T createInstanceAccessor(AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<T> accessorClass, Object instance) {
+	public <T extends InstanceAccessor> T createInstanceAccessor(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<T> accessorClass, Object instance) {
 		var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, accessorClass, instance);
 		return createAccessor(accessorClass, handler);
 	}
@@ -66,11 +64,11 @@ public class AccessorFactory {
 		return Reflections.newProxyInstance(accessorClass, handler);
 	}
 
-	public AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> getTypeHandlerRegistry() {
+	public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
 		return this.typeHandlerRegistry;
 	}
 
-	public AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> getMethodHandlerRegistry() {
+	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
 		return this.methodHandlerRegistry;
 	}
 }

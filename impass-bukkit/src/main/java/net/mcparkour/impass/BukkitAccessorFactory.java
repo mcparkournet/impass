@@ -24,11 +24,9 @@
 
 package net.mcparkour.impass;
 
-import java.lang.annotation.Annotation;
 import net.mcparkour.impass.annotation.handler.type.CraftBukkitAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.type.MinecraftServerAnnotationHandler;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
 public class BukkitAccessorFactory extends AccessorFactory {
 
@@ -36,9 +34,9 @@ public class BukkitAccessorFactory extends AccessorFactory {
 		super(createTypeHandlerRegistry(serverVersion), BasicAccessorFactory.createMethodHandlerRegistry());
 	}
 
-	public static AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> createTypeHandlerRegistry(String serverVersion) {
-		return AnnotationHandlerRegistry.<TypeAnnotationHandler<? extends Annotation>>builder().
-			with(BasicAccessorFactory.createTypeHandlerRegistry())
+	public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry(String serverVersion) {
+		return TypeAnnotationHandlerRegistry.builder()
+			.with(BasicAccessorFactory.createTypeHandlerRegistry())
 			.add(new CraftBukkitAnnotationHandler(serverVersion))
 			.add(new MinecraftServerAnnotationHandler(serverVersion))
 			.build();

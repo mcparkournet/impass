@@ -25,7 +25,6 @@
 package net.mcparkour.impass.annotation.handler.type;
 
 import net.mcparkour.impass.annotation.type.CraftBukkitType;
-import net.mcparkour.impass.handler.AnnotationHandlerException;
 import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 import net.mcparkour.impass.util.reflection.Reflections;
 
@@ -38,13 +37,8 @@ public class CraftBukkitAnnotationHandler implements TypeAnnotationHandler<Craft
 	}
 
 	@Override
-	public Class<?> getTypeFromAnnotation(Class<?> annotatedClass) {
-		var annotationType = getAnnotationType();
-		var typeAnnotation = annotatedClass.getAnnotation(annotationType);
-		if (typeAnnotation == null) {
-			throw new AnnotationHandlerException("Type annotation is not present");
-		}
-		var className = typeAnnotation.value();
+	public Class<?> handle(CraftBukkitType annotation) {
+		var className = annotation.value();
 		return Reflections.getClass("org.bukkit.craftbukkit." + this.serverVersion + "." + className);
 	}
 

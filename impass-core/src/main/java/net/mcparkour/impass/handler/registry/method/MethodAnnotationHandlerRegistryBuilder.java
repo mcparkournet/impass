@@ -22,13 +22,16 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass;
+package net.mcparkour.impass.handler.registry.method;
 
-public class AccessorHandlerException extends RuntimeException {
+import java.lang.annotation.Annotation;
+import net.mcparkour.impass.handler.method.MethodAnnotationHandler;
+import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistryBuilder;
 
-	private static final long serialVersionUID = 3270439577167139360L;
+public class MethodAnnotationHandlerRegistryBuilder extends AnnotationHandlerRegistryBuilder<MethodAnnotationHandler<? extends Annotation>, MethodAnnotationHandlerRegistry> {
 
-	public AccessorHandlerException(String message) {
-		super(message);
+	@Override
+	public MethodAnnotationHandlerRegistry build() {
+		return build(MethodAnnotationHandlerRegistry::new);
 	}
 }

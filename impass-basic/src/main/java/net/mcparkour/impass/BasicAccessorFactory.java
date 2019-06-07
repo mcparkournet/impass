@@ -24,13 +24,13 @@
 
 package net.mcparkour.impass;
 
-import java.lang.annotation.Annotation;
 import net.mcparkour.impass.annotation.handler.method.ConstructorAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.GetterAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.MethodAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.SetterAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.type.TypeAnnotationHandler;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
 public class BasicAccessorFactory extends AccessorFactory {
 
@@ -38,15 +38,15 @@ public class BasicAccessorFactory extends AccessorFactory {
 		super(createTypeHandlerRegistry(), createMethodHandlerRegistry());
 	}
 
-	public static AnnotationHandlerRegistry<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>> createTypeHandlerRegistry() {
-		return AnnotationHandlerRegistry.<net.mcparkour.impass.handler.type.TypeAnnotationHandler<? extends Annotation>>builder().
-			add(new TypeAnnotationHandler())
+	public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry() {
+		return TypeAnnotationHandlerRegistry.builder()
+			.add(new TypeAnnotationHandler())
 			.build();
 	}
 
-	public static AnnotationHandlerRegistry<net.mcparkour.impass.handler.method.MethodAnnotationHandler<? extends Annotation>> createMethodHandlerRegistry() {
-		return AnnotationHandlerRegistry.<net.mcparkour.impass.handler.method.MethodAnnotationHandler<?>>builder().
-			add(new GetterAnnotationHandler())
+	public static MethodAnnotationHandlerRegistry createMethodHandlerRegistry() {
+		return MethodAnnotationHandlerRegistry.builder()
+			.add(new GetterAnnotationHandler())
 			.add(new SetterAnnotationHandler())
 			.add(new MethodAnnotationHandler())
 			.add(new ConstructorAnnotationHandler())

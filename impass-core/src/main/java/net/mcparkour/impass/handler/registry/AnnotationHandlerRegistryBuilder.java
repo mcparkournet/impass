@@ -27,27 +27,27 @@ package net.mcparkour.impass.handler.registry;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import net.mcparkour.impass.handler.AnnotationHandler;
 import net.mcparkour.impass.util.Builder;
 
-public class AnnotationHandlerRegistryBuilder<H extends AnnotationHandler<? extends Annotation>> implements Builder<AnnotationHandlerRegistry<H>> {
+public abstract class AnnotationHandlerRegistryBuilder<H extends AnnotationHandler<? extends Annotation>, R extends AnnotationHandlerRegistry<H>> implements Builder<R> {
 
 	private Map<Class<? extends Annotation>, H> handlers = new HashMap<>(4);
 
-	public AnnotationHandlerRegistryBuilder<H> with(AnnotationHandlerRegistry<H> handlerRegistry) {
+	public AnnotationHandlerRegistryBuilder<H, R> with(R handlerRegistry) {
 		Map<Class<? extends Annotation>, H> handlers = handlerRegistry.getHandlers();
 		this.handlers.putAll(handlers);
 		return this;
 	}
 
-	public AnnotationHandlerRegistryBuilder<H> add(H handler) {
+	public AnnotationHandlerRegistryBuilder<H, R> add(H handler) {
 		var annotationType = handler.getAnnotationType();
 		this.handlers.put(annotationType, handler);
 		return this;
 	}
 
-	@Override
-	public AnnotationHandlerRegistry<H> build() {
-		return new AnnotationHandlerRegistry<>(this.handlers);
+	public R build(Function<? super Map<Class<? extends Annotation>, H>, ? extends R> applier) {
+		return applier.apply(this.handlers);
 	}
 }

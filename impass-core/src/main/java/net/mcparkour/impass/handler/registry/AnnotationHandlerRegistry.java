@@ -32,10 +32,6 @@ public class AnnotationHandlerRegistry<H extends AnnotationHandler<? extends Ann
 
 	private Map<Class<? extends Annotation>, H> handlers;
 
-	public static <H extends AnnotationHandler<? extends Annotation>> AnnotationHandlerRegistryBuilder<H> builder() {
-		return new AnnotationHandlerRegistryBuilder<>();
-	}
-
 	public AnnotationHandlerRegistry(Map<Class<? extends Annotation>, H> handlers) {
 		this.handlers = handlers;
 	}

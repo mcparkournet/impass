@@ -24,21 +24,19 @@
 
 package net.mcparkour.impass;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import net.mcparkour.impass.handler.method.MethodAnnotationHandler;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class AccessorHandler implements InvocationHandler {
 
 	private AccessorFactory accessorFactory;
-	private AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
-	private AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry;
+	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
+	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
 
-	public AccessorHandler(AccessorFactory accessorFactory, AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry) {
+	public AccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
 		this.accessorFactory = accessorFactory;
 		this.typeHandlerRegistry = typeHandlerRegistry;
 		this.methodHandlerRegistry = methodHandlerRegistry;
@@ -58,11 +56,11 @@ public abstract class AccessorHandler implements InvocationHandler {
 		return this.accessorFactory;
 	}
 
-	public AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> getTypeHandlerRegistry() {
+	public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
 		return this.typeHandlerRegistry;
 	}
 
-	public AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> getMethodHandlerRegistry() {
+	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
 		return this.methodHandlerRegistry;
 	}
 }

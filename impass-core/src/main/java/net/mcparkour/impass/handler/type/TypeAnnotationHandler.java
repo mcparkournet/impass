@@ -29,5 +29,10 @@ import net.mcparkour.impass.handler.AnnotationHandler;
 
 public interface TypeAnnotationHandler<A extends Annotation> extends AnnotationHandler<A> {
 
-	Class<?> getTypeFromAnnotation(Class<?> annotatedClass);
+	default Class<?> handleRaw(Annotation annotation) {
+		var castedAnnotation = castAnnotation(annotation);
+		return handle(castedAnnotation);
+	}
+
+	Class<?> handle(A annotation);
 }

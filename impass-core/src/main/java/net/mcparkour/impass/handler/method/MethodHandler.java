@@ -28,6 +28,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 import net.mcparkour.impass.instance.InstanceAccessor;
 import net.mcparkour.impass.util.reflection.Reflections;
@@ -40,10 +41,10 @@ public class MethodHandler {
 	private Object[] parameters;
 	private Class<?>[] parameterTypes;
 	private AccessorFactory accessorFactory;
-	private AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry;
+	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
 	private ReflectionOperations reflectionOperations;
 
-	public MethodHandler(Class<?> type, Method method, Object[] parameters, AccessorFactory accessorFactory, AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, ReflectionOperations reflectionOperations) {
+	public MethodHandler(Class<?> type, Method method, Object[] parameters, AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, ReflectionOperations reflectionOperations) {
 		this.type = type;
 		this.method = method;
 		this.parameters = parameters;
@@ -108,15 +109,7 @@ public class MethodHandler {
 					this.parameters[index] = instance;
 					this.parameterTypes[index] = instance.getClass();
 				} else {
-					var annotations = parameterType.getAnnotations();
-					for (var annotation : annotations) {
-						var annotationType = annotation.annotationType();
-						var methodAnnotationHandler = this.typeHandlerRegistry.get(annotationType);
-						if (methodAnnotationHandler != null) {
-							this.parameterTypes[index] = methodAnnotationHandler.getTypeFromAnnotation(parameterType);
-							break;
-						}
-					}
+					this.parameterTypes[index] = this.typeHandlerRegistry.handleType(parameterType);
 				}
 			}
 		}

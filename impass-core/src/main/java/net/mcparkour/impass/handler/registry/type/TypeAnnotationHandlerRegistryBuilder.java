@@ -22,28 +22,16 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.annotation.handler.type;
+package net.mcparkour.impass.handler.registry.type;
 
-import net.mcparkour.impass.annotation.type.MinecraftServerType;
+import java.lang.annotation.Annotation;
+import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistryBuilder;
 import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
 
-public class MinecraftServerAnnotationHandler implements TypeAnnotationHandler<MinecraftServerType> {
-
-	private String serverVersion;
-
-	public MinecraftServerAnnotationHandler(String serverVersion) {
-		this.serverVersion = serverVersion;
-	}
+public class TypeAnnotationHandlerRegistryBuilder extends AnnotationHandlerRegistryBuilder<TypeAnnotationHandler<? extends Annotation>, TypeAnnotationHandlerRegistry> {
 
 	@Override
-	public Class<?> handle(MinecraftServerType annotation) {
-		var className = annotation.value();
-		return Reflections.getClass("net.minecraft.server." + this.serverVersion + "." + className);
-	}
-
-	@Override
-	public Class<MinecraftServerType> getAnnotationType() {
-		return MinecraftServerType.class;
+	public TypeAnnotationHandlerRegistry build() {
+		return build(TypeAnnotationHandlerRegistry::new);
 	}
 }

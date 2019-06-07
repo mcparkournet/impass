@@ -24,15 +24,12 @@
 
 package net.mcparkour.impass.instance;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
-import net.mcparkour.impass.AccessorHandlerException;
-import net.mcparkour.impass.handler.method.MethodAnnotationHandler;
 import net.mcparkour.impass.handler.method.MethodHandler;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
+import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,17 +43,9 @@ public class InstanceAccessorHandler extends AccessorHandler {
 	private Class<?> instanceType;
 	private Object instance;
 
-	public InstanceAccessorHandler(AccessorFactory accessorFactory, AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> typeHandlerRegistry, AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> methodHandlerRegistry, Class<? extends InstanceAccessor> accessorClass, Object instance) {
+	public InstanceAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Class<? extends InstanceAccessor> accessorClass, Object instance) {
 		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry);
-		var annotations = accessorClass.getAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var methodAnnotationHandler = typeHandlerRegistry.get(annotationType);
-			if (methodAnnotationHandler != null) {
-				this.instanceType = methodAnnotationHandler.getTypeFromAnnotation(accessorClass);
-				break;
-			}
-		}
+		this.instanceType = typeHandlerRegistry.handleType(accessorClass);
 		this.instance = instance;
 	}
 
@@ -80,14 +69,6 @@ public class InstanceAccessorHandler extends AccessorHandler {
 		if (method.equals(TO_STRING_METHOD)) {
 			return this.instance.toString();
 		}
-		var annotations = method.getDeclaredAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var methodAnnotationHandler = methodHandlerRegistry.get(annotationType);
-			if (methodAnnotationHandler != null) {
-				return methodAnnotationHandler.handleRaw(annotation, handler);
-			}
-		}
-		throw new AccessorHandlerException("Method does not have any annotation");
+		return methodHandlerRegistry.handleMethod(handler);
 	}
 }

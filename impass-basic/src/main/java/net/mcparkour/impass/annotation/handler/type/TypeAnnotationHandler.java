@@ -25,19 +25,13 @@
 package net.mcparkour.impass.annotation.handler.type;
 
 import net.mcparkour.impass.annotation.type.Type;
-import net.mcparkour.impass.handler.AnnotationHandlerException;
 import net.mcparkour.impass.util.reflection.Reflections;
 
 public class TypeAnnotationHandler implements net.mcparkour.impass.handler.type.TypeAnnotationHandler<Type> {
 
 	@Override
-	public Class<?> getTypeFromAnnotation(Class<?> annotatedClass) {
-		var annotationType = getAnnotationType();
-		var typeAnnotation = annotatedClass.getAnnotation(annotationType);
-		if (typeAnnotation == null) {
-			throw new AnnotationHandlerException("Type annotation is not present");
-		}
-		var className = typeAnnotation.value();
+	public Class<?> handle(Type annotation) {
+		var className = annotation.value();
 		return Reflections.getClass(className);
 	}
 
