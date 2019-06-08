@@ -50,7 +50,9 @@ public class InheritanceTest {
 		SubclassAccessor subclassRoot = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
 		SuperclassAccessor superclass = this.accessorFactory.createInstanceAccessor(SuperclassAccessor.class, new Superclass());
 		SubclassAccessor subclass = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+		SubclassTwoAccessor subclassTwo = this.accessorFactory.createInstanceAccessor(SubclassTwoAccessor.class, new SubclassTwo());
 		Assertions.assertEquals(1, subclassRoot.accept(superclass));
 		Assertions.assertEquals(2, subclassRoot.accept(subclass));
+		Assertions.assertEquals(3, subclassRoot.accept(subclassTwo));
 	}
 }
