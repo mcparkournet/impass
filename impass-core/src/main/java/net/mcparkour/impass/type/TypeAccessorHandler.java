@@ -24,7 +24,6 @@
 
 package net.mcparkour.impass.type;
 
-import net.mcparkour.impass.Accessor;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
 import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
@@ -32,7 +31,7 @@ import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
 public class TypeAccessorHandler extends AccessorHandler {
 
-	public TypeAccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		super(accessorFactory, accessorType, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
+	public TypeAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
 	}
 }

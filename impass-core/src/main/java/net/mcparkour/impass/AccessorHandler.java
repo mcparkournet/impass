@@ -35,14 +35,12 @@ import org.jetbrains.annotations.Nullable;
 public class AccessorHandler implements InvocationHandler {
 
 	private AccessorFactory accessorFactory;
-	private Class<?> type;
 	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
 	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
 	private ReflectionOperations reflectionOperations;
 
-	public AccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, ReflectionOperations reflectionOperations) {
+	public AccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, ReflectionOperations reflectionOperations) {
 		this.accessorFactory = accessorFactory;
-		this.type = typeHandlerRegistry.handleType(accessorType);
 		this.typeHandlerRegistry = typeHandlerRegistry;
 		this.methodHandlerRegistry = methodHandlerRegistry;
 		this.reflectionOperations = reflectionOperations;
@@ -51,8 +49,10 @@ public class AccessorHandler implements InvocationHandler {
 	@Override
 	@Nullable
 	public Object invoke(Object proxy, Method method, @Nullable Object[] args) throws Throwable {
+		var accessorType = method.getDeclaringClass();
+		var type = this.typeHandlerRegistry.handleType(accessorType);
 		var parameters = args == null ? new Object[0] : args;
-		var handler = new MethodHandler(this.type, method, parameters, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
+		var handler = new MethodHandler(type, method, parameters, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
 		return handle(handler);
 	}
 

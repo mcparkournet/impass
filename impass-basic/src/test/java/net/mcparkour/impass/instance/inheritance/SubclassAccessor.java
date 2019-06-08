@@ -22,32 +22,11 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.handler.registry.type;
+package net.mcparkour.impass.instance.inheritance;
 
-import java.lang.annotation.Annotation;
-import java.util.Map;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.annotation.type.Type;
 
-public class TypeAnnotationHandlerRegistry extends AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> {
+@Type("net.mcparkour.impass.instance.inheritance.Subclass")
+public interface SubclassAccessor extends SuperclassAccessor {
 
-	public static TypeAnnotationHandlerRegistryBuilder builder() {
-		return new TypeAnnotationHandlerRegistryBuilder();
-	}
-
-	public TypeAnnotationHandlerRegistry(Map<Class<? extends Annotation>, TypeAnnotationHandler<? extends Annotation>> handlers) {
-		super(handlers);
-	}
-
-	public Class<?> handleType(Class<?> type) {
-		var annotations = type.getAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var handler = get(annotationType);
-			if (handler != null) {
-				return handler.handleRaw(annotation);
-			}
-		}
-		return type;
-	}
 }

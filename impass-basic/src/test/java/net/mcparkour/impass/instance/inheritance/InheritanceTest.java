@@ -22,32 +22,25 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.handler.registry.type;
+package net.mcparkour.impass.instance.inheritance;
 
-import java.lang.annotation.Annotation;
-import java.util.Map;
-import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
-import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
+import net.mcparkour.impass.AccessorFactory;
+import net.mcparkour.impass.BasicAccessorFactory;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class TypeAnnotationHandlerRegistry extends AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> {
+public class InheritanceTest {
 
-	public static TypeAnnotationHandlerRegistryBuilder builder() {
-		return new TypeAnnotationHandlerRegistryBuilder();
+	private AccessorFactory accessorFactory;
+
+	@BeforeEach
+	public void setUp() {
+		this.accessorFactory = new BasicAccessorFactory();
 	}
 
-	public TypeAnnotationHandlerRegistry(Map<Class<? extends Annotation>, TypeAnnotationHandler<? extends Annotation>> handlers) {
-		super(handlers);
-	}
-
-	public Class<?> handleType(Class<?> type) {
-		var annotations = type.getAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var handler = get(annotationType);
-			if (handler != null) {
-				return handler.handleRaw(annotation);
-			}
-		}
-		return type;
+	@Test
+	public void test() {
+		SubclassAccessor subclassAccessor = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+		subclassAccessor.superclassMethod();
 	}
 }

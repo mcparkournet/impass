@@ -25,7 +25,6 @@
 package net.mcparkour.impass.instance;
 
 import java.lang.reflect.Method;
-import net.mcparkour.impass.Accessor;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
 import net.mcparkour.impass.handler.method.MethodHandler;
@@ -43,8 +42,8 @@ public class InstanceAccessorHandler extends AccessorHandler {
 
 	private Object instance;
 
-	public InstanceAccessorHandler(AccessorFactory accessorFactory, Class<? extends Accessor> accessorType, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Object instance) {
-		super(accessorFactory, accessorType, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(instance));
+	public InstanceAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Object instance) {
+		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(instance));
 		this.instance = instance;
 	}
 

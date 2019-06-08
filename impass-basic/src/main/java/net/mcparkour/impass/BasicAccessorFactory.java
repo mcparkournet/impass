@@ -72,7 +72,7 @@ public class BasicAccessorFactory implements AccessorFactory {
 	}
 
 	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		var handler = new TypeAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry);
+		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry);
 		return createAccessor(accessorClass, handler);
 	}
 
@@ -82,7 +82,7 @@ public class BasicAccessorFactory implements AccessorFactory {
 	}
 
 	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		var handler = new InstanceAccessorHandler(this, accessorClass, typeHandlerRegistry, methodHandlerRegistry, instance);
+		var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, instance);
 		return createAccessor(accessorClass, handler);
 	}
 
