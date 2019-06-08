@@ -3,7 +3,7 @@
 
 # Impass
 
-Impass allows you to access unavailable members in implementation classes. This is used mainly to access NMS or CraftBukkit members, which are not exposed in API, such as NBT related methods.
+Impass allows you to access unavailable members using dynamic proxy classes. It is used mainly to access implementation members, which are not exposed in the API, such as some CraftBukkit or NMS methods.
 
 ## Usage
 

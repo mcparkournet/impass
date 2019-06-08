@@ -65,7 +65,7 @@ subprojects {
 			issueTrackerUrl = "$websiteUrl/issues"
 			vcsUrl = "$websiteUrl.git"
 			setLicenses("MIT")
-			setLabels("java", "implementation-access", "proxy-class", "craftbukkit", "nms")
+			setLabels("java", "accessor", "implementation-access", "dynamic-proxy", "craftbukkit", "nms")
 		})
 	}
 }
