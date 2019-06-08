@@ -27,7 +27,6 @@ package net.mcparkour.impass.handler.registry.method;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
-import net.mcparkour.impass.handler.AnnotationHandlerException;
 import net.mcparkour.impass.handler.method.MethodAnnotationHandler;
 import net.mcparkour.impass.handler.method.MethodHandler;
 import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
@@ -54,6 +53,6 @@ public class MethodAnnotationHandlerRegistry extends AnnotationHandlerRegistry<M
 				return handler.handleRaw(annotation, methodHandler);
 			}
 		}
-		throw new AnnotationHandlerException("Member does not have any annotation");
+		return methodHandler.invokeMethod();
 	}
 }

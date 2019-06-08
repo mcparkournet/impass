@@ -55,4 +55,11 @@ public class InheritanceTest {
 		Assertions.assertEquals(2, subclassRoot.accept(subclass));
 		Assertions.assertEquals(3, subclassRoot.accept(subclassTwo));
 	}
+
+	@Test
+	public void testExternalSubclassAccessor() {
+		ListSubclassAccessor listSubclass = this.accessorFactory.createInstanceAccessor(ListSubclassAccessor.class, new ListSubclass());
+		Assertions.assertEquals(1, listSubclass.getNumberOne());
+		Assertions.assertEquals(0, listSubclass.size());
+	}
 }

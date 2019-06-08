@@ -72,6 +72,12 @@ public class MethodHandler {
 	}
 
 	@Nullable
+	public Object invokeMethod() throws Throwable {
+		var name = this.method.getName();
+		return invokeMethod(name);
+	}
+
+	@Nullable
 	public Object invokeMethod(String methodName) throws Throwable {
 		remapParameters();
 		var method = Reflections.getMethod(this.type, methodName, this.parameterTypes);

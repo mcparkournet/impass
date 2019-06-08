@@ -28,7 +28,6 @@ import net.mcparkour.impass.BasicAccessorFactory;
 import net.mcparkour.impass.MethodInvokedException;
 import net.mcparkour.impass.TestImplementation;
 import net.mcparkour.impass.TestImplementationTwo;
-import net.mcparkour.impass.handler.AnnotationHandlerException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +69,7 @@ public class InstanceAccessorTest {
 
 	@Test
 	public void testUnannotatedMethodAccess() {
-		Assertions.assertThrows(AnnotationHandlerException.class, () -> this.accessor.unannotatedMethod());
+		Assertions.assertThrows(MethodInvokedException.class, () -> this.accessor.unannotatedMethod());
 	}
 
 	@Test

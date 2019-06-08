@@ -22,13 +22,13 @@
  * SOFTWARE.
  */
 
-package net.mcparkour.impass.handler;
+package net.mcparkour.impass.instance.inheritance;
 
-public class AnnotationHandlerException extends RuntimeException {
+import java.util.ArrayList;
 
-	private static final long serialVersionUID = -4060558283476616965L;
+public class ListSubclass extends ArrayList<String> {
 
-	public AnnotationHandlerException(String message) {
-		super(message);
+	public int getNumberOne() {
+		return 1;
 	}
 }
