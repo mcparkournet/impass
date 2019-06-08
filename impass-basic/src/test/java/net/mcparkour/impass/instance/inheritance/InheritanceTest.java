@@ -26,6 +26,7 @@ package net.mcparkour.impass.instance.inheritance;
 
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.BasicAccessorFactory;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,8 +40,17 @@ public class InheritanceTest {
 	}
 
 	@Test
-	public void test() {
+	public void testSuperclassMethodAccess() {
 		SubclassAccessor subclassAccessor = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
-		subclassAccessor.superclassMethod();
+		Assertions.assertEquals(1, subclassAccessor.superclassMethod());
+	}
+
+	@Test
+	public void testSuperclassParameterMethodAccess() {
+		SubclassAccessor subclassRoot = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+		SuperclassAccessor superclass = this.accessorFactory.createInstanceAccessor(SuperclassAccessor.class, new Superclass());
+		SubclassAccessor subclass = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+		Assertions.assertEquals(1, subclassRoot.accept(superclass));
+		Assertions.assertEquals(2, subclassRoot.accept(subclass));
 	}
 }

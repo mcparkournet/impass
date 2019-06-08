@@ -108,10 +108,8 @@ public class MethodHandler {
 					var accessor = (InstanceAccessor) parameter;
 					var instance = accessor.getInstance();
 					this.parameters[index] = instance;
-					this.parameterTypes[index] = instance.getClass();
-				} else {
-					this.parameterTypes[index] = this.typeHandlerRegistry.handleType(parameterType);
 				}
+				this.parameterTypes[index] = this.typeHandlerRegistry.handleType(parameterType);
 			}
 		}
 	}

@@ -24,4 +24,14 @@
 
 package net.mcparkour.impass.instance.inheritance;
 
-public class Subclass extends Superclass {}
+public class Subclass extends Superclass {
+
+	public int accept(Superclass superclass) {
+		return superclass.returnOne();
+	}
+
+	@Override
+	public int returnOne() {
+		return 2;
+	}
+}
