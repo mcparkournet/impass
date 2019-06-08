@@ -29,11 +29,12 @@ import java.lang.annotation.Annotation;
 public interface AnnotationHandler<A extends Annotation> {
 
 	default A castAnnotation(Annotation annotation) {
-		var annotationType = getAnnotationType();
-		if (!annotationType.isInstance(annotation)) {
-			throw new AnnotationHandlerException("Invalid annotation type");
+		var annotationType = annotation.annotationType();
+		var handlerAnnotationType = getAnnotationType();
+		if (annotationType != handlerAnnotationType) {
+			throw new IllegalArgumentException("Invalid annotation type (Given: " + annotationType + "; Expected: " + handlerAnnotationType + ")");
 		}
-		return annotationType.cast(annotation);
+		return handlerAnnotationType.cast(annotation);
 	}
 
 	Class<A> getAnnotationType();
