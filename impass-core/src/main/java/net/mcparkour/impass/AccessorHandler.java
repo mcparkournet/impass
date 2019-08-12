@@ -50,14 +50,18 @@ public class AccessorHandler implements InvocationHandler {
 	@Nullable
 	public Object invoke(Object proxy, Method method, @Nullable Object[] args) throws Throwable {
 		var accessorType = method.getDeclaringClass();
-		var type = this.typeHandlerRegistry.handleType(accessorType);
 		var parameters = args == null ? new Object[0] : args;
-		var handler = new MethodHandler(type, method, parameters, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
+		var parameterTypes = method.getParameterTypes();
+		var implementationType = this.typeHandlerRegistry.handleType(accessorType);
+		var handler = new MethodHandler(proxy, method, accessorType, parameters, parameterTypes, implementationType, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
 		return handle(handler);
 	}
 
 	@Nullable
 	public Object handle(MethodHandler handler) throws Throwable {
+		if (handler.isMethodDefault()) {
+			return handler.invokeDefaultMethod();
+		}
 		return this.methodHandlerRegistry.handleMethod(handler);
 	}
 
@@ -71,5 +75,9 @@ public class AccessorHandler implements InvocationHandler {
 
 	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
 		return this.methodHandlerRegistry;
+	}
+
+	public ReflectionOperations getReflectionOperations() {
+		return this.reflectionOperations;
 	}
 }

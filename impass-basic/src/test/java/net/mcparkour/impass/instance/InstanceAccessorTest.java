@@ -217,4 +217,9 @@ public class InstanceAccessorTest {
 		var implementation = new TestImplementationTwo(constructorValue);
 		return this.accessorFactory.createInstanceAccessor(TestInstanceAccessorTwo.class, implementation);
 	}
+
+	@Test
+	public void testDefaultObjectObjectMethodCall() {
+		Assertions.assertEquals("TEST", this.accessor.defaultObjectObjectMethod("test"));
+	}
 }

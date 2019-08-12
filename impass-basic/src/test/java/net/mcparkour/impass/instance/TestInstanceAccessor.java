@@ -112,4 +112,13 @@ public interface TestInstanceAccessor extends InstanceAccessor {
 	@Nullable
 	@Method("nullNullMethod")
 	TestInstanceAccessorTwo nullNullMethod(@Nullable TestInstanceAccessorTwo accessor);
+
+	default String defaultObjectObjectMethod(String string) {
+		String upperCase = toUpperCase(string);
+		return objectObjectMethod(upperCase);
+	}
+
+	private String toUpperCase(String string) {
+		return string.toUpperCase();
+	}
 }

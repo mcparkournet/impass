@@ -130,4 +130,13 @@ public interface TestTypeAccessor extends TypeAccessor {
 
 	@Constructor
 	TestInstanceAccessor construct(int primitive, String object, TestInstanceAccessorTwo accessor);
+
+	default String defaultObjectObjectMethod(String string) {
+		String upperCase = toUpperCase(string);
+		return staticObjectObjectMethod(upperCase);
+	}
+
+	private String toUpperCase(String string) {
+		return string.toUpperCase();
+	}
 }

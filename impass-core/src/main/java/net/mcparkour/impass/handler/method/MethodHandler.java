@@ -25,6 +25,8 @@
 package net.mcparkour.impass.handler.method;
 
 import java.lang.annotation.Annotation;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
@@ -36,19 +38,23 @@ import org.jetbrains.annotations.Nullable;
 
 public class MethodHandler {
 
-	private Class<?> type;
+	private Object proxyInstance;
 	private Method method;
+	private Class<?> accessorType;
 	private Object[] parameters;
 	private Class<?>[] parameterTypes;
+	private Class<?> implementationType;
 	private AccessorFactory accessorFactory;
 	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
 	private ReflectionOperations reflectionOperations;
 
-	public MethodHandler(Class<?> type, Method method, Object[] parameters, AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, ReflectionOperations reflectionOperations) {
-		this.type = type;
+	public MethodHandler(Object proxyInstance, Method method, Class<?> accessorType, Object[] parameters, Class<?>[] parameterTypes, Class<?> implementationType, AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, ReflectionOperations reflectionOperations) {
+		this.proxyInstance = proxyInstance;
 		this.method = method;
+		this.accessorType = accessorType;
 		this.parameters = parameters;
-		this.parameterTypes = method.getParameterTypes();
+		this.parameterTypes = parameterTypes;
+		this.implementationType = implementationType;
 		this.accessorFactory = accessorFactory;
 		this.typeHandlerRegistry = typeHandlerRegistry;
 		this.reflectionOperations = reflectionOperations;
@@ -56,7 +62,7 @@ public class MethodHandler {
 
 	@Nullable
 	public Object getFieldValue(String fieldName) {
-		var field = Reflections.getField(this.type, fieldName);
+		var field = Reflections.getField(this.implementationType, fieldName);
 		var value = this.reflectionOperations.getFieldValue(field);
 		if (value == null) {
 			return null;
@@ -66,7 +72,7 @@ public class MethodHandler {
 
 	public void setFieldValue(String fieldName) {
 		remapParameters();
-		var field = Reflections.getField(this.type, fieldName);
+		var field = Reflections.getField(this.implementationType, fieldName);
 		var firstParameter = getFirstParameter();
 		this.reflectionOperations.setFieldValue(field, firstParameter);
 	}
@@ -80,7 +86,7 @@ public class MethodHandler {
 	@Nullable
 	public Object invokeMethod(String methodName) throws Throwable {
 		remapParameters();
-		var method = Reflections.getMethod(this.type, methodName, this.parameterTypes);
+		var method = Reflections.getMethod(this.implementationType, methodName, this.parameterTypes);
 		var value = this.reflectionOperations.invokeMethod(method, this.parameters);
 		if (value == null) {
 			return null;
@@ -90,7 +96,7 @@ public class MethodHandler {
 
 	public Object newInstance() {
 		remapParameters();
-		var constructor = Reflections.getConstructor(this.type, this.parameterTypes);
+		var constructor = Reflections.getConstructor(this.implementationType, this.parameterTypes);
 		var implementation = Reflections.newInstance(constructor, this.parameters);
 		return remapReturnType(implementation);
 	}
@@ -124,16 +130,38 @@ public class MethodHandler {
 		return this.method.equals(method);
 	}
 
+	public Object invokeDefaultMethod() throws Throwable {
+		var methodName = this.method.getName();
+		var methodType = createMethodType();
+		return MethodHandles.lookup()
+			.findSpecial(this.accessorType, methodName, methodType, this.accessorType)
+			.bindTo(this.proxyInstance)
+			.invokeWithArguments(this.parameters);
+	}
+
+	private MethodType createMethodType() {
+		var returnType = this.method.getReturnType();
+		return MethodType.methodType(returnType, this.parameterTypes);
+	}
+
+	public boolean isMethodDefault() {
+		return this.method.isDefault();
+	}
+
 	public Object getFirstParameter() {
 		return this.parameters[0];
 	}
 
-	public Class<?> getType() {
-		return this.type;
+	public Object getProxyInstance() {
+		return this.proxyInstance;
 	}
 
 	public Method getMethod() {
 		return this.method;
+	}
+
+	public Class<?> getAccessorType() {
+		return this.accessorType;
 	}
 
 	public Object[] getParameters() {
@@ -142,6 +170,10 @@ public class MethodHandler {
 
 	public Class<?>[] getParameterTypes() {
 		return this.parameterTypes;
+	}
+
+	public Class<?> getImplementationType() {
+		return this.implementationType;
 	}
 
 	public AccessorFactory getAccessorFactory() {
