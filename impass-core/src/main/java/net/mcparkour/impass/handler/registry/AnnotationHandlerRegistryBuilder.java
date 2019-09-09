@@ -29,9 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import net.mcparkour.impass.handler.AnnotationHandler;
-import net.mcparkour.impass.util.Builder;
 
-public abstract class AnnotationHandlerRegistryBuilder<H extends AnnotationHandler<? extends Annotation>, R extends AnnotationHandlerRegistry<H>> implements Builder<R> {
+public abstract class AnnotationHandlerRegistryBuilder<H extends AnnotationHandler<? extends Annotation>, R extends AnnotationHandlerRegistry<H>> {
 
 	private Map<Class<? extends Annotation>, H> handlers = new HashMap<>(4);
 
@@ -46,6 +45,8 @@ public abstract class AnnotationHandlerRegistryBuilder<H extends AnnotationHandl
 		this.handlers.put(annotationType, handler);
 		return this;
 	}
+
+	public abstract R build();
 
 	public R build(Function<? super Map<Class<? extends Annotation>, H>, ? extends R> applier) {
 		return applier.apply(this.handlers);
