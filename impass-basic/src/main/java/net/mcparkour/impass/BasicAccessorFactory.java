@@ -24,6 +24,7 @@
 
 package net.mcparkour.impass;
 
+import net.mcparkour.common.reflection.Reflections;
 import net.mcparkour.impass.annotation.handler.method.ConstructorAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.GetterAnnotationHandler;
 import net.mcparkour.impass.annotation.handler.method.MethodAnnotationHandler;
@@ -35,7 +36,6 @@ import net.mcparkour.impass.instance.InstanceAccessor;
 import net.mcparkour.impass.instance.InstanceAccessorHandler;
 import net.mcparkour.impass.type.TypeAccessor;
 import net.mcparkour.impass.type.TypeAccessorHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
 
 public class BasicAccessorFactory implements AccessorFactory {
 

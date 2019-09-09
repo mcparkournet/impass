@@ -28,12 +28,12 @@ import java.lang.annotation.Annotation;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
+import net.mcparkour.common.reflection.Reflections;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 import net.mcparkour.impass.instance.InstanceAccessor;
-import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
 
 public class MethodHandler {

@@ -25,12 +25,12 @@
 package net.mcparkour.impass.instance;
 
 import java.lang.reflect.Method;
+import net.mcparkour.common.reflection.Reflections;
 import net.mcparkour.impass.AccessorFactory;
 import net.mcparkour.impass.AccessorHandler;
 import net.mcparkour.impass.handler.method.MethodHandler;
 import net.mcparkour.impass.handler.registry.method.MethodAnnotationHandlerRegistry;
 import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
-import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
 
 public class InstanceAccessorHandler extends AccessorHandler {

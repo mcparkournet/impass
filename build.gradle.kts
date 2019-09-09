@@ -18,6 +18,7 @@ subprojects {
 	}
 
 	dependencies {
+		api("net.mcparkour:common-reflection:1.0.0")
 		compileOnly("org.jetbrains:annotations:17.0.0")
 		testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
 		testRuntime("org.junit.jupiter:junit-jupiter-engine:5.5.1")

@@ -24,8 +24,8 @@
 
 package net.mcparkour.impass.annotation.handler.type;
 
+import net.mcparkour.common.reflection.Reflections;
 import net.mcparkour.impass.annotation.type.Type;
-import net.mcparkour.impass.util.reflection.Reflections;
 
 public class TypeAnnotationHandler implements net.mcparkour.impass.handler.type.TypeAnnotationHandler<Type> {
 

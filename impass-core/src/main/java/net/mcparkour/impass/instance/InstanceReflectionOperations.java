@@ -26,8 +26,9 @@ package net.mcparkour.impass.instance;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import net.mcparkour.common.reflection.Reflections;
+import net.mcparkour.common.reflection.UncheckedInvocationTargetException;
 import net.mcparkour.impass.handler.method.ReflectionOperations;
-import net.mcparkour.impass.util.reflection.Reflections;
 import org.jetbrains.annotations.Nullable;
 
 public class InstanceReflectionOperations implements ReflectionOperations {
@@ -52,7 +53,11 @@ public class InstanceReflectionOperations implements ReflectionOperations {
 	@Override
 	@Nullable
 	public Object invokeMethod(Method method, Object... parameters) throws Throwable {
-		return Reflections.invokeMethod(method, this.instance, parameters);
+		try {
+			return Reflections.invokeMethod(method, this.instance, parameters);
+		} catch (UncheckedInvocationTargetException exception) {
+			throw exception.getTargetException();
+		}
 	}
 
 	public Object getInstance() {

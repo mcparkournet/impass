@@ -24,9 +24,9 @@
 
 package net.mcparkour.impass.annotation.handler.type;
 
+import net.mcparkour.common.reflection.Reflections;
 import net.mcparkour.impass.annotation.type.MinecraftServerType;
 import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
-import net.mcparkour.impass.util.reflection.Reflections;
 
 public class MinecraftServerAnnotationHandler implements TypeAnnotationHandler<MinecraftServerType> {
 
