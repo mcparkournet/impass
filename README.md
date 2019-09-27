@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mcparkournet/impass.svg?branch=master)](https://travis-ci.org/mcparkournet/impass)
-[![Download](https://api.bintray.com/packages/mcparkour/maven-public/impass-bukkit/images/download.svg)](https://bintray.com/mcparkour/maven-public/impass-bukkit/_latestVersion)
+[![Download](https://api.bintray.com/packages/mcparkour/maven-public/impass-core/images/download.svg)](https://bintray.com/mcparkour/maven-public/impass-core/_latestVersion)
 
 # Impass
 
