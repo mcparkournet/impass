@@ -18,36 +18,29 @@ subprojects {
 	}
 
 	dependencies {
-		api("net.mcparkour:common-reflection:1.0.0")
-		compileOnly("org.jetbrains:annotations:17.0.0")
-		testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.1")
-		testRuntime("org.junit.jupiter:junit-jupiter-engine:5.5.1")
-		testCompileOnly("org.jetbrains:annotations:17.0.0")
+		api("net.mcparkour:common-reflection:1.0.5")
+		compileOnly("org.jetbrains:annotations:19.0.0")
+		testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
+		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
+		testCompileOnly("org.jetbrains:annotations:19.0.0")
 	}
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_12
-		targetCompatibility = JavaVersion.VERSION_12
+		sourceCompatibility = JavaVersion.VERSION_11
+		targetCompatibility = JavaVersion.VERSION_11
+		withSourcesJar()
 	}
 
 	tasks {
 		test {
-			useJUnitPlatform {
-				includeEngines("junit-jupiter")
-			}
+			useJUnitPlatform()
 		}
-	}
-
-	task<Jar>("sourcesJar") {
-		from(sourceSets["main"].allSource)
-		archiveClassifier.set("sources")
 	}
 
 	publishing {
 		publications {
 			create<MavenPublication>("maven") {
 				from(components["java"])
-				artifact(tasks["sourcesJar"])
 			}
 		}
 	}
