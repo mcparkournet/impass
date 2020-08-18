@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mcparkournet/impass.svg?branch=master)](https://travis-ci.org/mcparkournet/impass)
+![build](https://github.com/mcparkournet/impass/workflows/build/badge.svg)
 [![Download](https://api.bintray.com/packages/mcparkour/maven-public/impass-core/images/download.svg)](https://bintray.com/mcparkour/maven-public/impass-core/_latestVersion)
 
 # Impass
