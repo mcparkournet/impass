@@ -18,11 +18,11 @@ subprojects {
 	}
 
 	dependencies {
-		api("net.mcparkour:common-reflection:1.0.5")
-		compileOnly("org.jetbrains:annotations:19.0.0")
-		testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
-		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
-		testCompileOnly("org.jetbrains:annotations:19.0.0")
+		api("net.mcparkour:common-reflection:1.0.7")
+		compileOnly("org.jetbrains:annotations:20.0.0")
+		testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+		testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+		testCompileOnly("org.jetbrains:annotations:20.0.0")
 	}
 
 	java {
