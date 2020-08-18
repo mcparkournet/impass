@@ -30,17 +30,17 @@ import net.mcparkour.impass.handler.AnnotationHandler;
 
 public class AnnotationHandlerRegistry<H extends AnnotationHandler<? extends Annotation>> {
 
-	private Map<Class<? extends Annotation>, H> handlers;
+    private Map<Class<? extends Annotation>, H> handlers;
 
-	public AnnotationHandlerRegistry(Map<Class<? extends Annotation>, H> handlers) {
-		this.handlers = handlers;
-	}
+    public AnnotationHandlerRegistry(final Map<Class<? extends Annotation>, H> handlers) {
+        this.handlers = handlers;
+    }
 
-	public H get(Class<? extends Annotation> annotation) {
-		return this.handlers.get(annotation);
-	}
+    public H get(final Class<? extends Annotation> annotation) {
+        return this.handlers.get(annotation);
+    }
 
-	public Map<Class<? extends Annotation>, H> getHandlers() {
-		return Map.copyOf(this.handlers);
-	}
+    public Map<Class<? extends Annotation>, H> getHandlers() {
+        return Map.copyOf(this.handlers);
+    }
 }

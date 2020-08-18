@@ -34,25 +34,25 @@ import org.jetbrains.annotations.Nullable;
 
 public class MethodAnnotationHandlerRegistry extends AnnotationHandlerRegistry<MethodAnnotationHandler<? extends Annotation>> {
 
-	public static MethodAnnotationHandlerRegistryBuilder builder() {
-		return new MethodAnnotationHandlerRegistryBuilder();
-	}
+    public static MethodAnnotationHandlerRegistryBuilder builder() {
+        return new MethodAnnotationHandlerRegistryBuilder();
+    }
 
-	public MethodAnnotationHandlerRegistry(Map<Class<? extends Annotation>, MethodAnnotationHandler<? extends Annotation>> handlers) {
-		super(handlers);
-	}
+    public MethodAnnotationHandlerRegistry(final Map<Class<? extends Annotation>, MethodAnnotationHandler<? extends Annotation>> handlers) {
+        super(handlers);
+    }
 
-	@Nullable
-	public Object handleMethod(MethodHandler methodHandler) throws Throwable {
-		Method method = methodHandler.getMethod();
-		var annotations = method.getAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var handler = get(annotationType);
-			if (handler != null) {
-				return handler.handleRaw(annotation, methodHandler);
-			}
-		}
-		return methodHandler.invokeMethod();
-	}
+    @Nullable
+    public Object handleMethod(final MethodHandler methodHandler) throws Throwable {
+        Method method = methodHandler.getMethod();
+        var annotations = method.getAnnotations();
+        for (final var annotation : annotations) {
+            var annotationType = annotation.annotationType();
+            var handler = get(annotationType);
+            if (handler != null) {
+                return handler.handleRaw(annotation, methodHandler);
+            }
+        }
+        return methodHandler.invokeMethod();
+    }
 }

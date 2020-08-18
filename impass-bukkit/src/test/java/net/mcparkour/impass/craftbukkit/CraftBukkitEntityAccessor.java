@@ -31,6 +31,6 @@ import net.mcparkour.impass.instance.InstanceAccessor;
 @CraftBukkitType("CraftBukkitEntity")
 public interface CraftBukkitEntityAccessor extends InstanceAccessor {
 
-	@Method("getNumberOne")
-	int getNumberOne();
+    @Method("getNumberOne")
+    int getNumberOne();
 }

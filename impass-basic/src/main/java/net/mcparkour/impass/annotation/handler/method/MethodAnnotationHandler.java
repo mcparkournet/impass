@@ -30,15 +30,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class MethodAnnotationHandler implements net.mcparkour.impass.handler.method.MethodAnnotationHandler<Method> {
 
-	@Override
-	@Nullable
-	public Object handle(Method annotation, MethodHandler handler) throws Throwable {
-		var methodName = annotation.value();
-		return handler.invokeMethod(methodName);
-	}
+    @Override
+    @Nullable
+    public Object handle(final Method annotation, final MethodHandler handler) throws Throwable {
+        var methodName = annotation.value();
+        return handler.invokeMethod(methodName);
+    }
 
-	@Override
-	public Class<Method> getAnnotationType() {
-		return Method.class;
-	}
+    @Override
+    public Class<Method> getAnnotationType() {
+        return Method.class;
+    }
 }

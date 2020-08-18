@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Method {
 
-	/**
-	 * @return implementation method name
-	 */
-	String value();
+    /**
+     * @return implementation method name
+     */
+    String value();
 }

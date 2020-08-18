@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface MinecraftServerType {
 
-	/**
-	 * @return net.minecraft.server class name
-	 */
-	String value();
+    /**
+     * @return net.minecraft.server class name
+     */
+    String value();
 }

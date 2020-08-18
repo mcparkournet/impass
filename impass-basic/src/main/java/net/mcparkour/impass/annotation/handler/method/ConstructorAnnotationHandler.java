@@ -31,14 +31,14 @@ import org.jetbrains.annotations.Nullable;
 
 public class ConstructorAnnotationHandler implements MethodAnnotationHandler<Constructor> {
 
-	@Override
-	@Nullable
-	public Object handle(Constructor annotation, MethodHandler handler) {
-		return handler.newInstance();
-	}
+    @Override
+    @Nullable
+    public Object handle(final Constructor annotation, final MethodHandler handler) {
+        return handler.newInstance();
+    }
 
-	@Override
-	public Class<Constructor> getAnnotationType() {
-		return Constructor.class;
-	}
+    @Override
+    public Class<Constructor> getAnnotationType() {
+        return Constructor.class;
+    }
 }

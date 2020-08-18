@@ -29,14 +29,14 @@ import net.mcparkour.impass.annotation.type.Type;
 
 public class TypeAnnotationHandler implements net.mcparkour.impass.handler.type.TypeAnnotationHandler<Type> {
 
-	@Override
-	public Class<?> handle(Type annotation) {
-		var className = annotation.value();
-		return Reflections.getClass(className);
-	}
+    @Override
+    public Class<?> handle(final Type annotation) {
+        var className = annotation.value();
+        return Reflections.getClass(className);
+    }
 
-	@Override
-	public Class<Type> getAnnotationType() {
-		return Type.class;
-	}
+    @Override
+    public Class<Type> getAnnotationType() {
+        return Type.class;
+    }
 }

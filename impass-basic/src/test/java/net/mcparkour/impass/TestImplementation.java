@@ -29,265 +29,265 @@ import org.jetbrains.annotations.Nullable;
 
 public class TestImplementation {
 
-	private void unannotatedMethod() {
-		throw new MethodInvokedException();
-	}
+    private void unannotatedMethod() {
+        throw new MethodInvokedException();
+    }
 
-	private int primitiveField = 1;
+    private int primitiveField = 1;
 
-	public int getPrimitiveField() {
-		return this.primitiveField;
-	}
-
-	private String objectField = "string";
-
-	public String getObjectField() {
-		return this.objectField;
-	}
-
-	private TestImplementationTwo accessorField = new TestImplementationTwo(1);
-
-	public TestImplementationTwo getAccessorField() {
-		return this.accessorField;
-	}
-
-	@Nullable
-	private TestImplementationTwo nullField = null;
-
-	@Nullable
-	public TestImplementationTwo getNullField() {
-		return this.nullField;
-	}
-
-	public void setNullField(@Nullable TestImplementationTwo nullField) {
-		this.nullField = nullField;
-	}
-
-	private void voidVoidMethod() {
-		throw new MethodInvokedException();
-	}
-
-	private int primitiveVoidMethod() {
-		return 1;
-	}
-
-	private void voidPrimitiveMethod(int integer) {
-		throw new MethodInvokedException();
-	}
-
-	private int primitivePrimitiveMethod(int integer) {
-		return integer;
-	}
-
-	private String objectVoidMethod() {
-		return "string";
-	}
-
-	private void voidObjectMethod(String string) {
-		throw new MethodInvokedException();
-	}
-
-	private String objectObjectMethod(String string) {
-		return string;
-	}
-
-	private TestImplementationTwo accessorVoidMethod() {
-		return new TestImplementationTwo(1);
-	}
-
-	private void voidAccessorMethod(TestImplementationTwo accessor) {
-		throw new MethodInvokedException();
-	}
-
-	private TestImplementationTwo accessorAccessorMethod(TestImplementationTwo accessor) {
-		return accessor;
-	}
-
-	private void voidPrimitiveObjectMethod(int integer, String string) {
-		throw new MethodInvokedException();
-	}
-
-	private int primitivePrimitiveObjectMethod(int integer, String string) {
-		return integer + Integer.parseInt(string);
-	}
-
-	private String objectPrimitiveObjectMethod(int integer, String string) {
-		return integer + " " + string;
-	}
-
-	private TestImplementationTwo accessorPrimitiveObjectAccessorMethod(int integer, String string, TestImplementationTwo accessor) {
-		return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
-	}
-
-	@Nullable
-	private TestImplementationTwo nullVoidMethod() {
-		return null;
-	}
-
-	private void voidNullMethod(@Nullable TestImplementationTwo accessor) {
-		throw new MethodInvokedException();
-	}
-
-	@Nullable
-	private TestImplementationTwo nullNullMethod(@Nullable TestImplementationTwo accessor) {
-		return accessor;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-		if (object == null || getClass() != object.getClass()) {
-			return false;
-		}
-		TestImplementation that = (TestImplementation) object;
-		return this.primitiveField == that.primitiveField && Objects.equals(this.objectField, that.objectField) && Objects.equals(this.accessorField, that.accessorField) && Objects.equals(this.nullField, that.nullField);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.primitiveField, this.objectField, this.accessorField, this.nullField);
-	}
-
-	@Override
-	public String toString() {
-		return "TestImplementation{" + "primitiveField=" + this.primitiveField + ", objectField='" + this.objectField + "'" + ", accessorField=" + this.accessorField + ", nullField=" + this.nullField + "}";
-	}
-
-	private static void staticUnannotatedMethod() {
-		throw new MethodInvokedException();
-	}
-
-	private static int staticPrimitiveField = 1;
-
-	public static int getStaticPrimitiveField() {
-		return staticPrimitiveField;
-	}
-
-	public static void setStaticPrimitiveField(int staticPrimitiveField) {
-		TestImplementation.staticPrimitiveField = staticPrimitiveField;
-	}
-
-	private static String staticObjectField = "string";
-
-	public static String getStaticObjectField() {
-		return staticObjectField;
-	}
-
-	public static void setStaticObjectField(String staticObjectField) {
-		TestImplementation.staticObjectField = staticObjectField;
-	}
-
-	private static TestImplementationTwo staticAccessorField = new TestImplementationTwo(1);
-
-	public static TestImplementationTwo getStaticAccessorField() {
-		return staticAccessorField;
-	}
-
-	public static void setStaticAccessorField(TestImplementationTwo staticAccessorField) {
-		TestImplementation.staticAccessorField = staticAccessorField;
-	}
-
-	@Nullable
-	private static TestImplementationTwo staticNullField = null;
-
-	@Nullable
-	public static TestImplementationTwo getStaticNullField() {
-		return staticNullField;
-	}
-
-	public static void setStaticNullField(@Nullable TestImplementationTwo nullField) {
-		staticNullField = nullField;
-	}
-
-	private static void staticVoidVoidMethod() {
-		throw new MethodInvokedException();
-	}
-
-	private static int staticPrimitiveVoidMethod() {
-		return 1;
-	}
-
-	private static void staticVoidPrimitiveMethod(int integer) {
-		throw new MethodInvokedException();
-	}
-
-	private static int staticPrimitivePrimitiveMethod(int integer) {
-		return integer;
-	}
-
-	private static String staticObjectVoidMethod() {
-		return "string";
-	}
-
-	private static void staticVoidObjectMethod(String string) {
-		throw new MethodInvokedException();
-	}
-
-	private static String staticObjectObjectMethod(String string) {
-		return string;
-	}
-
-	private static TestImplementationTwo staticAccessorVoidMethod() {
-		return new TestImplementationTwo(1);
-	}
-
-	private static void staticVoidAccessorMethod(TestImplementationTwo accessor) {
-		throw new MethodInvokedException();
-	}
-
-	private static TestImplementationTwo staticAccessorAccessorMethod(TestImplementationTwo accessor) {
-		return accessor;
-	}
-
-	private static void staticVoidPrimitiveObjectMethod(int integer, String string) {
-		throw new MethodInvokedException();
-	}
-
-	private static int staticPrimitivePrimitiveObjectMethod(int integer, String string) {
-		return integer + Integer.parseInt(string);
-	}
-
-	private static String staticObjectPrimitiveObjectMethod(int integer, String string) {
-		return integer + " " + string;
-	}
-
-	private static TestImplementationTwo staticAccessorPrimitiveObjectAccessorMethod(int integer, String string, TestImplementationTwo accessor) {
-		return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
-	}
-
-	@Nullable
-	private static TestImplementationTwo staticNullVoidMethod() {
-		return null;
-	}
-
-	private static void staticVoidNullMethod(@Nullable TestImplementationTwo accessor) {
-		throw new MethodInvokedException();
-	}
-
-	@Nullable
-	private static TestImplementationTwo staticNullNullMethod(@Nullable TestImplementationTwo accessor) {
-		return accessor;
-	}
-
-	public TestImplementation() {}
-
-	public TestImplementation(int primitiveField) {
-		this.primitiveField = primitiveField;
-	}
-
-	public TestImplementation(String objectField) {
-		this.objectField = objectField;
-	}
-
-	public TestImplementation(TestImplementationTwo accessorField) {
-		this.accessorField = accessorField;
-	}
-
-	public TestImplementation(int primitiveField, String objectField, TestImplementationTwo accessorField) {
-		this.primitiveField = primitiveField;
-		this.objectField = objectField;
-		this.accessorField = accessorField;
-	}
+    public int getPrimitiveField() {
+        return this.primitiveField;
+    }
+
+    private String objectField = "string";
+
+    public String getObjectField() {
+        return this.objectField;
+    }
+
+    private TestImplementationTwo accessorField = new TestImplementationTwo(1);
+
+    public TestImplementationTwo getAccessorField() {
+        return this.accessorField;
+    }
+
+    @Nullable
+    private TestImplementationTwo nullField;
+
+    @Nullable
+    public TestImplementationTwo getNullField() {
+        return this.nullField;
+    }
+
+    public void setNullField(@Nullable final TestImplementationTwo nullField) {
+        this.nullField = nullField;
+    }
+
+    private void voidVoidMethod() {
+        throw new MethodInvokedException();
+    }
+
+    private int primitiveVoidMethod() {
+        return 1;
+    }
+
+    private void voidPrimitiveMethod(final int integer) {
+        throw new MethodInvokedException();
+    }
+
+    private int primitivePrimitiveMethod(final int integer) {
+        return integer;
+    }
+
+    private String objectVoidMethod() {
+        return "string";
+    }
+
+    private void voidObjectMethod(final String string) {
+        throw new MethodInvokedException();
+    }
+
+    private String objectObjectMethod(final String string) {
+        return string;
+    }
+
+    private TestImplementationTwo accessorVoidMethod() {
+        return new TestImplementationTwo(1);
+    }
+
+    private void voidAccessorMethod(final TestImplementationTwo accessor) {
+        throw new MethodInvokedException();
+    }
+
+    private TestImplementationTwo accessorAccessorMethod(final TestImplementationTwo accessor) {
+        return accessor;
+    }
+
+    private void voidPrimitiveObjectMethod(final int integer, final String string) {
+        throw new MethodInvokedException();
+    }
+
+    private int primitivePrimitiveObjectMethod(final int integer, final String string) {
+        return integer + Integer.parseInt(string);
+    }
+
+    private String objectPrimitiveObjectMethod(final int integer, final String string) {
+        return integer + " " + string;
+    }
+
+    private TestImplementationTwo accessorPrimitiveObjectAccessorMethod(final int integer, final String string, final TestImplementationTwo accessor) {
+        return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
+    }
+
+    @Nullable
+    private TestImplementationTwo nullVoidMethod() {
+        return null;
+    }
+
+    private void voidNullMethod(@Nullable final TestImplementationTwo accessor) {
+        throw new MethodInvokedException();
+    }
+
+    @Nullable
+    private TestImplementationTwo nullNullMethod(@Nullable final TestImplementationTwo accessor) {
+        return accessor;
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        TestImplementation that = (TestImplementation) object;
+        return this.primitiveField == that.primitiveField && Objects.equals(this.objectField, that.objectField) && Objects.equals(this.accessorField, that.accessorField) && Objects.equals(this.nullField, that.nullField);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.primitiveField, this.objectField, this.accessorField, this.nullField);
+    }
+
+    @Override
+    public String toString() {
+        return "TestImplementation{" + "primitiveField=" + this.primitiveField + ", objectField='" + this.objectField + "'" + ", accessorField=" + this.accessorField + ", nullField=" + this.nullField + "}";
+    }
+
+    private static void staticUnannotatedMethod() {
+        throw new MethodInvokedException();
+    }
+
+    private static int staticPrimitiveField = 1;
+
+    public static int getStaticPrimitiveField() {
+        return staticPrimitiveField;
+    }
+
+    public static void setStaticPrimitiveField(final int staticPrimitiveField) {
+        TestImplementation.staticPrimitiveField = staticPrimitiveField;
+    }
+
+    private static String staticObjectField = "string";
+
+    public static String getStaticObjectField() {
+        return staticObjectField;
+    }
+
+    public static void setStaticObjectField(final String staticObjectField) {
+        TestImplementation.staticObjectField = staticObjectField;
+    }
+
+    private static TestImplementationTwo staticAccessorField = new TestImplementationTwo(1);
+
+    public static TestImplementationTwo getStaticAccessorField() {
+        return staticAccessorField;
+    }
+
+    public static void setStaticAccessorField(final TestImplementationTwo staticAccessorField) {
+        TestImplementation.staticAccessorField = staticAccessorField;
+    }
+
+    @Nullable
+    private static TestImplementationTwo staticNullField;
+
+    @Nullable
+    public static TestImplementationTwo getStaticNullField() {
+        return staticNullField;
+    }
+
+    public static void setStaticNullField(@Nullable final TestImplementationTwo nullField) {
+        staticNullField = nullField;
+    }
+
+    private static void staticVoidVoidMethod() {
+        throw new MethodInvokedException();
+    }
+
+    private static int staticPrimitiveVoidMethod() {
+        return 1;
+    }
+
+    private static void staticVoidPrimitiveMethod(final int integer) {
+        throw new MethodInvokedException();
+    }
+
+    private static int staticPrimitivePrimitiveMethod(final int integer) {
+        return integer;
+    }
+
+    private static String staticObjectVoidMethod() {
+        return "string";
+    }
+
+    private static void staticVoidObjectMethod(final String string) {
+        throw new MethodInvokedException();
+    }
+
+    private static String staticObjectObjectMethod(final String string) {
+        return string;
+    }
+
+    private static TestImplementationTwo staticAccessorVoidMethod() {
+        return new TestImplementationTwo(1);
+    }
+
+    private static void staticVoidAccessorMethod(final TestImplementationTwo accessor) {
+        throw new MethodInvokedException();
+    }
+
+    private static TestImplementationTwo staticAccessorAccessorMethod(final TestImplementationTwo accessor) {
+        return accessor;
+    }
+
+    private static void staticVoidPrimitiveObjectMethod(final int integer, final String string) {
+        throw new MethodInvokedException();
+    }
+
+    private static int staticPrimitivePrimitiveObjectMethod(final int integer, final String string) {
+        return integer + Integer.parseInt(string);
+    }
+
+    private static String staticObjectPrimitiveObjectMethod(final int integer, final String string) {
+        return integer + " " + string;
+    }
+
+    private static TestImplementationTwo staticAccessorPrimitiveObjectAccessorMethod(final int integer, final String string, final TestImplementationTwo accessor) {
+        return new TestImplementationTwo(integer + Integer.parseInt(string) + accessor.getConstructorValue());
+    }
+
+    @Nullable
+    private static TestImplementationTwo staticNullVoidMethod() {
+        return null;
+    }
+
+    private static void staticVoidNullMethod(@Nullable final TestImplementationTwo accessor) {
+        throw new MethodInvokedException();
+    }
+
+    @Nullable
+    private static TestImplementationTwo staticNullNullMethod(@Nullable final TestImplementationTwo accessor) {
+        return accessor;
+    }
+
+    public TestImplementation() {}
+
+    public TestImplementation(final int primitiveField) {
+        this.primitiveField = primitiveField;
+    }
+
+    public TestImplementation(final String objectField) {
+        this.objectField = objectField;
+    }
+
+    public TestImplementation(final TestImplementationTwo accessorField) {
+        this.accessorField = accessorField;
+    }
+
+    public TestImplementation(final int primitiveField, final String objectField, final TestImplementationTwo accessorField) {
+        this.primitiveField = primitiveField;
+        this.objectField = objectField;
+        this.accessorField = accessorField;
+    }
 }

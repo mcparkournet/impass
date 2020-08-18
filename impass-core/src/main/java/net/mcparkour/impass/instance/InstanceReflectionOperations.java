@@ -33,34 +33,35 @@ import org.jetbrains.annotations.Nullable;
 
 public class InstanceReflectionOperations implements ReflectionOperations {
 
-	private Object instance;
+    private Object instance;
 
-	public InstanceReflectionOperations(Object instance) {
-		this.instance = instance;
-	}
+    public InstanceReflectionOperations(final Object instance) {
+        this.instance = instance;
+    }
 
-	@Override
-	@Nullable
-	public Object getFieldValue(Field field) {
-		return Reflections.getFieldValue(field, this.instance);
-	}
+    @Override
+    @Nullable
+    public Object getFieldValue(final Field field) {
+        return Reflections.getFieldValue(field, this.instance);
+    }
 
-	@Override
-	public void setFieldValue(Field field, @Nullable Object value) {
-		Reflections.setFieldValue(field, this.instance, value);
-	}
+    @Override
+    public void setFieldValue(final Field field, @Nullable final Object value) {
+        Reflections.setFieldValue(field, this.instance, value);
+    }
 
-	@Override
-	@Nullable
-	public Object invokeMethod(Method method, Object... parameters) throws Throwable {
-		try {
-			return Reflections.invokeMethod(method, this.instance, parameters);
-		} catch (UncheckedInvocationTargetException exception) {
-			throw exception.getTargetException();
-		}
-	}
+    @SuppressWarnings("ProhibitedExceptionThrown")
+    @Override
+    @Nullable
+    public Object invokeMethod(final Method method, final Object... parameters) throws Throwable {
+        try {
+            return Reflections.invokeMethod(method, this.instance, parameters);
+        } catch (final UncheckedInvocationTargetException exception) {
+            throw exception.getTargetException();
+        }
+    }
 
-	public Object getInstance() {
-		return this.instance;
-	}
+    public Object getInstance() {
+        return this.instance;
+    }
 }

@@ -32,34 +32,34 @@ import org.junit.jupiter.api.Test;
 
 public class InheritanceTest {
 
-	private AccessorFactory accessorFactory;
+    private AccessorFactory accessorFactory;
 
-	@BeforeEach
-	public void setUp() {
-		this.accessorFactory = new BasicAccessorFactory();
-	}
+    @BeforeEach
+    public void setUp() {
+        this.accessorFactory = new BasicAccessorFactory();
+    }
 
-	@Test
-	public void testSuperclassMethodAccess() {
-		SubclassAccessor subclassAccessor = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
-		Assertions.assertEquals(1, subclassAccessor.superclassMethod());
-	}
+    @Test
+    public void testSuperclassMethodAccess() {
+        SubclassAccessor subclassAccessor = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+        Assertions.assertEquals(1, subclassAccessor.superclassMethod());
+    }
 
-	@Test
-	public void testSuperclassParameterMethodAccess() {
-		SubclassAccessor subclassRoot = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
-		SuperclassAccessor superclass = this.accessorFactory.createInstanceAccessor(SuperclassAccessor.class, new Superclass());
-		SubclassAccessor subclass = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
-		SubclassTwoAccessor subclassTwo = this.accessorFactory.createInstanceAccessor(SubclassTwoAccessor.class, new SubclassTwo());
-		Assertions.assertEquals(1, subclassRoot.accept(superclass));
-		Assertions.assertEquals(2, subclassRoot.accept(subclass));
-		Assertions.assertEquals(3, subclassRoot.accept(subclassTwo));
-	}
+    @Test
+    public void testSuperclassParameterMethodAccess() {
+        SubclassAccessor subclassRoot = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+        SuperclassAccessor superclass = this.accessorFactory.createInstanceAccessor(SuperclassAccessor.class, new Superclass());
+        SubclassAccessor subclass = this.accessorFactory.createInstanceAccessor(SubclassAccessor.class, new Subclass());
+        SubclassTwoAccessor subclassTwo = this.accessorFactory.createInstanceAccessor(SubclassTwoAccessor.class, new SubclassTwo());
+        Assertions.assertEquals(1, subclassRoot.accept(superclass));
+        Assertions.assertEquals(2, subclassRoot.accept(subclass));
+        Assertions.assertEquals(3, subclassRoot.accept(subclassTwo));
+    }
 
-	@Test
-	public void testExternalSubclassAccessor() {
-		ListSubclassAccessor listSubclass = this.accessorFactory.createInstanceAccessor(ListSubclassAccessor.class, new ListSubclass());
-		Assertions.assertEquals(1, listSubclass.getNumberOne());
-		Assertions.assertEquals(0, listSubclass.size());
-	}
+    @Test
+    public void testExternalSubclassAccessor() {
+        ListSubclassAccessor listSubclass = this.accessorFactory.createInstanceAccessor(ListSubclassAccessor.class, new ListSubclass());
+        Assertions.assertEquals(1, listSubclass.getNumberOne());
+        Assertions.assertEquals(0, listSubclass.size());
+    }
 }

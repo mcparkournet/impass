@@ -1,3 +1,3 @@
 dependencies {
-	api(project(":impass-core"))
+    api(project(":impass-core"))
 }

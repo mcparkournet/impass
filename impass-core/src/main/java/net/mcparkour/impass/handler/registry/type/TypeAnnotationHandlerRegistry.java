@@ -31,23 +31,23 @@ import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 
 public class TypeAnnotationHandlerRegistry extends AnnotationHandlerRegistry<TypeAnnotationHandler<? extends Annotation>> {
 
-	public static TypeAnnotationHandlerRegistryBuilder builder() {
-		return new TypeAnnotationHandlerRegistryBuilder();
-	}
+    public static TypeAnnotationHandlerRegistryBuilder builder() {
+        return new TypeAnnotationHandlerRegistryBuilder();
+    }
 
-	public TypeAnnotationHandlerRegistry(Map<Class<? extends Annotation>, TypeAnnotationHandler<? extends Annotation>> handlers) {
-		super(handlers);
-	}
+    public TypeAnnotationHandlerRegistry(final Map<Class<? extends Annotation>, TypeAnnotationHandler<? extends Annotation>> handlers) {
+        super(handlers);
+    }
 
-	public Class<?> handleType(Class<?> type) {
-		var annotations = type.getAnnotations();
-		for (var annotation : annotations) {
-			var annotationType = annotation.annotationType();
-			var handler = get(annotationType);
-			if (handler != null) {
-				return handler.handleRaw(annotation);
-			}
-		}
-		return type;
-	}
+    public Class<?> handleType(final Class<?> type) {
+        var annotations = type.getAnnotations();
+        for (final var annotation : annotations) {
+            var annotationType = annotation.annotationType();
+            var handler = get(annotationType);
+            if (handler != null) {
+                return handler.handleRaw(annotation);
+            }
+        }
+        return type;
+    }
 }

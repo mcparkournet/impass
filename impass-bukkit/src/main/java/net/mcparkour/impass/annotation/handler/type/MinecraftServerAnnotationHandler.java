@@ -30,20 +30,20 @@ import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 
 public class MinecraftServerAnnotationHandler implements TypeAnnotationHandler<MinecraftServerType> {
 
-	private String serverVersion;
+    private String serverVersion;
 
-	public MinecraftServerAnnotationHandler(String serverVersion) {
-		this.serverVersion = serverVersion;
-	}
+    public MinecraftServerAnnotationHandler(final String serverVersion) {
+        this.serverVersion = serverVersion;
+    }
 
-	@Override
-	public Class<?> handle(MinecraftServerType annotation) {
-		var className = annotation.value();
-		return Reflections.getClass("net.minecraft.server." + this.serverVersion + "." + className);
-	}
+    @Override
+    public Class<?> handle(final MinecraftServerType annotation) {
+        var className = annotation.value();
+        return Reflections.getClass("net.minecraft.server." + this.serverVersion + "." + className);
+    }
 
-	@Override
-	public Class<MinecraftServerType> getAnnotationType() {
-		return MinecraftServerType.class;
-	}
+    @Override
+    public Class<MinecraftServerType> getAnnotationType() {
+        return MinecraftServerType.class;
+    }
 }

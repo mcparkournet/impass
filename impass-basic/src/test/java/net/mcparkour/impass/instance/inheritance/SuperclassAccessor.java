@@ -31,9 +31,9 @@ import net.mcparkour.impass.instance.InstanceAccessor;
 @Type("net.mcparkour.impass.instance.inheritance.Superclass")
 public interface SuperclassAccessor extends InstanceAccessor {
 
-	@Method("superclassMethod")
-	int superclassMethod();
+    @Method("superclassMethod")
+    int superclassMethod();
 
-	@Method("returnOne")
-	int returnOne();
+    @Method("returnOne")
+    int returnOne();
 }

@@ -29,10 +29,10 @@ import net.mcparkour.impass.handler.AnnotationHandler;
 
 public interface TypeAnnotationHandler<A extends Annotation> extends AnnotationHandler<A> {
 
-	default Class<?> handleRaw(Annotation annotation) {
-		var castedAnnotation = castAnnotation(annotation);
-		return handle(castedAnnotation);
-	}
+    default Class<?> handleRaw(final Annotation annotation) {
+        var castedAnnotation = castAnnotation(annotation);
+        return handle(castedAnnotation);
+    }
 
-	Class<?> handle(A annotation);
+    Class<?> handle(A annotation);
 }

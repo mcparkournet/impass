@@ -31,16 +31,16 @@ import org.jetbrains.annotations.Nullable;
 
 public class SetterAnnotationHandler implements MethodAnnotationHandler<Setter> {
 
-	@Override
-	@Nullable
-	public Object handle(Setter annotation, MethodHandler handler) {
-		var fieldName = annotation.value();
-		handler.setFieldValue(fieldName);
-		return null;
-	}
+    @Override
+    @Nullable
+    public Object handle(final Setter annotation, final MethodHandler handler) {
+        var fieldName = annotation.value();
+        handler.setFieldValue(fieldName);
+        return null;
+    }
 
-	@Override
-	public Class<Setter> getAnnotationType() {
-		return Setter.class;
-	}
+    @Override
+    public Class<Setter> getAnnotationType() {
+        return Setter.class;
+    }
 }

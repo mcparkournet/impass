@@ -39,62 +39,62 @@ import net.mcparkour.impass.type.TypeAccessorHandler;
 
 public class BasicAccessorFactory implements AccessorFactory {
 
-	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
-	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
+    private TypeAnnotationHandlerRegistry typeHandlerRegistry;
+    private MethodAnnotationHandlerRegistry methodHandlerRegistry;
 
-	public BasicAccessorFactory() {
-		this(createTypeHandlerRegistry(), createMethodHandlerRegistry());
-	}
+    public BasicAccessorFactory() {
+        this(createTypeHandlerRegistry(), createMethodHandlerRegistry());
+    }
 
-	public BasicAccessorFactory(TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		this.typeHandlerRegistry = typeHandlerRegistry;
-		this.methodHandlerRegistry = methodHandlerRegistry;
-	}
+    public BasicAccessorFactory(final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+        this.typeHandlerRegistry = typeHandlerRegistry;
+        this.methodHandlerRegistry = methodHandlerRegistry;
+    }
 
-	public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry() {
-		return TypeAnnotationHandlerRegistry.builder()
-			.add(new TypeAnnotationHandler())
-			.build();
-	}
+    public static TypeAnnotationHandlerRegistry createTypeHandlerRegistry() {
+        return TypeAnnotationHandlerRegistry.builder()
+            .add(new TypeAnnotationHandler())
+            .build();
+    }
 
-	public static MethodAnnotationHandlerRegistry createMethodHandlerRegistry() {
-		return MethodAnnotationHandlerRegistry.builder()
-			.add(new GetterAnnotationHandler())
-			.add(new SetterAnnotationHandler())
-			.add(new MethodAnnotationHandler())
-			.add(new ConstructorAnnotationHandler())
-			.build();
-	}
+    public static MethodAnnotationHandlerRegistry createMethodHandlerRegistry() {
+        return MethodAnnotationHandlerRegistry.builder()
+            .add(new GetterAnnotationHandler())
+            .add(new SetterAnnotationHandler())
+            .add(new MethodAnnotationHandler())
+            .add(new ConstructorAnnotationHandler())
+            .build();
+    }
 
-	@Override
-	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass) {
-		return createTypeAccessor(accessorClass, this.typeHandlerRegistry, this.methodHandlerRegistry);
-	}
+    @Override
+    public <T extends TypeAccessor> T createTypeAccessor(final Class<T> accessorClass) {
+        return createTypeAccessor(accessorClass, this.typeHandlerRegistry, this.methodHandlerRegistry);
+    }
 
-	public <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry);
-		return createAccessor(accessorClass, handler);
-	}
+    public <T extends TypeAccessor> T createTypeAccessor(final Class<T> accessorClass, final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+        var handler = new TypeAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry);
+        return createAccessor(accessorClass, handler);
+    }
 
-	@Override
-	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance) {
-		return createInstanceAccessor(accessorClass, instance, this.typeHandlerRegistry, this.methodHandlerRegistry);
-	}
+    @Override
+    public <T extends InstanceAccessor> T createInstanceAccessor(final Class<T> accessorClass, final Object instance) {
+        return createInstanceAccessor(accessorClass, instance, this.typeHandlerRegistry, this.methodHandlerRegistry);
+    }
 
-	public <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, instance);
-		return createAccessor(accessorClass, handler);
-	}
+    public <T extends InstanceAccessor> T createInstanceAccessor(final Class<T> accessorClass, final Object instance, final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+        var handler = new InstanceAccessorHandler(this, typeHandlerRegistry, methodHandlerRegistry, instance);
+        return createAccessor(accessorClass, handler);
+    }
 
-	public <T extends Accessor> T createAccessor(Class<T> accessorClass, AccessorHandler handler) {
-		return Reflections.newProxyInstance(accessorClass, handler);
-	}
+    public <T extends Accessor> T createAccessor(final Class<T> accessorClass, final AccessorHandler handler) {
+        return Reflections.newProxyInstance(accessorClass, handler);
+    }
 
-	public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
-		return this.typeHandlerRegistry;
-	}
+    public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
+        return this.typeHandlerRegistry;
+    }
 
-	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
-		return this.methodHandlerRegistry;
-	}
+    public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
+        return this.methodHandlerRegistry;
+    }
 }

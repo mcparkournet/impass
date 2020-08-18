@@ -33,17 +33,17 @@ import org.junit.jupiter.api.Test;
 
 public class CraftBukkitAccessorTest {
 
-	private AccessorFactory accessorFactory;
-	private CraftBukkitEntityAccessor accessor;
+    private AccessorFactory accessorFactory;
+    private CraftBukkitEntityAccessor accessor;
 
-	@BeforeEach
-	public void setUp() {
-		this.accessorFactory = new BukkitAccessorFactory("v1_14_R1");
-		this.accessor = this.accessorFactory.createInstanceAccessor(CraftBukkitEntityAccessor.class, new CraftBukkitEntity());
-	}
+    @BeforeEach
+    public void setUp() {
+        this.accessorFactory = new BukkitAccessorFactory("v1_14_R1");
+        this.accessor = this.accessorFactory.createInstanceAccessor(CraftBukkitEntityAccessor.class, new CraftBukkitEntity());
+    }
 
-	@Test
-	public void testCraftBukkitMethodAccess() {
-		Assertions.assertEquals(1, this.accessor.getNumberOne());
-	}
+    @Test
+    public void testCraftBukkitMethodAccess() {
+        Assertions.assertEquals(1, this.accessor.getNumberOne());
+    }
 }

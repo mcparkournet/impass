@@ -31,6 +31,6 @@ import net.mcparkour.impass.instance.InstanceAccessor;
 @MinecraftServerType("MinecraftServerEntity")
 public interface MinecraftServerEntityAccessor extends InstanceAccessor {
 
-	@Method("getNumberOne")
-	int getNumberOne();
+    @Method("getNumberOne")
+    int getNumberOne();
 }

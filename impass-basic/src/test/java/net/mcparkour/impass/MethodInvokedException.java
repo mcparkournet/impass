@@ -26,5 +26,5 @@ package net.mcparkour.impass;
 
 public class MethodInvokedException extends RuntimeException {
 
-	private static final long serialVersionUID = -7060212669098472015L;
+    private static final long serialVersionUID = -7060212669098472015L;
 }

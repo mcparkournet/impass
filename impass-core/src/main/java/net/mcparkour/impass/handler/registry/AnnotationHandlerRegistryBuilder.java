@@ -32,23 +32,23 @@ import net.mcparkour.impass.handler.AnnotationHandler;
 
 public abstract class AnnotationHandlerRegistryBuilder<H extends AnnotationHandler<? extends Annotation>, R extends AnnotationHandlerRegistry<H>> {
 
-	private Map<Class<? extends Annotation>, H> handlers = new HashMap<>(4);
+    private Map<Class<? extends Annotation>, H> handlers = new HashMap<>(4);
 
-	public AnnotationHandlerRegistryBuilder<H, R> with(R handlerRegistry) {
-		Map<Class<? extends Annotation>, H> handlers = handlerRegistry.getHandlers();
-		this.handlers.putAll(handlers);
-		return this;
-	}
+    public AnnotationHandlerRegistryBuilder<H, R> with(final R handlerRegistry) {
+        Map<Class<? extends Annotation>, H> handlers = handlerRegistry.getHandlers();
+        this.handlers.putAll(handlers);
+        return this;
+    }
 
-	public AnnotationHandlerRegistryBuilder<H, R> add(H handler) {
-		var annotationType = handler.getAnnotationType();
-		this.handlers.put(annotationType, handler);
-		return this;
-	}
+    public AnnotationHandlerRegistryBuilder<H, R> add(final H handler) {
+        var annotationType = handler.getAnnotationType();
+        this.handlers.put(annotationType, handler);
+        return this;
+    }
 
-	public abstract R build();
+    public abstract R build();
 
-	public R build(Function<? super Map<Class<? extends Annotation>, H>, ? extends R> applier) {
-		return applier.apply(this.handlers);
-	}
+    public R build(final Function<? super Map<Class<? extends Annotation>, H>, ? extends R> applier) {
+        return applier.apply(this.handlers);
+    }
 }

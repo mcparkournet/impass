@@ -26,7 +26,7 @@ package net.minecraft.server.v1_14_R1;
 
 public class MinecraftServerEntity {
 
-	public int getNumberOne() {
-		return 1;
-	}
+    public int getNumberOne() {
+        return 1;
+    }
 }

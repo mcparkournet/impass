@@ -26,11 +26,11 @@ package net.mcparkour.impass.instance.inheritance;
 
 public class Superclass {
 
-	public int superclassMethod() {
-		return 1;
-	}
+    public int superclassMethod() {
+        return 1;
+    }
 
-	public int returnOne() {
-		return 1;
-	}
+    public int returnOne() {
+        return 1;
+    }
 }

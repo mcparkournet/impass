@@ -33,17 +33,17 @@ import org.junit.jupiter.api.Test;
 
 public class MinecraftServerAccessorTest {
 
-	private AccessorFactory accessorFactory;
-	private MinecraftServerEntityAccessor accessor;
+    private AccessorFactory accessorFactory;
+    private MinecraftServerEntityAccessor accessor;
 
-	@BeforeEach
-	public void setUp() {
-		this.accessorFactory = new BukkitAccessorFactory("v1_14_R1");
-		this.accessor = this.accessorFactory.createInstanceAccessor(MinecraftServerEntityAccessor.class, new MinecraftServerEntity());
-	}
+    @BeforeEach
+    public void setUp() {
+        this.accessorFactory = new BukkitAccessorFactory("v1_14_R1");
+        this.accessor = this.accessorFactory.createInstanceAccessor(MinecraftServerEntityAccessor.class, new MinecraftServerEntity());
+    }
 
-	@Test
-	public void testMinecraftServerMethodAccess() {
-		Assertions.assertEquals(1, this.accessor.getNumberOne());
-	}
+    @Test
+    public void testMinecraftServerMethodAccess() {
+        Assertions.assertEquals(1, this.accessor.getNumberOne());
+    }
 }

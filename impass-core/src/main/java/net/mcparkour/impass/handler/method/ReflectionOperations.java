@@ -30,11 +30,11 @@ import org.jetbrains.annotations.Nullable;
 
 public interface ReflectionOperations {
 
-	@Nullable
-	Object getFieldValue(Field field);
+    @Nullable
+    Object getFieldValue(Field field);
 
-	void setFieldValue(Field field, @Nullable Object value);
+    void setFieldValue(Field field, @Nullable Object value);
 
-	@Nullable
-	Object invokeMethod(Method method, Object... parameters) throws Throwable;
+    @Nullable
+    Object invokeMethod(Method method, Object... parameters) throws Throwable;
 }

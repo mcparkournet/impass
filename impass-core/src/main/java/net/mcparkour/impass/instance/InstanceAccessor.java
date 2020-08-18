@@ -28,14 +28,14 @@ import net.mcparkour.impass.Accessor;
 
 public interface InstanceAccessor extends Accessor {
 
-	Object getInstance();
+    Object getInstance();
 
-	@Override
-	boolean equals(Object object);
+    @Override
+    boolean equals(Object object);
 
-	@Override
-	int hashCode();
+    @Override
+    int hashCode();
 
-	@Override
-	String toString();
+    @Override
+    String toString();
 }

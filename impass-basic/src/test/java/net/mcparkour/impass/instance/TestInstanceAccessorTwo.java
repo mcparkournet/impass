@@ -30,6 +30,6 @@ import net.mcparkour.impass.annotation.type.Type;
 @Type("net.mcparkour.impass.TestImplementationTwo")
 public interface TestInstanceAccessorTwo extends InstanceAccessor {
 
-	@Getter("constructorValue")
-	int getConstructorValue();
+    @Getter("constructorValue")
+    int getConstructorValue();
 }

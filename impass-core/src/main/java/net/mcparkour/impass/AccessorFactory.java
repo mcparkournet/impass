@@ -29,7 +29,7 @@ import net.mcparkour.impass.type.TypeAccessor;
 
 public interface AccessorFactory {
 
-	<T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass);
+    <T extends TypeAccessor> T createTypeAccessor(Class<T> accessorClass);
 
-	<T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance);
+    <T extends InstanceAccessor> T createInstanceAccessor(Class<T> accessorClass, Object instance);
 }

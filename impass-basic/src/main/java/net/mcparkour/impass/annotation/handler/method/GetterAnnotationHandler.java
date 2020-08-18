@@ -31,15 +31,15 @@ import org.jetbrains.annotations.Nullable;
 
 public class GetterAnnotationHandler implements MethodAnnotationHandler<Getter> {
 
-	@Override
-	@Nullable
-	public Object handle(Getter annotation, MethodHandler handler) {
-		var fieldName = annotation.value();
-		return handler.getFieldValue(fieldName);
-	}
+    @Override
+    @Nullable
+    public Object handle(final Getter annotation, final MethodHandler handler) {
+        var fieldName = annotation.value();
+        return handler.getFieldValue(fieldName);
+    }
 
-	@Override
-	public Class<Getter> getAnnotationType() {
-		return Getter.class;
-	}
+    @Override
+    public Class<Getter> getAnnotationType() {
+        return Getter.class;
+    }
 }

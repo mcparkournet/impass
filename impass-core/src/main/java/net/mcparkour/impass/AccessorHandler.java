@@ -34,50 +34,50 @@ import org.jetbrains.annotations.Nullable;
 
 public class AccessorHandler implements InvocationHandler {
 
-	private AccessorFactory accessorFactory;
-	private TypeAnnotationHandlerRegistry typeHandlerRegistry;
-	private MethodAnnotationHandlerRegistry methodHandlerRegistry;
-	private ReflectionOperations reflectionOperations;
+    private AccessorFactory accessorFactory;
+    private TypeAnnotationHandlerRegistry typeHandlerRegistry;
+    private MethodAnnotationHandlerRegistry methodHandlerRegistry;
+    private ReflectionOperations reflectionOperations;
 
-	public AccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, ReflectionOperations reflectionOperations) {
-		this.accessorFactory = accessorFactory;
-		this.typeHandlerRegistry = typeHandlerRegistry;
-		this.methodHandlerRegistry = methodHandlerRegistry;
-		this.reflectionOperations = reflectionOperations;
-	}
+    public AccessorHandler(final AccessorFactory accessorFactory, final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry, final ReflectionOperations reflectionOperations) {
+        this.accessorFactory = accessorFactory;
+        this.typeHandlerRegistry = typeHandlerRegistry;
+        this.methodHandlerRegistry = methodHandlerRegistry;
+        this.reflectionOperations = reflectionOperations;
+    }
 
-	@Override
-	@Nullable
-	public Object invoke(Object proxy, Method method, @Nullable Object[] args) throws Throwable {
-		var accessorType = method.getDeclaringClass();
-		var parameters = args == null ? new Object[0] : args;
-		var parameterTypes = method.getParameterTypes();
-		var implementationType = this.typeHandlerRegistry.handleType(accessorType);
-		var handler = new MethodHandler(proxy, method, accessorType, parameters, parameterTypes, implementationType, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
-		return handle(handler);
-	}
+    @Override
+    @Nullable
+    public Object invoke(final Object proxy, final Method method, @Nullable final Object[] args) throws Throwable {
+        var accessorType = method.getDeclaringClass();
+        var parameters = args == null ? new Object[0] : args;
+        var parameterTypes = method.getParameterTypes();
+        var implementationType = this.typeHandlerRegistry.handleType(accessorType);
+        var handler = new MethodHandler(proxy, method, accessorType, parameters, parameterTypes, implementationType, this.accessorFactory, this.typeHandlerRegistry, this.reflectionOperations);
+        return handle(handler);
+    }
 
-	@Nullable
-	public Object handle(MethodHandler handler) throws Throwable {
-		if (handler.isMethodDefault()) {
-			return handler.invokeDefaultMethod();
-		}
-		return this.methodHandlerRegistry.handleMethod(handler);
-	}
+    @Nullable
+    public Object handle(final MethodHandler handler) throws Throwable {
+        if (handler.isMethodDefault()) {
+            return handler.invokeDefaultMethod();
+        }
+        return this.methodHandlerRegistry.handleMethod(handler);
+    }
 
-	public AccessorFactory getAccessorFactory() {
-		return this.accessorFactory;
-	}
+    public AccessorFactory getAccessorFactory() {
+        return this.accessorFactory;
+    }
 
-	public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
-		return this.typeHandlerRegistry;
-	}
+    public TypeAnnotationHandlerRegistry getTypeHandlerRegistry() {
+        return this.typeHandlerRegistry;
+    }
 
-	public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
-		return this.methodHandlerRegistry;
-	}
+    public MethodAnnotationHandlerRegistry getMethodHandlerRegistry() {
+        return this.methodHandlerRegistry;
+    }
 
-	public ReflectionOperations getReflectionOperations() {
-		return this.reflectionOperations;
-	}
+    public ReflectionOperations getReflectionOperations() {
+        return this.reflectionOperations;
+    }
 }

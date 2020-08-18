@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CraftBukkitType {
 
-	/**
-	 * @return org.bukkit.craftbukkit class name
-	 */
-	String value();
+    /**
+     * @return org.bukkit.craftbukkit class name
+     */
+    String value();
 }

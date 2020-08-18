@@ -31,9 +31,9 @@ import org.junit.jupiter.api.Test;
 
 public class BukkitAccessorFactoryTest {
 
-	@Test
-	public void testGetServerVersion() {
-		Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new MinecraftServerEntity()));
-		Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new CraftBukkitEntity()));
-	}
+    @Test
+    public void testGetServerVersion() {
+        Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new MinecraftServerEntity()));
+        Assertions.assertEquals("v1_14_R1", BukkitAccessorFactory.getServerVersion(new CraftBukkitEntity()));
+    }
 }

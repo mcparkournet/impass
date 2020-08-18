@@ -32,6 +32,6 @@ import net.mcparkour.impass.instance.InstanceAccessor;
 @Type("net.mcparkour.impass.instance.inheritance.ListSubclass")
 public interface ListSubclassAccessor extends InstanceAccessor, List<String> {
 
-	@Method("getNumberOne")
-	int getNumberOne();
+    @Method("getNumberOne")
+    int getNumberOne();
 }

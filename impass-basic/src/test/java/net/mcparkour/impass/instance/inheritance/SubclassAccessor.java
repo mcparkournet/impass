@@ -30,6 +30,6 @@ import net.mcparkour.impass.annotation.type.Type;
 @Type("net.mcparkour.impass.instance.inheritance.Subclass")
 public interface SubclassAccessor extends SuperclassAccessor {
 
-	@Method("accept")
-	int accept(SuperclassAccessor superclass);
+    @Method("accept")
+    int accept(SuperclassAccessor superclass);
 }

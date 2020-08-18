@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Setter {
 
-	/**
-	 * @return implementation field name
-	 */
-	String value();
+    /**
+     * @return implementation field name
+     */
+    String value();
 }

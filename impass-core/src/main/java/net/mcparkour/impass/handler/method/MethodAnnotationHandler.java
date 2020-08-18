@@ -30,11 +30,11 @@ import org.jetbrains.annotations.Nullable;
 
 public interface MethodAnnotationHandler<A extends Annotation> extends AnnotationHandler<A> {
 
-	@Nullable
-	default Object handleRaw(Annotation annotation, MethodHandler handler) throws Throwable {
-		var castedAnnotation = castAnnotation(annotation);
-		return handle(castedAnnotation, handler);
-	}
+    @Nullable
+    default Object handleRaw(final Annotation annotation, final MethodHandler handler) throws Throwable {
+        var castedAnnotation = castAnnotation(annotation);
+        return handle(castedAnnotation, handler);
+    }
 
-	@Nullable Object handle(A annotation, MethodHandler handler) throws Throwable;
+    @Nullable Object handle(A annotation, MethodHandler handler) throws Throwable;
 }

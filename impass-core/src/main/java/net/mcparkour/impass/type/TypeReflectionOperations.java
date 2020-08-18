@@ -33,24 +33,25 @@ import org.jetbrains.annotations.Nullable;
 
 public class TypeReflectionOperations implements ReflectionOperations {
 
-	@Override
-	@Nullable
-	public Object getFieldValue(Field field) {
-		return Reflections.getFieldValue(field, null);
-	}
+    @Override
+    @Nullable
+    public Object getFieldValue(final Field field) {
+        return Reflections.getFieldValue(field, null);
+    }
 
-	@Override
-	public void setFieldValue(Field field, @Nullable Object value) {
-		Reflections.setFieldValue(field, null, value);
-	}
+    @Override
+    public void setFieldValue(final Field field, @Nullable final Object value) {
+        Reflections.setFieldValue(field, null, value);
+    }
 
-	@Override
-	@Nullable
-	public Object invokeMethod(Method method, Object... parameters) throws Throwable {
-		try {
-			return Reflections.invokeMethod(method, null, parameters);
-		} catch (UncheckedInvocationTargetException exception) {
-			throw exception.getTargetException();
-		}
-	}
+    @SuppressWarnings("ProhibitedExceptionThrown")
+    @Override
+    @Nullable
+    public Object invokeMethod(final Method method, final Object... parameters) throws Throwable {
+        try {
+            return Reflections.invokeMethod(method, null, parameters);
+        } catch (final UncheckedInvocationTargetException exception) {
+            throw exception.getTargetException();
+        }
+    }
 }

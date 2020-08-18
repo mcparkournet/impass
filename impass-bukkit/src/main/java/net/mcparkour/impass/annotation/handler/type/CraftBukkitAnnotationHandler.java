@@ -30,20 +30,20 @@ import net.mcparkour.impass.handler.type.TypeAnnotationHandler;
 
 public class CraftBukkitAnnotationHandler implements TypeAnnotationHandler<CraftBukkitType> {
 
-	private String serverVersion;
+    private String serverVersion;
 
-	public CraftBukkitAnnotationHandler(String serverVersion) {
-		this.serverVersion = serverVersion;
-	}
+    public CraftBukkitAnnotationHandler(final String serverVersion) {
+        this.serverVersion = serverVersion;
+    }
 
-	@Override
-	public Class<?> handle(CraftBukkitType annotation) {
-		var className = annotation.value();
-		return Reflections.getClass("org.bukkit.craftbukkit." + this.serverVersion + "." + className);
-	}
+    @Override
+    public Class<?> handle(final CraftBukkitType annotation) {
+        var className = annotation.value();
+        return Reflections.getClass("org.bukkit.craftbukkit." + this.serverVersion + "." + className);
+    }
 
-	@Override
-	public Class<CraftBukkitType> getAnnotationType() {
-		return CraftBukkitType.class;
-	}
+    @Override
+    public Class<CraftBukkitType> getAnnotationType() {
+        return CraftBukkitType.class;
+    }
 }

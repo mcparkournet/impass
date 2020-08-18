@@ -35,39 +35,39 @@ import org.jetbrains.annotations.Nullable;
 
 public class InstanceAccessorHandler extends AccessorHandler {
 
-	private static final Method GET_INSTANCE_METHOD = Reflections.getMethod(InstanceAccessor.class, "getInstance");
-	private static final Method EQUALS_METHOD = Reflections.getMethod(Object.class, "equals", Object.class);
-	private static final Method HASH_CODE_METHOD = Reflections.getMethod(Object.class, "hashCode");
-	private static final Method TO_STRING_METHOD = Reflections.getMethod(Object.class, "toString");
+    private static final Method GET_INSTANCE_METHOD = Reflections.getMethod(InstanceAccessor.class, "getInstance");
+    private static final Method EQUALS_METHOD = Reflections.getMethod(Object.class, "equals", Object.class);
+    private static final Method HASH_CODE_METHOD = Reflections.getMethod(Object.class, "hashCode");
+    private static final Method TO_STRING_METHOD = Reflections.getMethod(Object.class, "toString");
 
-	private Object instance;
+    private Object instance;
 
-	public InstanceAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry, Object instance) {
-		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(instance));
-		this.instance = instance;
-	}
+    public InstanceAccessorHandler(final AccessorFactory accessorFactory, final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry, final Object instance) {
+        super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new InstanceReflectionOperations(instance));
+        this.instance = instance;
+    }
 
-	@Override
-	@Nullable
-	public Object handle(MethodHandler handler) throws Throwable {
-		if (handler.isInvoked(GET_INSTANCE_METHOD)) {
-			return this.instance;
-		}
-		if (handler.isInvoked(EQUALS_METHOD)) {
-			handler.remapParameters();
-			var firstParameter = handler.getFirstParameter();
-			return firstParameter.equals(this.instance);
-		}
-		if (handler.isInvoked(HASH_CODE_METHOD)) {
-			return this.instance.hashCode();
-		}
-		if (handler.isInvoked(TO_STRING_METHOD)) {
-			return this.instance.toString();
-		}
-		return super.handle(handler);
-	}
+    @Override
+    @Nullable
+    public Object handle(final MethodHandler handler) throws Throwable {
+        if (handler.isInvoked(GET_INSTANCE_METHOD)) {
+            return this.instance;
+        }
+        if (handler.isInvoked(EQUALS_METHOD)) {
+            handler.remapParameters();
+            var firstParameter = handler.getFirstParameter();
+            return firstParameter.equals(this.instance);
+        }
+        if (handler.isInvoked(HASH_CODE_METHOD)) {
+            return this.instance.hashCode();
+        }
+        if (handler.isInvoked(TO_STRING_METHOD)) {
+            return this.instance.toString();
+        }
+        return super.handle(handler);
+    }
 
-	public Object getInstance() {
-		return this.instance;
-	}
+    public Object getInstance() {
+        return this.instance;
+    }
 }

@@ -31,7 +31,7 @@ import net.mcparkour.impass.handler.registry.type.TypeAnnotationHandlerRegistry;
 
 public class TypeAccessorHandler extends AccessorHandler {
 
-	public TypeAccessorHandler(AccessorFactory accessorFactory, TypeAnnotationHandlerRegistry typeHandlerRegistry, MethodAnnotationHandlerRegistry methodHandlerRegistry) {
-		super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
-	}
+    public TypeAccessorHandler(final AccessorFactory accessorFactory, final TypeAnnotationHandlerRegistry typeHandlerRegistry, final MethodAnnotationHandlerRegistry methodHandlerRegistry) {
+        super(accessorFactory, typeHandlerRegistry, methodHandlerRegistry, new TypeReflectionOperations());
+    }
 }

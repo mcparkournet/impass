@@ -30,8 +30,8 @@ import net.mcparkour.impass.handler.registry.AnnotationHandlerRegistryBuilder;
 
 public class MethodAnnotationHandlerRegistryBuilder extends AnnotationHandlerRegistryBuilder<MethodAnnotationHandler<? extends Annotation>, MethodAnnotationHandlerRegistry> {
 
-	@Override
-	public MethodAnnotationHandlerRegistry build() {
-		return build(MethodAnnotationHandlerRegistry::new);
-	}
+    @Override
+    public MethodAnnotationHandlerRegistry build() {
+        return build(MethodAnnotationHandlerRegistry::new);
+    }
 }

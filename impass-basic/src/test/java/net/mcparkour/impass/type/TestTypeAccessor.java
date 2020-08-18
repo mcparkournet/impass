@@ -36,107 +36,107 @@ import org.jetbrains.annotations.Nullable;
 @Type("net.mcparkour.impass.TestImplementation")
 public interface TestTypeAccessor extends TypeAccessor {
 
-	void staticUnannotatedMethod();
+    void staticUnannotatedMethod();
 
-	@Getter("staticPrimitiveField")
-	int getStaticPrimitiveField();
+    @Getter("staticPrimitiveField")
+    int getStaticPrimitiveField();
 
-	@Setter("staticPrimitiveField")
-	void setStaticPrimitiveField(int integer);
+    @Setter("staticPrimitiveField")
+    void setStaticPrimitiveField(int integer);
 
-	@Getter("staticObjectField")
-	String getStaticObjectField();
+    @Getter("staticObjectField")
+    String getStaticObjectField();
 
-	@Setter("staticObjectField")
-	void setStaticObjectField(String string);
+    @Setter("staticObjectField")
+    void setStaticObjectField(String string);
 
-	@Getter("staticAccessorField")
-	TestInstanceAccessorTwo getStaticAccessorField();
+    @Getter("staticAccessorField")
+    TestInstanceAccessorTwo getStaticAccessorField();
 
-	@Setter("staticAccessorField")
-	void setStaticAccessorField(TestInstanceAccessorTwo accessor);
+    @Setter("staticAccessorField")
+    void setStaticAccessorField(TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Getter("staticNullField")
-	TestInstanceAccessorTwo getStaticNullField();
+    @Nullable
+    @Getter("staticNullField")
+    TestInstanceAccessorTwo getStaticNullField();
 
-	@Setter("staticNullField")
-	void setStaticNullField(@Nullable TestInstanceAccessorTwo accessor);
+    @Setter("staticNullField")
+    void setStaticNullField(@Nullable TestInstanceAccessorTwo accessor);
 
-	@Method("staticVoidVoidMethod")
-	void staticVoidVoidMethod();
+    @Method("staticVoidVoidMethod")
+    void staticVoidVoidMethod();
 
-	@Method("staticPrimitiveVoidMethod")
-	int staticPrimitiveVoidMethod();
+    @Method("staticPrimitiveVoidMethod")
+    int staticPrimitiveVoidMethod();
 
-	@Method("staticVoidPrimitiveMethod")
-	void staticVoidPrimitiveMethod(int integer);
+    @Method("staticVoidPrimitiveMethod")
+    void staticVoidPrimitiveMethod(int integer);
 
-	@Method("staticPrimitivePrimitiveMethod")
-	int staticPrimitivePrimitiveMethod(int integer);
+    @Method("staticPrimitivePrimitiveMethod")
+    int staticPrimitivePrimitiveMethod(int integer);
 
-	@Method("staticObjectVoidMethod")
-	String staticObjectVoidMethod();
+    @Method("staticObjectVoidMethod")
+    String staticObjectVoidMethod();
 
-	@Method("staticVoidObjectMethod")
-	void staticVoidObjectMethod(String string);
+    @Method("staticVoidObjectMethod")
+    void staticVoidObjectMethod(String string);
 
-	@Method("staticObjectObjectMethod")
-	String staticObjectObjectMethod(String string);
+    @Method("staticObjectObjectMethod")
+    String staticObjectObjectMethod(String string);
 
-	@Method("staticAccessorVoidMethod")
-	TestInstanceAccessorTwo staticAccessorVoidMethod();
+    @Method("staticAccessorVoidMethod")
+    TestInstanceAccessorTwo staticAccessorVoidMethod();
 
-	@Method("staticVoidAccessorMethod")
-	void staticVoidAccessorMethod(TestInstanceAccessorTwo accessor);
+    @Method("staticVoidAccessorMethod")
+    void staticVoidAccessorMethod(TestInstanceAccessorTwo accessor);
 
-	@Method("staticAccessorAccessorMethod")
-	TestInstanceAccessorTwo staticAccessorAccessorMethod(TestInstanceAccessorTwo accessor);
+    @Method("staticAccessorAccessorMethod")
+    TestInstanceAccessorTwo staticAccessorAccessorMethod(TestInstanceAccessorTwo accessor);
 
-	@Method("staticVoidPrimitiveObjectMethod")
-	void staticVoidPrimitiveObjectMethod(int integer, String string);
+    @Method("staticVoidPrimitiveObjectMethod")
+    void staticVoidPrimitiveObjectMethod(int integer, String string);
 
-	@Method("staticPrimitivePrimitiveObjectMethod")
-	int staticPrimitivePrimitiveObjectMethod(int integer, String string);
+    @Method("staticPrimitivePrimitiveObjectMethod")
+    int staticPrimitivePrimitiveObjectMethod(int integer, String string);
 
-	@Method("staticObjectPrimitiveObjectMethod")
-	String staticObjectPrimitiveObjectMethod(int integer, String string);
+    @Method("staticObjectPrimitiveObjectMethod")
+    String staticObjectPrimitiveObjectMethod(int integer, String string);
 
-	@Method("staticAccessorPrimitiveObjectAccessorMethod")
-	TestInstanceAccessorTwo staticAccessorPrimitiveObjectAccessorMethod(int integer, String string, TestInstanceAccessorTwo accessor);
+    @Method("staticAccessorPrimitiveObjectAccessorMethod")
+    TestInstanceAccessorTwo staticAccessorPrimitiveObjectAccessorMethod(int integer, String string, TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Method("staticNullVoidMethod")
-	TestInstanceAccessorTwo staticNullVoidMethod();
+    @Nullable
+    @Method("staticNullVoidMethod")
+    TestInstanceAccessorTwo staticNullVoidMethod();
 
-	@Method("staticVoidNullMethod")
-	void staticVoidNullMethod(@Nullable TestInstanceAccessorTwo accessor);
+    @Method("staticVoidNullMethod")
+    void staticVoidNullMethod(@Nullable TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Method("staticNullNullMethod")
-	TestInstanceAccessorTwo staticNullNullMethod(@Nullable TestInstanceAccessorTwo accessor);
+    @Nullable
+    @Method("staticNullNullMethod")
+    TestInstanceAccessorTwo staticNullNullMethod(@Nullable TestInstanceAccessorTwo accessor);
 
-	@Constructor
-	TestInstanceAccessor construct();
+    @Constructor
+    TestInstanceAccessor construct();
 
-	@Constructor
-	TestInstanceAccessor construct(int primitive);
+    @Constructor
+    TestInstanceAccessor construct(int primitive);
 
-	@Constructor
-	TestInstanceAccessor construct(String object);
+    @Constructor
+    TestInstanceAccessor construct(String object);
 
-	@Constructor
-	TestInstanceAccessor construct(TestInstanceAccessorTwo accessor);
+    @Constructor
+    TestInstanceAccessor construct(TestInstanceAccessorTwo accessor);
 
-	@Constructor
-	TestInstanceAccessor construct(int primitive, String object, TestInstanceAccessorTwo accessor);
+    @Constructor
+    TestInstanceAccessor construct(int primitive, String object, TestInstanceAccessorTwo accessor);
 
-	default String defaultObjectObjectMethod(String string) {
-		String upperCase = toUpperCase(string);
-		return staticObjectObjectMethod(upperCase);
-	}
+    default String defaultObjectObjectMethod(final String string) {
+        String upperCase = toUpperCase(string);
+        return staticObjectObjectMethod(upperCase);
+    }
 
-	private String toUpperCase(String string) {
-		return string.toUpperCase();
-	}
+    private String toUpperCase(final String string) {
+        return string.toUpperCase();
+    }
 }

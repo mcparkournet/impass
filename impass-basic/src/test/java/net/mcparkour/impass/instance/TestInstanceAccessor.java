@@ -33,92 +33,92 @@ import org.jetbrains.annotations.Nullable;
 @Type("net.mcparkour.impass.TestImplementation")
 public interface TestInstanceAccessor extends InstanceAccessor {
 
-	void unannotatedMethod();
+    void unannotatedMethod();
 
-	@Getter("primitiveField")
-	int getPrimitiveField();
+    @Getter("primitiveField")
+    int getPrimitiveField();
 
-	@Setter("primitiveField")
-	void setPrimitiveField(int integer);
+    @Setter("primitiveField")
+    void setPrimitiveField(int integer);
 
-	@Getter("objectField")
-	String getObjectField();
+    @Getter("objectField")
+    String getObjectField();
 
-	@Setter("objectField")
-	void setObjectField(String string);
+    @Setter("objectField")
+    void setObjectField(String string);
 
-	@Getter("accessorField")
-	TestInstanceAccessorTwo getAccessorField();
+    @Getter("accessorField")
+    TestInstanceAccessorTwo getAccessorField();
 
-	@Setter("accessorField")
-	void setAccessorField(TestInstanceAccessorTwo accessor);
+    @Setter("accessorField")
+    void setAccessorField(TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Getter("nullField")
-	TestInstanceAccessorTwo getNullField();
+    @Nullable
+    @Getter("nullField")
+    TestInstanceAccessorTwo getNullField();
 
-	@Setter("nullField")
-	void setNullField(@Nullable TestInstanceAccessorTwo accessor);
+    @Setter("nullField")
+    void setNullField(@Nullable TestInstanceAccessorTwo accessor);
 
-	@Method("voidVoidMethod")
-	void voidVoidMethod();
+    @Method("voidVoidMethod")
+    void voidVoidMethod();
 
-	@Method("primitiveVoidMethod")
-	int primitiveVoidMethod();
+    @Method("primitiveVoidMethod")
+    int primitiveVoidMethod();
 
-	@Method("voidPrimitiveMethod")
-	void voidPrimitiveMethod(int integer);
+    @Method("voidPrimitiveMethod")
+    void voidPrimitiveMethod(int integer);
 
-	@Method("primitivePrimitiveMethod")
-	int primitivePrimitiveMethod(int integer);
+    @Method("primitivePrimitiveMethod")
+    int primitivePrimitiveMethod(int integer);
 
-	@Method("objectVoidMethod")
-	String objectVoidMethod();
+    @Method("objectVoidMethod")
+    String objectVoidMethod();
 
-	@Method("voidObjectMethod")
-	void voidObjectMethod(String string);
+    @Method("voidObjectMethod")
+    void voidObjectMethod(String string);
 
-	@Method("objectObjectMethod")
-	String objectObjectMethod(String string);
+    @Method("objectObjectMethod")
+    String objectObjectMethod(String string);
 
-	@Method("accessorVoidMethod")
-	TestInstanceAccessorTwo accessorVoidMethod();
+    @Method("accessorVoidMethod")
+    TestInstanceAccessorTwo accessorVoidMethod();
 
-	@Method("voidAccessorMethod")
-	void voidAccessorMethod(TestInstanceAccessorTwo accessor);
+    @Method("voidAccessorMethod")
+    void voidAccessorMethod(TestInstanceAccessorTwo accessor);
 
-	@Method("accessorAccessorMethod")
-	TestInstanceAccessorTwo accessorAccessorMethod(TestInstanceAccessorTwo accessor);
+    @Method("accessorAccessorMethod")
+    TestInstanceAccessorTwo accessorAccessorMethod(TestInstanceAccessorTwo accessor);
 
-	@Method("voidPrimitiveObjectMethod")
-	void voidPrimitiveObjectMethod(int integer, String string);
+    @Method("voidPrimitiveObjectMethod")
+    void voidPrimitiveObjectMethod(int integer, String string);
 
-	@Method("primitivePrimitiveObjectMethod")
-	int primitivePrimitiveObjectMethod(int integer, String string);
+    @Method("primitivePrimitiveObjectMethod")
+    int primitivePrimitiveObjectMethod(int integer, String string);
 
-	@Method("objectPrimitiveObjectMethod")
-	String objectPrimitiveObjectMethod(int integer, String string);
+    @Method("objectPrimitiveObjectMethod")
+    String objectPrimitiveObjectMethod(int integer, String string);
 
-	@Method("accessorPrimitiveObjectAccessorMethod")
-	TestInstanceAccessorTwo accessorPrimitiveObjectAccessorMethod(int integer, String string, TestInstanceAccessorTwo accessor);
+    @Method("accessorPrimitiveObjectAccessorMethod")
+    TestInstanceAccessorTwo accessorPrimitiveObjectAccessorMethod(int integer, String string, TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Method("nullVoidMethod")
-	TestInstanceAccessorTwo nullVoidMethod();
+    @Nullable
+    @Method("nullVoidMethod")
+    TestInstanceAccessorTwo nullVoidMethod();
 
-	@Method("voidNullMethod")
-	void voidNullMethod(@Nullable TestInstanceAccessorTwo accessor);
+    @Method("voidNullMethod")
+    void voidNullMethod(@Nullable TestInstanceAccessorTwo accessor);
 
-	@Nullable
-	@Method("nullNullMethod")
-	TestInstanceAccessorTwo nullNullMethod(@Nullable TestInstanceAccessorTwo accessor);
+    @Nullable
+    @Method("nullNullMethod")
+    TestInstanceAccessorTwo nullNullMethod(@Nullable TestInstanceAccessorTwo accessor);
 
-	default String defaultObjectObjectMethod(String string) {
-		String upperCase = toUpperCase(string);
-		return objectObjectMethod(upperCase);
-	}
+    default String defaultObjectObjectMethod(final String string) {
+        String upperCase = toUpperCase(string);
+        return objectObjectMethod(upperCase);
+    }
 
-	private String toUpperCase(String string) {
-		return string.toUpperCase();
-	}
+    private String toUpperCase(final String string) {
+        return string.toUpperCase();
+    }
 }

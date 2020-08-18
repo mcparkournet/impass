@@ -26,9 +26,10 @@ package net.mcparkour.impass.instance.inheritance;
 
 import java.util.ArrayList;
 
+@SuppressWarnings({"serial", "CloneableClassWithoutClone", "ClassExtendsConcreteCollection"})
 public class ListSubclass extends ArrayList<String> {
 
-	public int getNumberOne() {
-		return 1;
-	}
+    public int getNumberOne() {
+        return 1;
+    }
 }

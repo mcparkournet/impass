@@ -26,7 +26,7 @@ package org.bukkit.craftbukkit.v1_14_R1;
 
 public class CraftBukkitEntity {
 
-	public int getNumberOne() {
-		return 1;
-	}
+    public int getNumberOne() {
+        return 1;
+    }
 }
